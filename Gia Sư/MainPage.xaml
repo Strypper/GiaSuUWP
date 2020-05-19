@@ -1,0 +1,136 @@
+﻿<Page
+    x:Class="Gia_Sư.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Gia_Sư" Loaded="Page_Loaded"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" xmlns:Windows10version1803="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 6)"
+    mc:Ignorable="d" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:UserControl="using:Gia_Sư.Components"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <muxc:NavigationView x:Name="NavigationViewPanel" IsBackButtonVisible="Collapsed" IsBackEnabled="True" IsSettingsVisible="False" KeyDown="NavigationViewPanel_KeyDown" KeyUp="NavigationViewPanel_KeyUp"
+                         SelectionChanged="NavigationViewPanel_SelectionChanged" PaneDisplayMode="Top" BackRequested="NavigationViewPanel_BackRequested">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowsState">
+                <VisualState x:Name="SurfaceBookAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="2000"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DesktopAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PhoneAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Search.Width" Value="300"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PhoneAdapt1">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Search.Width" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <muxc:NavigationView.AutoSuggestBox>
+            <AutoSuggestBox x:Name="Search" AccessKey="S" ToolTipService.ToolTip="Press Crt + S for Quick Access"
+                            QueryIcon="Find" Width="400"/>
+        </muxc:NavigationView.AutoSuggestBox>
+        <muxc:NavigationView.MenuItems>
+            <muxc:NavigationViewItem x:Name="Home" Icon="Home" Content="TRANG CHỦ" IsSelected="True" Tag="RootHome" FontWeight="Bold"/>
+            <muxc:NavigationViewItemSeparator/>
+            <muxc:NavigationViewItem Content="GIA SƯ" Icon="Contact" ToolTipService.ToolTip="Dịch Vụ Gia Sư" Tag="RootSubject" FontWeight="Bold">
+                <muxc:NavigationViewItem.MenuItems>
+                    <muxc:NavigationViewItem x:Name="Subject" Icon="Library" Content="Môn Học" FontWeight="Bold"/>
+                    <muxc:NavigationViewItem x:Name="Tutor" Icon="Contact2" Content="Gia Sư" FontWeight="Bold"/>
+                    <muxc:NavigationViewItem x:Name="Homework" Content="Bài Tập" FontWeight="Bold">
+                        <muxc:NavigationViewItem.Icon>
+                            <FontIcon Glyph="&#xEC87;" />
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
+                    <muxc:NavigationViewItemSeparator/>
+                </muxc:NavigationViewItem.MenuItems>
+            </muxc:NavigationViewItem>
+            <muxc:NavigationViewItem Content="VIỆC LÀM" ToolTipService.ToolTip="Tìm Kiếm Việc Làm" FontWeight="Bold">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE821;"/>
+                </muxc:NavigationViewItem.Icon>
+                <muxc:NavigationViewItem.MenuItems>
+                    <muxc:NavigationViewItem x:Name="ParttimeJob" Content="Việc Bán Thời Gian" FontWeight="Bold">
+                        <muxc:NavigationViewItem.Icon>
+                            <FontIcon Glyph="&#xEA99;"/>
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
+                    <muxc:NavigationViewItem x:Name="ProJob" Content="Việc Chuyên Ngành" FontWeight="Bold">
+                        <muxc:NavigationViewItem.Icon>
+                            <FontIcon Glyph="&#xE821;"/>
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
+                </muxc:NavigationViewItem.MenuItems>
+            </muxc:NavigationViewItem>
+            <muxc:NavigationViewItemSeparator/>
+            <muxc:NavigationViewItem Content="TỤ TẬP" ToolTipService.ToolTip="Các Địa Điểm Tụ Tập" FontWeight="Bold">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
+                </muxc:NavigationViewItem.Icon>
+                <muxc:NavigationViewItem.MenuItems>
+                    <muxc:NavigationViewItem x:Name="Cafe" Content="Cafe - Trà Sữa" FontWeight="Bold">
+                        <muxc:NavigationViewItem.Icon>
+                            <FontIcon Glyph="&#xEC32;"/>
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
+                    <muxc:NavigationViewItem x:Name="Food" Content="Quán Ăn" FontWeight="Bold">
+                        <muxc:NavigationViewItem.Icon>
+                            <FontIcon Glyph="&#xED56;"/>
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
+                </muxc:NavigationViewItem.MenuItems>
+            </muxc:NavigationViewItem>
+            <muxc:NavigationViewItemSeparator/>
+            <muxc:NavigationViewItem Content="MUA ĐỒ" ToolTipService.ToolTip="Chợ Cũ" FontWeight="Bold">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1C9;" />
+                </muxc:NavigationViewItem.Icon>
+                <muxc:NavigationViewItem.MenuItems>
+                    <muxc:NavigationViewItem x:Name="PersonalSell" Content="Cá Nhân" FontWeight="Bold">
+                        <muxc:NavigationViewItem.Icon>
+                            <FontIcon Glyph="&#xEFA9;"/>
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
+                    <muxc:NavigationViewItem x:Name="Store" Content="Cửa Hàng" FontWeight="Bold">
+                        <muxc:NavigationViewItem.Icon>
+                            <FontIcon Glyph="&#xE14D;"/>
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
+                </muxc:NavigationViewItem.MenuItems>
+            </muxc:NavigationViewItem>
+        </muxc:NavigationView.MenuItems>
+        <Frame x:Name="MainFrame" Navigated="MainFrame_Navigated"/>
+        <muxc:NavigationView.PaneHeader>
+            <UserControl:Logo/>
+        </muxc:NavigationView.PaneHeader>
+        <muxc:NavigationView.PaneFooter>
+            <Button x:Name="Settings" Tag="Settings" Background="Transparent"
+                    Click="Setting" PointerEntered="Settings_PointerEntered">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon x:Name="GearIcon" Glyph="&#xE713;" FontSize="20"
+                              Width="20" Height="20"/>
+                    <TextBlock Text="Cài Đặt" Margin="5"/>
+                </StackPanel>
+            </Button>
+        </muxc:NavigationView.PaneFooter>
+    </muxc:NavigationView>
+</Page>

@@ -1,0 +1,284 @@
+﻿<Page
+    x:Class="Gia_Sư.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Gia_Sư" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:UserControl="using:Gia_Sư.Components" 
+    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d" xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions" xmlns:data="using:Gia_Sư.Models.Location" xmlns:data1="using:Gia_Sư.Models.SubjectData" xmlns:data2="using:Gia_Sư.Models"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <AcrylicBrush x:Key="BackgroundAcrylicBrush" BackgroundSource="HostBackdrop" 
+                      TintColor="White" TintOpacity="0.2" FallbackColor="White"/>
+
+        <LinearGradientBrush x:Key="DefaultColor" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FDFC47" Offset="0.0" />
+            <GradientStop Color="#24FE41" Offset="0.7" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="GiaSuColor" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#2193b0" Offset="0.0" />
+            <GradientStop Color="#37dbe0" Offset="0.7" />
+            <GradientStop Color="#6dd5ed" Offset="0.7" />
+        </LinearGradientBrush>
+
+        <Style TargetType="TextBox" x:Key="GiaSuTextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="Width" Value="280"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid x:Name="DesignPage">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="BackgroundGrid" Background="{StaticResource BackgroundAcrylicBrush}" />
+        <Grid x:Name="Head" Grid.Row="0" Visibility="Collapsed">
+            <TextBlock x:Name="Logo" VerticalAlignment="Top" HorizontalAlignment="Left"
+                       Text="GIA SƯ" FontSize="50" FontWeight="ExtraBold"
+                       Foreground="{ThemeResource SystemAccentColor}" Margin="5" Windows10version1809:Scale="0,0,0">
+                <Windows10version1809:TextBlock.ScaleTransition>
+                    <Vector3Transition Duration="0:0:1.5"/>
+                </Windows10version1809:TextBlock.ScaleTransition>
+            </TextBlock>
+            <TextBlock x:Name="Intro" HorizontalAlignment="Center"
+                       Text="CHÀO MỪNG TỚI CỘNG ĐỒNG SINH VIÊN" FontWeight="ExtraBold"
+                       Foreground="{ThemeResource SystemAccentColor}" FontSize="50"
+                       Margin="5">
+                <Windows10version1809:TextBlock.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1.5"/>
+                </Windows10version1809:TextBlock.TranslationTransition>
+            </TextBlock>
+        </Grid>
+        <Grid x:Name="Down" Grid.Row="1" Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+            <StackPanel x:Name="Form" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                        BorderThickness="5" BorderBrush="{ThemeResource SystemAccentColor}" 
+                        Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+                <Windows10version1809:StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                 FromVerticalOffset="900"
+                                                 FromHorizontalOffset="900"/>
+                    </TransitionCollection>
+                </Windows10version1809:StackPanel.ChildrenTransitions>
+
+                <Windows10version1809:StackPanel.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1.5"/>
+                </Windows10version1809:StackPanel.TranslationTransition>
+
+                <StackPanel.Transitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition/>
+                    </TransitionCollection>
+                </StackPanel.Transitions>
+
+                <Pivot x:Name="MainPivot" HorizontalAlignment="Center" VerticalAlignment="Center" Width="620">
+                    <Pivot.Transitions>
+                        <TransitionCollection>
+                            <RepositionThemeTransition/>
+                        </TransitionCollection>
+                    </Pivot.Transitions>
+                    <PivotItem Header="Đăng Ký">
+                        <StackPanel x:Name="Bottom">
+                                <Windows10version1809:ScrollViewer Height="310">
+                                    <StackPanel x:Name="RegisterContainer">
+                                        <StackPanel.ChildrenTransitions>
+                                            <TransitionCollection>
+                                                <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                                 FromVerticalOffset="550"
+                                                                 FromHorizontalOffset="250"/>
+                                            </TransitionCollection>
+                                        </StackPanel.ChildrenTransitions>
+                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                            <Button x:Name="TurnOnCamera" Content="&#xE114;" FontFamily="Segoe MDL2 Assets" Margin="5"
+                                                    Width="40" Height="40" FontSize="20" Click="TurnOnCamera_Click"/>
+                                            <PersonPicture x:Name="ProfilePic" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5"/>
+                                            <Button x:Name="BrowsePhotoButton" Content="&#xEC50;" FontFamily="Segoe MDL2 Assets" Margin="5"
+                                                    Width="40" Height="40" FontSize="20" Click="BrowsePhoto"/>
+                                            <TextBox x:Name="NickName" Header="NickName" Width="280" Windows10version1809:CornerRadius="0"
+                                                     VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="60,0,0,0" LostFocus="LostFocus"
+                                                     extensions:TextBoxRegex.Regex="^[A-Za-zăâîșțĂÂÎȘȚ\s-]*[A-Za-zăâîșțĂÂÎȘȚ-][A-Za-zăâîșțĂÂÎȘȚ\s-][0-9]*$"
+                                                     extensions:TextBoxRegex.ValidationMode="Forced"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox x:Name="FirstName" Header="Tên" Style="{StaticResource GiaSuTextBox}"
+                                                     LostFocus="LostFocus"
+                                                     extensions:TextBoxRegex.Regex="\b\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*\b"
+                                                     extensions:TextBoxRegex.ValidationMode="Forced"/>
+                                            <TextBox x:Name="LastName" Header="Họ" Style="{StaticResource GiaSuTextBox}"
+                                                     LostFocus="LostFocus"
+                                                     extensions:TextBoxRegex.Regex="\b\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*\b"
+                                                     extensions:TextBoxRegex.ValidationMode="Forced"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <CalendarDatePicker x:Name="DateOfBirth" Header="Ngày Sinh" Margin="5" Width="280" Closed="DateOfBirth_Closed"
+                                                                    PlaceholderText="Chọn Ngày Sinh Của Bạn" Windows10version1809:CornerRadius="0"/>
+                                            <ComboBox x:Name="Gender" Header="Giới Tính" Width="280" Windows10version1809:CornerRadius="0"
+                                                          Margin="5">
+                                                <x:String>👦 Nam</x:String>
+                                                <x:String>👧 Nữ</x:String>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                                <PasswordBox x:Name="Password" Header="Mật Khẩu" Margin="5" Windows10version1809:CornerRadius="0" Width="280" LostFocus="Password_LostFocus"/>
+                                                <PasswordBox x:Name="ConfirmPassword" Header="Xác Thực Mật Khẩu" Margin="5" Windows10version1809:CornerRadius="0" Width="280" LostFocus="ConfirmPassword_LostFocus"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                                <TextBox x:Name="Address" Header="Địa Chỉ" Style="{StaticResource GiaSuTextBox}"
+                                                         extensions:TextBoxRegex.Regex="\b\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*\b"
+                                                         extensions:TextBoxRegex.ValidationMode="Forced"/>
+                                                <TextBox x:Name="Mobile" Header="Số Điện Thoại" Style="{StaticResource GiaSuTextBox}"
+                                                         LostFocus="LostFocus"
+                                                         extensions:TextBoxRegex.ValidationType="Number"
+                                                         extensions:TextBoxRegex.ValidationMode="Forced"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Windows10version1809:ComboBox x:Name="City" Header="Thành Phố" Margin="5" Width="280" 
+                                                                           PlaceholderText="Chọn Thành Phố" CornerRadius="0"
+                                                                           SelectionChanged="City_SelectionChanged">
+                                                <Windows10version1809:ComboBox.ItemTemplate>
+                                                    <DataTemplate x:DataType="data:VietNamCity">
+                                                        <Windows10version1809:TextBlock Text="{x:Bind cityName}"/>
+                                                    </DataTemplate>
+                                                </Windows10version1809:ComboBox.ItemTemplate>
+                                            </Windows10version1809:ComboBox>
+                                            <Windows10version1809:ComboBox x:Name="District" Header="Quận Huyện" Margin="5" Width="280" 
+                                                                               PlaceholderText="Chọn Quận Huyện" CornerRadius="0">
+                                                <Windows10version1809:ComboBox.ItemTemplate>
+                                                    <DataTemplate x:DataType="data:VietNamDistrict">
+                                                        <Windows10version1809:TextBlock Text="{x:Bind districtName}"/>
+                                                    </DataTemplate>
+                                                </Windows10version1809:ComboBox.ItemTemplate>
+                                            </Windows10version1809:ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox x:Name="Email" Header="Email" Style="{StaticResource GiaSuTextBox}"
+                                                     LostFocus="LostFocus"
+                                                     extensions:TextBoxRegex.ValidationType="Email"
+                                                     extensions:TextBoxRegex.ValidationMode="Forced"/>
+                                            <TextBox x:Name="ConfirmEmail" Header="Xác Thực Email" Style="{StaticResource GiaSuTextBox}"
+                                                     extensions:TextBoxRegex.ValidationType="Email"
+                                                     extensions:TextBoxRegex.ValidationMode="Forced"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                        <ComboBox x:Name="StudyGroup" Header="Khối Đại Học" Margin="5" Width="280" SelectionChanged="StudyGroup_SelectionChanged"
+                                                        PlaceholderText="Chọn Khối Đại Học Của Bạn" Windows10version1809:CornerRadius="0">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data1:StudyGroup">
+                                                    <Windows10version1809:TextBlock Text="{x:Bind StudyGroupName}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox x:Name="StudyField" Header="Chuyên Ngành" Margin="5" Width="280"
+                                                        PlaceholderText="Chọn Ngành Của Bạn" Windows10version1809:CornerRadius="0">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data1:StudyField">
+                                                    <Windows10version1809:TextBlock Text="{x:Bind StudyFieldName}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Windows10version1809:ComboBox x:Name="SchoolCity" Header="Trường Ở Thành Phố Nào" Margin="5" Width="280"
+                                                      PlaceholderText="Chọn Thành Phố Trường Bạn" Windows10version1809:CornerRadius="0"
+                                                      SelectionChanged="SchoolCity_SelectionChanged">
+                                            <Windows10version1809:ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data:VietNamCity">
+                                                    <Windows10version1809:TextBlock Text="{x:Bind cityName}"/>
+                                                </DataTemplate>
+                                            </Windows10version1809:ComboBox.ItemTemplate>
+                                        </Windows10version1809:ComboBox>
+                                        <Windows10version1809:ComboBox x:Name="SchoolDistrict" Header="Trường Ở Quận Nào" Margin="5" Width="280"
+                                                      PlaceholderText="Chọn Quận Trường Bạn" Windows10version1809:CornerRadius="0"
+                                                      SelectionChanged="SchoolDistrict_SelectionChanged">
+                                            <Windows10version1809:ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data:VietNamDistrict">
+                                                    <Windows10version1809:TextBlock Text="{x:Bind districtName}"/>
+                                                </DataTemplate>
+                                            </Windows10version1809:ComboBox.ItemTemplate>
+                                        </Windows10version1809:ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ComboBox x:Name="ExistingSchool" Header="Trường Có Sẵn" Margin="5" Width="280" SelectionChanged="ExistingSchool_SelectionChanged"
+                                                      PlaceholderText="Chọn Trường Có Sẵn" Windows10version1809:CornerRadius="0">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data2:School">
+                                                    <Windows10version1809:StackPanel Orientation="Horizontal" Width="350">
+                                                        <Windows10version1809:Image Source="{x:Bind schoolLogo}" Width="50" Height="50" Margin="5"/>
+                                                        <Windows10version1809:TextBlock Text="{x:Bind schoolName}" Margin="5" VerticalAlignment="Center"/>
+                                                    </Windows10version1809:StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <TextBox x:Name="School" Header="Tên Trường Học" Style="{StaticResource GiaSuTextBox}"
+                                                 LostFocus="LostFocus" PlaceholderText="Nếu Không Có Trường Trong Danh Sách"
+                                                 extensions:TextBoxRegex.Regex="\b\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*\b"
+                                                 extensions:TextBoxRegex.ValidationMode="Forced"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox x:Name="SchoolAddress" Header="Địa Chỉ Trường Học" Style="{StaticResource GiaSuTextBox}"
+                                                         LostFocus="LostFocus" PlaceholderText="Nếu Có"/>
+                                        <ComboBox x:Name="Role" Header="Quyền" Margin="5" Width="280" Windows10version1809:CornerRadius="0">
+                                            <x:String>⚙ Admin</x:String>
+                                            <x:String>👩‍🎓👨‍🎓 Sinh Viên</x:String>
+                                            <x:String>👨‍🏫👩‍🏫 Gia Sư</x:String>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Windows10version1809:ScrollViewer>
+                            <muxc:ProgressBar x:Name="WaitingRegisterBar" Width="200" Margin="5"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center" IsIndeterminate="True" ShowPaused="False" ShowError="False"
+                                        Foreground="{ThemeResource SystemAccentColor}" Visibility="Collapsed">
+                                <muxc:ProgressBar.Transitions>
+                                    <TransitionCollection>
+                                        <RepositionThemeTransition />
+                                    </TransitionCollection>
+                                </muxc:ProgressBar.Transitions>
+                            </muxc:ProgressBar>
+                            <Button x:Name="SignUp" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    Width="150" Height="50" Margin="20" Click="SignUp_Click" FontWeight="ExtraBold"
+                                    Background="{ThemeResource SystemAccentColor}" Windows10version1809:CornerRadius="0">
+                                    Dăng Ký
+                                </Button>
+                            </StackPanel>
+                    </PivotItem>
+                    <PivotItem x:Name="LoginPivot" Header="Đăng Nhập">
+                        <StackPanel x:Name="LoginForm" KeyDown="LoginForm_KeyDown">
+                            <TextBlock x:Name="ErrorMessage" HorizontalAlignment="Center" Margin="5" Text="ỐI HÌNH NHƯ CÁI GÌ ĐÓ SAI SAI 🤔"
+                                       FontWeight="ExtraBold" Foreground="Orange" Visibility="Collapsed"/>
+                            <TextBox x:Name="LogInUserEmail" Style="{StaticResource GiaSuTextBox}"
+                                 Header="UserEmail"/>
+                            <Windows10version1809:PasswordBox x:Name="LogInPassword" Width="280" CornerRadius="0" Margin="5"
+                                 Header="Password"/>
+                            <muxc:ProgressBar x:Name="WaitingLoginBar" Width="200" Margin="5"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                        IsIndeterminate="True" ShowPaused="False" ShowError="False" Visibility="Collapsed">
+                                <muxc:ProgressBar.Transitions>
+                                    <TransitionCollection>
+                                        <RepositionThemeTransition />
+                                    </TransitionCollection>
+                                </muxc:ProgressBar.Transitions>
+                            </muxc:ProgressBar>
+                            <Button x:Name="LogIn" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    Width="150" Height="50" Margin="15" Click="LogIn_Click"
+                                    Background="{ThemeResource SystemAccentColor}" FontWeight="ExtraBold">
+                                Đăng Nhập
+                            </Button>
+                        </StackPanel>
+                    </PivotItem>
+                </Pivot>
+            </StackPanel>
+            <Button x:Name="GuessEnter" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Width="150" Height="50" Margin="20" FontWeight="ExtraBold"
+                    Background="{ThemeResource SystemAccentColor}" Click="GuessEnter_Click">
+                Khám Phá --->
+            </Button>
+        </Grid>
+    </Grid>
+</Page>

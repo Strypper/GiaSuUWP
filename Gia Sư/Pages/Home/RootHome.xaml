@@ -1,0 +1,305 @@
+﻿<Page
+    x:Class="Gia_Sư.Pages.Home.RootHome"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Gia_Sư.Pages.Home"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:UserControl="using:Gia_Sư.Components"
+    xmlns:models="using:Gia_Sư.Models.Services"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:Interact="using:Gia_Sư.Helpers"
+    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
+    mc:Ignorable="d" Loaded="Page_Loaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        
+    </Page.Resources>
+
+
+    <Grid x:Name="Root">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowsState">
+                <VisualState x:Name="SurfaceBookAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="2000"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DesktopAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1600"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ScrollV.Margin" Value="0,-180,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WindowsAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Root.RowDefinitions[1].Height" Value="0"/>
+                        <Setter Target="WelComeSection.RowDefinitions[1].Height" Value="*"/>
+                        <Setter Target="WelComeSection.ColumnDefinitions[1].Width" Value="0"/>
+                        <Setter Target="WelcomeText.Width" Value="340"/>
+                        <Setter Target="WelcomeText.FontSize" Value="30"/>
+                        <Setter Target="WelcomeText.TextAlignment" Value="Center"/>
+                        <Setter Target="Benefit.Margin" Value="0"/>
+                        <Setter Target="Benefit.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="Benefit.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="Benefit.(Grid.Row)" Value="1"/>
+                        <Setter Target="Benefit.(Grid.Column)" Value="0"/>
+                        <Setter Target="Welcome.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="Welcome.VerticalAlignment" Value="Center"/>
+                        <Setter Target="Welcome.Margin" Value="0"/>
+                        <Setter Target="Below.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="ScrollV.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PhoneAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Root.RowDefinitions[1].Height" Value="0"/>
+                        <Setter Target="WelComeSection.RowDefinitions[1].Height" Value="*"/>
+                        <Setter Target="WelComeSection.ColumnDefinitions[1].Width" Value="0"/>
+                        <Setter Target="WelcomeText.Width" Value="340"/>
+                        <Setter Target="WelcomeText.FontSize" Value="30"/>
+                        <Setter Target="Benefit.Margin" Value="0"/>
+                        <Setter Target="Benefit.(Grid.Row)" Value="1"/>
+                        <Setter Target="Benefit.(Grid.Column)" Value="0"/>
+                        <Setter Target="Benefit.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="Benefit.RowDefinitions[2].Height" Value="*"/>
+                        <Setter Target="Benefit.RowDefinitions[3].Height" Value="*"/>
+                        <Setter Target="Benefit.RowDefinitions[4].Height" Value="*"/>
+                        <Setter Target="Benefit.RowDefinitions[5].Height" Value="*"/>
+                        <Setter Target="Benefit.ColumnDefinitions[0].Width" Value="400"/>
+                        <Setter Target="Benefit.ColumnDefinitions[1].Width" Value="0"/>
+                        <Setter Target="Benefit.ColumnDefinitions[2].Width" Value="0"/>
+                        <Setter Target="Benefit.Height" Value="1200"/>
+                        <Setter Target="Benefit.Width" Value="400"/>
+                        <Setter Target="Welcome.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="Welcome.VerticalAlignment" Value="Center"/>
+                        <Setter Target="Welcome.Margin" Value="0"/>
+                        <Setter Target="Touch.(Grid.Row)" Value="1"/>
+                        <Setter Target="Touch.(Grid.Column)" Value="0"/>
+                        <Setter Target="Performance.(Grid.Row)" Value="2"/>
+                        <Setter Target="Performance.(Grid.Column)" Value="0"/>
+                        <Setter Target="Battery.(Grid.Row)" Value="3"/>
+                        <Setter Target="Battery.(Grid.Column)" Value="0"/>
+                        <Setter Target="Design.(Grid.Row)" Value="4"/>
+                        <Setter Target="Design.(Grid.Column)" Value="0"/>
+                        <Setter Target="Windows10.(Grid.Row)" Value="5"/>
+                        <Setter Target="Windows10.(Grid.Column)" Value="0"/>
+                        <Setter Target="Below.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="ScrollV.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="WelComeSection" Grid.Row="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="0" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel x:Name="Welcome" VerticalAlignment="Top" 
+                        Windows10version1809:Translation="0,-600,0"
+                        HorizontalAlignment="Left" Grid.Row="0"
+                        Margin="35,50,0,0">
+                <Windows10version1809:StackPanel.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1"/>
+                </Windows10version1809:StackPanel.TranslationTransition>
+                <TextBlock x:Name="WelcomeText" Text="CHÀO MỪNG BẠN TỚI PHIÊN BẢN DESKTOP"
+                           FontWeight="ExtraBold" FontSize="50" Foreground="{ThemeResource SystemAccentColor}"
+                           Width="600" Height="170" TextWrapping="Wrap"
+                           TextAlignment="Left"/>
+                <Button x:Name="DesktopSupport" Background="Transparent" Margin="0,35,0,0"
+                        BorderBrush="Black" Padding="15" BorderThickness="5" Foreground="{ThemeResource SystemAccentColor}"
+                        HorizontalAlignment="Left" Width="450" Windows10version1809:CornerRadius="0">
+                    <StackPanel>
+                        <FontIcon Glyph="&#xEC4E;" FontSize="50"/>
+                        <TextBlock Text="WINDOWS 10 / MACOS / SAMSUNG DEX" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="5"
+                                   FontSize="20"/>
+                    </StackPanel>
+                </Button>
+                <Button Background="Transparent" Margin="0,35,0,0" Foreground="{ThemeResource SystemAccentColor}"
+                        BorderBrush="Black" Padding="15" BorderThickness="5"
+                        HorizontalAlignment="Left" Width="450" Windows10version1809:CornerRadius="0">
+                    <StackPanel>
+                        <FontIcon Glyph="&#xE8EA;" FontSize="50" />
+                        <TextBlock Text="WINDOWS 10X / IOS / ANDROID" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="5"
+                                   FontSize="20"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <Grid x:Name="Benefit" VerticalAlignment="Top"
+                  Grid.Column="1" Grid.Row="0" Margin="0,200,35,0"
+                  ColumnSpacing="35" RowSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="0" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="Ram" Background="Transparent" Foreground="{ThemeResource SystemAccentColor}"
+                        Width="300" Grid.Row="0" Grid.Column="0"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel>
+                        <FontIcon Glyph="&#xE8BE;" FontSize="100"/>
+                        <TextBlock Text="TỐI ƯU BỘ NHỚ" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="5"
+                                   FontSize="25"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="Touch" Background="Transparent" Foreground="{ThemeResource SystemAccentColor}"
+                        Width="300" Grid.Row="0" Grid.Column="1"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel>
+                        <FontIcon Glyph="&#xEDA4;" FontSize="100" />
+                        <TextBlock Text="HỖ TRỢ CẢM ỨNG" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="5"
+                                   FontSize="25"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="Performance" Background="Transparent" Foreground="{ThemeResource SystemAccentColor}"
+                        Width="300" Grid.Row="0" Grid.Column="2"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel>
+                        <FontIcon Glyph="&#xEC4A;" FontSize="100" />
+                        <TextBlock Text="HIỆU NĂNG CAO" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="5"
+                                   FontSize="25"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="Battery" Background="Transparent" Foreground="{ThemeResource SystemAccentColor}"
+                        Width="300" Grid.Row="1" Grid.Column="0"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel>
+                        <FontIcon Glyph="&#xEBC0;" FontSize="100" />
+                        <TextBlock Text="TIẾT KIỆM PIN" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="5"
+                                   FontSize="25"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="Design" Background="Transparent" Foreground="{ThemeResource SystemAccentColor}"
+                        Width="300" Grid.Row="1" Grid.Column="1"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel>
+                        <FontIcon Glyph="&#xEB3C;" FontSize="100" />
+                        <TextBlock Text="THIẾT KẾ HIỆN ĐẠI" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="5"
+                                   FontSize="25"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="Windows10" Background="Transparent" Foreground="{ThemeResource SystemAccentColor}"
+                        Width="300" Grid.Row="1" Grid.Column="2"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel>
+                        <FontIcon Glyph="&#xE8A9;" FontSize="100" />
+                        <TextBlock Text="WINDOWS 10" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="5"
+                                   FontSize="25"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+        <Grid x:Name="Below" Grid.Row="1" Background="Black" Opacity="0">
+            <Windows10version1809:Grid.OpacityTransition>
+                <ScalarTransition Duration="0:0:1"/>
+            </Windows10version1809:Grid.OpacityTransition>
+            <ScrollViewer x:Name="ScrollV" VerticalScrollMode="Disabled" Margin="0,-280,0,0"
+                          HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="Items">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                     FromHorizontalOffset="5000"
+                                                     />
+                            <RepositionThemeTransition/>
+                        </TransitionCollection>
+                    </ItemsControl.ItemContainerTransitions>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:Services">
+                            <Grid Margin="80,0,60,0">
+                                <Canvas x:Name ="InfoCanvas" Width="500" Height="200" >
+                                    <Grid x:Name="Info" Width="500" Height="200" Background="#2e2e2e">
+                                        <Button BorderBrush="{ThemeResource SystemAccentColor}" Windows10version1809:CornerRadius="0" Width="200" Margin="40"
+                                                BorderThickness="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                                                Background="Transparent">
+                                            <StackPanel Orientation="Horizontal">
+                                                <FontIcon Glyph="{x:Bind ShortCutIcon1}" FontSize="15" 
+                                                          Foreground="{ThemeResource SystemAccentColor}"/>
+                                                <TextBlock Text="{x:Bind ShortCut}" FontWeight="Bold"
+                                                           HorizontalAlignment="Center" Margin="5"
+                                                           FontSize="10" Foreground="{ThemeResource SystemAccentColor}"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button BorderBrush="{ThemeResource SystemAccentColor}" Windows10version1809:CornerRadius="0" Width="200" Margin="40"
+                                                BorderThickness="2" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                                Background="Transparent">
+                                            <StackPanel Orientation="Horizontal">
+                                                <FontIcon Glyph="{x:Bind ShortCutIcon2}" FontSize="15"
+                                                          Foreground="{ThemeResource SystemAccentColor}"/>
+                                                <TextBlock Text="{x:Bind ShortCut2}" FontWeight="Bold"
+                                                           HorizontalAlignment="Center" Margin="5"
+                                                           FontSize="10" Foreground="{ThemeResource SystemAccentColor}"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                            </Canvas>
+                                <Grid x:Name="Image" Width="500" Height="250">
+                                    <Canvas>
+                                        <Grid x:Name="Photo" Width="500" Height="250"
+                                              BorderThickness="7" Background="#2e2e2e" BorderBrush="Black">
+                                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                <TextBlock Text="{x:Bind Icon}" FontFamily="Segoe MDL2 Assets" FontSize="100"
+                                                           Foreground="{ThemeResource SystemAccentColor}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{x:Bind Title}" Margin="15" FontWeight="Bold" FontSize="20"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                           Foreground="{ThemeResource SystemAccentColor}"/>
+                                                <UserControl:ExploreButton Margin="5"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Canvas>
+                                </Grid>
+                            <interactivity:Interaction.Behaviors>
+                                <Interact:InteractionBehaviors HittestContent="{Binding ElementName=Image}" 
+                                                               InfoContent="{Binding ElementName=Info}" 
+                                                               PhotoContent="{Binding ElementName=Photo}" 
+                                                               InfoContainer ="{Binding ElementName=InfoCanvas}" />
+                            </interactivity:Interaction.Behaviors>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>
