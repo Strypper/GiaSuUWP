@@ -27,7 +27,7 @@ namespace Gia_Sư.Components
         public event EventHandler<PaginationRouteEvent> pageClick;
         private int NumberOfRequest;
         //Get the request count
-        private readonly string GetNumberOfPage = $"https://localhost:44316/api/SubjectControllers/NumberOfRecord";
+        private readonly string GetNumberOfPage = $"https://giasuapi.azurewebsites.net/api/SubjectControllers/NumberOfRecord";
         private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
         private readonly HttpClient httpClient = new HttpClient(handler);
         private bool FirstTriggerButton = true;

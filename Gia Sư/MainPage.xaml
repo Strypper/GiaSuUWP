@@ -120,7 +120,7 @@
         </muxc:NavigationView.MenuItems>
         <Frame x:Name="MainFrame" Navigated="MainFrame_Navigated"/>
         <muxc:NavigationView.PaneHeader>
-            <UserControl:Logo/>
+            <Image Source="Assets/AppImage/TutorLogo.png"/>
         </muxc:NavigationView.PaneHeader>
         <muxc:NavigationView.PaneFooter>
             <Button x:Name="Settings" Tag="Settings" Background="Transparent"

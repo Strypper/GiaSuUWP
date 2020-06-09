@@ -8,7 +8,7 @@
     xmlns:UserControl="using:Gia_Sư.Components" 
     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" 
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    mc:Ignorable="d" xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions" xmlns:data="using:Gia_Sư.Models.Location" xmlns:data1="using:Gia_Sư.Models.SubjectData" xmlns:data2="using:Gia_Sư.Models"
+    mc:Ignorable="d" xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions" xmlns:data="using:Gia_Sư.Models.Location" xmlns:data1="using:Gia_Sư.Models.SubjectData" xmlns:data2="using:Gia_Sư.Models" xmlns:lottie="using:Microsoft.Toolkit.Uwp.UI.Lottie"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
@@ -29,7 +29,7 @@
         <Style TargetType="TextBox" x:Key="GiaSuTextBox">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="CornerRadius" Value="0"/>
-            <Setter Property="Width" Value="280"/>
+            <Setter Property="Width" Value="300"/>
         </Style>
     </Page.Resources>
 
@@ -47,14 +47,29 @@
                     <Vector3Transition Duration="0:0:1.5"/>
                 </Windows10version1809:TextBlock.ScaleTransition>
             </TextBlock>
-            <TextBlock x:Name="Intro" HorizontalAlignment="Center"
-                       Text="CHÀO MỪNG TỚI CỘNG ĐỒNG SINH VIÊN" FontWeight="ExtraBold"
-                       Foreground="{ThemeResource SystemAccentColor}" FontSize="50"
-                       Margin="5">
-                <Windows10version1809:TextBlock.TranslationTransition>
+            <Windows10version1809:RelativePanel x:Name="IntroLayout" Translation="0,-60,0"
+                                                HorizontalAlignment="Center" VerticalAlignment="top">
+                <Windows10version1809:RelativePanel.TranslationTransition>
                     <Vector3Transition Duration="0:0:1.5"/>
-                </Windows10version1809:TextBlock.TranslationTransition>
-            </TextBlock>
+                </Windows10version1809:RelativePanel.TranslationTransition>
+                <Image x:Name="LogoImage" Width="150" Height="150" Margin="0,0,0,60"
+                       CenterPoint="75,75,0" Scale="0,0,0"
+                       Windows10version1809:RelativePanel.AlignTopWithPanel="True"
+                       Windows10version1809:RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       Windows10version1809:RelativePanel.AlignVerticalCenterWithPanel="True"
+                       Source="Assets/TutorLogo.png">
+                    <Image.ScaleTransition>
+                        <Vector3Transition Duration="0:0:3"/>
+                    </Image.ScaleTransition>
+                </Image>
+                <TextBlock x:Name="Intro" HorizontalAlignment="Center"
+                           Text="CHÀO MỪNG TỚI CỘNG ĐỒNG SINH VIÊN" FontWeight="ExtraBold"
+                           Foreground="{ThemeResource SystemAccentColor}" FontSize="50"
+                           Windows10version1809:RelativePanel.AlignBottomWith="LogoImage"
+                           Windows10version1809:RelativePanel.AlignHorizontalCenterWithPanel="True"
+                           Windows10version1809:RelativePanel.AlignVerticalCenterWithPanel="True">
+                </TextBlock>
+            </Windows10version1809:RelativePanel>
         </Grid>
         <Grid x:Name="Down" Grid.Row="1" Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
             <StackPanel x:Name="Form" VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -78,7 +93,7 @@
                     </TransitionCollection>
                 </StackPanel.Transitions>
 
-                <Pivot x:Name="MainPivot" HorizontalAlignment="Center" VerticalAlignment="Center" Width="620">
+                <Pivot x:Name="MainPivot" HorizontalAlignment="Center" VerticalAlignment="Center" Width="650">
                     <Pivot.Transitions>
                         <TransitionCollection>
                             <RepositionThemeTransition/>
@@ -95,14 +110,18 @@
                                                                  FromHorizontalOffset="250"/>
                                             </TransitionCollection>
                                         </StackPanel.ChildrenTransitions>
-                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal" Margin="0,0,0,0">
                                             <Button x:Name="TurnOnCamera" Content="&#xE114;" FontFamily="Segoe MDL2 Assets" Margin="5"
                                                     Width="40" Height="40" FontSize="20" Click="TurnOnCamera_Click"/>
                                             <PersonPicture x:Name="ProfilePic" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5"/>
                                             <Button x:Name="BrowsePhotoButton" Content="&#xEC50;" FontFamily="Segoe MDL2 Assets" Margin="5"
                                                     Width="40" Height="40" FontSize="20" Click="BrowsePhoto"/>
-                                            <TextBox x:Name="NickName" Header="NickName" Width="280" Windows10version1809:CornerRadius="0"
-                                                     VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="60,0,0,0" LostFocus="LostFocus"
+                                            <Button x:Name="DragDropTip" Content="&#xE1E3;" FontFamily="Segoe MDL2 Assets" Margin="5"
+                                                    Width="40" Height="40" FontSize="20"/>
+                                            <Button x:Name="WhatIsThis" Content="&#xE897;" FontFamily="Segoe MDL2 Assets" Margin="5"
+                                                    Width="40" Height="40" FontSize="20"/>
+                                            <TextBox x:Name="NickName" Header="NickName" Width="300" Windows10version1809:CornerRadius="0"
+                                                     VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="5" LostFocus="LostFocus"
                                                      extensions:TextBoxRegex.Regex="^[A-Za-zăâîșțĂÂÎȘȚ\s-]*[A-Za-zăâîșțĂÂÎȘȚ-][A-Za-zăâîșțĂÂÎȘȚ\s-][0-9]*$"
                                                      extensions:TextBoxRegex.ValidationMode="Forced"/>
                                         </StackPanel>
@@ -117,17 +136,17 @@
                                                      extensions:TextBoxRegex.ValidationMode="Forced"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <CalendarDatePicker x:Name="DateOfBirth" Header="Ngày Sinh" Margin="5" Width="280" Closed="DateOfBirth_Closed"
+                                            <CalendarDatePicker x:Name="DateOfBirth" Header="Ngày Sinh" Margin="5" Width="300" Closed="DateOfBirth_Closed"
                                                                     PlaceholderText="Chọn Ngày Sinh Của Bạn" Windows10version1809:CornerRadius="0"/>
-                                            <ComboBox x:Name="Gender" Header="Giới Tính" Width="280" Windows10version1809:CornerRadius="0"
+                                            <ComboBox x:Name="Gender" Header="Giới Tính" Width="300" Windows10version1809:CornerRadius="0"
                                                           Margin="5">
                                                 <x:String>👦 Nam</x:String>
                                                 <x:String>👧 Nữ</x:String>
                                             </ComboBox>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                                <PasswordBox x:Name="Password" Header="Mật Khẩu" Margin="5" Windows10version1809:CornerRadius="0" Width="280" LostFocus="Password_LostFocus"/>
-                                                <PasswordBox x:Name="ConfirmPassword" Header="Xác Thực Mật Khẩu" Margin="5" Windows10version1809:CornerRadius="0" Width="280" LostFocus="ConfirmPassword_LostFocus"/>
+                                                <PasswordBox x:Name="Password" Header="Mật Khẩu" Margin="5" Windows10version1809:CornerRadius="0" Width="300" LostFocus="Password_LostFocus"/>
+                                                <PasswordBox x:Name="ConfirmPassword" Header="Xác Thực Mật Khẩu" Margin="5" Windows10version1809:CornerRadius="0" Width="300" LostFocus="ConfirmPassword_LostFocus"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                                 <TextBox x:Name="Address" Header="Địa Chỉ" Style="{StaticResource GiaSuTextBox}"
@@ -139,7 +158,7 @@
                                                          extensions:TextBoxRegex.ValidationMode="Forced"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <Windows10version1809:ComboBox x:Name="City" Header="Thành Phố" Margin="5" Width="280" 
+                                            <Windows10version1809:ComboBox x:Name="City" Header="Thành Phố" Margin="5" Width="300" 
                                                                            PlaceholderText="Chọn Thành Phố" CornerRadius="0"
                                                                            SelectionChanged="City_SelectionChanged">
                                                 <Windows10version1809:ComboBox.ItemTemplate>
@@ -148,7 +167,7 @@
                                                     </DataTemplate>
                                                 </Windows10version1809:ComboBox.ItemTemplate>
                                             </Windows10version1809:ComboBox>
-                                            <Windows10version1809:ComboBox x:Name="District" Header="Quận Huyện" Margin="5" Width="280" 
+                                            <Windows10version1809:ComboBox x:Name="District" Header="Quận Huyện" Margin="5" Width="300" 
                                                                                PlaceholderText="Chọn Quận Huyện" CornerRadius="0">
                                                 <Windows10version1809:ComboBox.ItemTemplate>
                                                     <DataTemplate x:DataType="data:VietNamDistrict">
@@ -167,15 +186,26 @@
                                                      extensions:TextBoxRegex.ValidationMode="Forced"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                        <ComboBox x:Name="StudyGroup" Header="Khối Đại Học" Margin="5" Width="280" SelectionChanged="StudyGroup_SelectionChanged"
+                                        <ComboBox x:Name="StudyGroup" Header="Khối Đại Học" Margin="5" Width="300" SelectionChanged="StudyGroup_SelectionChanged"
                                                         PlaceholderText="Chọn Khối Đại Học Của Bạn" Windows10version1809:CornerRadius="0">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate x:DataType="data1:StudyGroup">
-                                                    <Windows10version1809:TextBlock Text="{x:Bind StudyGroupName}"/>
+                                                    <Border Width="280" Height="50">
+                                                        <Border.Background>
+                                                            <ImageBrush>
+                                                                <ImageBrush.ImageSource>
+                                                                    <BitmapImage UriSource="{x:Bind StudyGroupImage}" DecodePixelWidth="280" DecodePixelHeight="50"/>
+                                                                </ImageBrush.ImageSource>
+                                                            </ImageBrush>
+                                                        </Border.Background>
+                                                        <Windows10version1809:TextBlock Text="{x:Bind StudyGroupName}" FontWeight="ExtraBold"
+                                                                                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                                        FontSize="12"/>
+                                                    </Border>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <ComboBox x:Name="StudyField" Header="Chuyên Ngành" Margin="5" Width="280"
+                                        <ComboBox x:Name="StudyField" Header="Chuyên Ngành" Margin="5" Width="300"
                                                         PlaceholderText="Chọn Ngành Của Bạn" Windows10version1809:CornerRadius="0">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate x:DataType="data1:StudyField">
@@ -185,7 +215,7 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Windows10version1809:ComboBox x:Name="SchoolCity" Header="Trường Ở Thành Phố Nào" Margin="5" Width="280"
+                                        <Windows10version1809:ComboBox x:Name="SchoolCity" Header="Trường Ở Thành Phố Nào" Margin="5" Width="300"
                                                       PlaceholderText="Chọn Thành Phố Trường Bạn" Windows10version1809:CornerRadius="0"
                                                       SelectionChanged="SchoolCity_SelectionChanged">
                                             <Windows10version1809:ComboBox.ItemTemplate>
@@ -194,7 +224,7 @@
                                                 </DataTemplate>
                                             </Windows10version1809:ComboBox.ItemTemplate>
                                         </Windows10version1809:ComboBox>
-                                        <Windows10version1809:ComboBox x:Name="SchoolDistrict" Header="Trường Ở Quận Nào" Margin="5" Width="280"
+                                        <Windows10version1809:ComboBox x:Name="SchoolDistrict" Header="Trường Ở Quận Nào" Margin="5" Width="300"
                                                       PlaceholderText="Chọn Quận Trường Bạn" Windows10version1809:CornerRadius="0"
                                                       SelectionChanged="SchoolDistrict_SelectionChanged">
                                             <Windows10version1809:ComboBox.ItemTemplate>
@@ -205,7 +235,7 @@
                                         </Windows10version1809:ComboBox>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <ComboBox x:Name="ExistingSchool" Header="Trường Có Sẵn" Margin="5" Width="280" SelectionChanged="ExistingSchool_SelectionChanged"
+                                        <ComboBox x:Name="ExistingSchool" Header="Trường Có Sẵn" Margin="5" Width="300" SelectionChanged="ExistingSchool_SelectionChanged"
                                                       PlaceholderText="Chọn Trường Có Sẵn" Windows10version1809:CornerRadius="0">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate x:DataType="data2:School">
@@ -224,7 +254,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBox x:Name="SchoolAddress" Header="Địa Chỉ Trường Học" Style="{StaticResource GiaSuTextBox}"
                                                          LostFocus="LostFocus" PlaceholderText="Nếu Có"/>
-                                        <ComboBox x:Name="Role" Header="Quyền" Margin="5" Width="280" Windows10version1809:CornerRadius="0">
+                                        <ComboBox x:Name="Role" Header="Quyền" Margin="5" Width="300" Windows10version1809:CornerRadius="0">
                                             <x:String>⚙ Admin</x:String>
                                             <x:String>👩‍🎓👨‍🎓 Sinh Viên</x:String>
                                             <x:String>👨‍🏫👩‍🏫 Gia Sư</x:String>
@@ -254,7 +284,7 @@
                                        FontWeight="ExtraBold" Foreground="Orange" Visibility="Collapsed"/>
                             <TextBox x:Name="LogInUserEmail" Style="{StaticResource GiaSuTextBox}"
                                  Header="UserEmail"/>
-                            <Windows10version1809:PasswordBox x:Name="LogInPassword" Width="280" CornerRadius="0" Margin="5"
+                            <Windows10version1809:PasswordBox x:Name="LogInPassword" Width="300" CornerRadius="0" Margin="5"
                                  Header="Password"/>
                             <muxc:ProgressBar x:Name="WaitingLoginBar" Width="200" Margin="5"
                                         VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -274,6 +304,10 @@
                     </PivotItem>
                 </Pivot>
             </StackPanel>
+            <muxc:AnimatedVisualPlayer x:Name="LottiePlayer" Width="200" Height="200" Margin="5" PlaybackRate="0.8"
+                                       VerticalAlignment="Bottom">
+                <lottie:LottieVisualSource x:Name="LottieJsonSource" UriSource="ms-appx:///Assets/Lottie/NetworkError.json"/>
+            </muxc:AnimatedVisualPlayer>
             <Button x:Name="GuessEnter" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Width="150" Height="50" Margin="20" FontWeight="ExtraBold"
                     Background="{ThemeResource SystemAccentColor}" Click="GuessEnter_Click">

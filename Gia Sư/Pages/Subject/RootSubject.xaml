@@ -244,13 +244,51 @@
                         <EntranceThemeTransition IsStaggeringEnabled="True" FromHorizontalOffset="1500" />
                     </TransitionCollection>
                 </StackPanel.ChildrenTransitions>
-                <Windows10version1809:ToggleButton Width="200" Height="50" Margin="15,0,15,15" Content="Khoa Học Tự Nhiên" FontWeight="bold"/>
-                <Windows10version1809:ToggleButton Width="200" Height="50" Margin="15,0,15,15" Content="Kỹ Thuật" FontWeight="bold"/>
-                <Windows10version1809:ToggleButton Width="200" Height="50" Margin="15,0,15,15" Content="Công Nghệ" FontWeight="bold"/>
-                <Windows10version1809:ToggleButton Width="200" Height="50" Margin="15,0,15,15" Content="Nông - Lâm - Ngư" FontWeight="bold"/>
-                <Windows10version1809:ToggleButton Width="200" Height="50" Margin="15,0,15,15" Content="Kinh Tế - Quản Lý" FontWeight="bold"/>
-                <Windows10version1809:ToggleButton Width="200" Height="50" Margin="15,0,15,15" Content="Sư Phạm" FontWeight="bold"/>
-                <Windows10version1809:ToggleButton Width="200" Height="50" Margin="15,0,15,15" Content="Ngoại Ngữ" FontWeight="bold"/>
+                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Công nghệ thông tin" FontWeight="bold">
+                    <Windows10version1809:ToggleButton.Background>
+                        <ImageBrush>
+                            <ImageBrush.ImageSource>
+                                <BitmapImage UriSource="/Assets/AppImage/CNTT.png" DecodePixelWidth="280" DecodePixelHeight="50"/>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Windows10version1809:ToggleButton.Background>
+                </Windows10version1809:ToggleButton>
+                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Ứng dụng và Khoa học Cơ bản" FontWeight="bold">
+                    <Windows10version1809:ToggleButton.Background>
+                        <ImageBrush>
+                            <ImageBrush.ImageSource>
+                                <BitmapImage UriSource="/Assets/AppImage/Science.jpg" DecodePixelWidth="280" DecodePixelHeight="50"/>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Windows10version1809:ToggleButton.Background>
+                </Windows10version1809:ToggleButton>
+                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Kinh doanh và Quản Lý" FontWeight="bold">
+                    <Windows10version1809:ToggleButton.Background>
+                        <ImageBrush>
+                            <ImageBrush.ImageSource>
+                                <BitmapImage UriSource="/Assets/AppImage/Business.jpg" DecodePixelWidth="280" DecodePixelHeight="50"/>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Windows10version1809:ToggleButton.Background>
+                </Windows10version1809:ToggleButton>
+                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Kiến trúc và Xây dựng" FontWeight="bold">
+                    <Windows10version1809:ToggleButton.Background>
+                        <ImageBrush>
+                            <ImageBrush.ImageSource>
+                                <BitmapImage UriSource="/Assets/AppImage/KienTrucXayDung.jpg" DecodePixelWidth="280" DecodePixelHeight="50"/>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Windows10version1809:ToggleButton.Background>
+                </Windows10version1809:ToggleButton>
+                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Luật" FontWeight="bold">
+                    <Windows10version1809:ToggleButton.Background>
+                        <ImageBrush>
+                            <ImageBrush.ImageSource>
+                                <BitmapImage UriSource="/Assets/AppImage/Law.png" DecodePixelWidth="280" DecodePixelHeight="50"/>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Windows10version1809:ToggleButton.Background>
+                </Windows10version1809:ToggleButton>
             </StackPanel>
         </StackPanel>
         <Grid x:Name="RequestPage" Grid.Row="1">
@@ -258,119 +296,124 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="475"/>
             </Grid.ColumnDefinitions>
-            <controls:AdaptiveGridView x:Name="SubjectGridView" animations:ReorderGridAnimation.Duration="1400"
+            <Windows10version1809:RefreshContainer x:Name="RefreshContainer" RefreshRequested="RefreshContainer_RefreshRequested">
+                <Grid>
+                    <ProgressRing x:Name="GetOverViewSubjectRequest" IsActive="False"  Width="100" Height="100"/>
+                    <controls:AdaptiveGridView x:Name="SubjectGridView" animations:ReorderGridAnimation.Duration="1400"
                                        HorizontalAlignment="Center" Margin="4,0,0,0" IsItemClickEnabled="True"
                                        ItemClick="Subject_ItemClick" MinWidth="475">
-                <controls:AdaptiveGridView.ItemContainerTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition IsStaggeringEnabled="True"
+                        <controls:AdaptiveGridView.ItemContainerTransitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition IsStaggeringEnabled="True"
                                              FromHorizontalOffset="400"
                                              FromVerticalOffset="450"/>
-                    </TransitionCollection>
-                </controls:AdaptiveGridView.ItemContainerTransitions>
-                <GridView.Header>
-                    <Grid HorizontalAlignment="Stretch">
-                        <Windows10version1809:TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
+                            </TransitionCollection>
+                        </controls:AdaptiveGridView.ItemContainerTransitions>
+                        <GridView.Header>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Windows10version1809:TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
                                                         FontSize="25" ToolTipService.ToolTip="Yêu cầu cá nhân"
                                                         Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}">
-                            <Run FontFamily="Segoe MDL2 Assets" Text="&#xE77B;"/>
-                            <Run Text="45"/>
-                        </Windows10version1809:TextBlock>
-                        <Windows10version1809:TextBlock FontSize="25" Foreground="{ThemeResource SystemAccentColor}"
+                                    <Run FontFamily="Segoe MDL2 Assets" Text="&#xE77B;"/>
+                                    <Run Text="45"/>
+                                </Windows10version1809:TextBlock>
+                                <Windows10version1809:TextBlock FontSize="25" Foreground="{ThemeResource SystemAccentColor}"
                                                         FontWeight="ExtraBold" HorizontalAlignment="Center">
-                            <Windows10version1809:Run Text="&#xE1D3;" FontFamily="Segoe MDL2 Assets"/>
-                            <Windows10version1809:Run Text="MÔN HỌC"/>
-                        </Windows10version1809:TextBlock>
-                        <Windows10version1809:TextBlock VerticalAlignment="Center" HorizontalAlignment="Right"
+                                    <Windows10version1809:Run Text="&#xE1D3;" FontFamily="Segoe MDL2 Assets"/>
+                                    <Windows10version1809:Run Text="MÔN HỌC"/>
+                                </Windows10version1809:TextBlock>
+                                <Windows10version1809:TextBlock VerticalAlignment="Center" HorizontalAlignment="Right"
                                                         FontSize="25" ToolTipService.ToolTip="Yêu cầu theo nhóm"
                                                         Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}">
-                            <Run FontFamily="Segoe MDL2 Assets" Text="&#xE125;"/>
-                            <Run Text="20"/>
-                        </Windows10version1809:TextBlock>
-                    </Grid>
-                </GridView.Header>
-                <!--MainGridView-->
-                <controls:AdaptiveGridView.ItemTemplate>
-                    <DataTemplate x:DataType="data:OverviewRequest">
-                        <!--Gridview element-->
-                        <Grid Height="120" Width="400" RowSpacing="2">
-                            <Interactivity:Interaction.Behaviors>
-                                <Core:EventTriggerBehavior EventName="PointerEntered">
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=NameOffsetRight}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=PositionOffsetRight}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=LocationOffsetRight}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=LocationFadeIn}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=ActionGridFadeIn}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=PhotoScaleUp}" MethodName="StartAnimation"/>
-                                </Core:EventTriggerBehavior>
-                                <Core:EventTriggerBehavior EventName="PointerExited">
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=NameOffsetLeft}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=PositionOffsetLeft}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=LocationOffsetLeft}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=LocationFadeOut}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=ActionGridFadeOut}" MethodName="StartAnimation"/>
-                                    <Core:CallMethodAction TargetObject="{Binding ElementName=PhotoScaleDown}" MethodName="StartAnimation"/>
-                                </Core:EventTriggerBehavior>
-                            </Interactivity:Interaction.Behaviors>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="30"/>
-                            </Grid.ColumnDefinitions>
+                                    <Run FontFamily="Segoe MDL2 Assets" Text="&#xE125;"/>
+                                    <Run Text="20"/>
+                                </Windows10version1809:TextBlock>
+                            </Grid>
+                        </GridView.Header>
+                        <!--MainGridView-->
+                        <controls:AdaptiveGridView.ItemTemplate>
+                            <DataTemplate x:DataType="data:OverviewRequest">
+                                <!--Gridview element-->
+                                <Grid Height="120" Width="400" RowSpacing="2">
+                                    <Interactivity:Interaction.Behaviors>
+                                        <Core:EventTriggerBehavior EventName="PointerEntered">
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=NameOffsetRight}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=PositionOffsetRight}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=LocationOffsetRight}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=LocationFadeIn}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=ActionGridFadeIn}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=PhotoScaleUp}" MethodName="StartAnimation"/>
+                                        </Core:EventTriggerBehavior>
+                                        <Core:EventTriggerBehavior EventName="PointerExited">
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=NameOffsetLeft}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=PositionOffsetLeft}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=LocationOffsetLeft}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=LocationFadeOut}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=ActionGridFadeOut}" MethodName="StartAnimation"/>
+                                            <Core:CallMethodAction TargetObject="{Binding ElementName=PhotoScaleDown}" MethodName="StartAnimation"/>
+                                        </Core:EventTriggerBehavior>
+                                    </Interactivity:Interaction.Behaviors>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
 
-                            <PersonPicture x:Name="ProfilePicture" ProfilePicture="{Binding Path=ProfileUrlImage, Mode=OneWay, TargetNullValue={Binding Path=NullValue}}"  Opacity="1" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3">
-                                <Interactivity:Interaction.Behaviors>
-                                    <ToolkitBehaviors:Scale x:Name="PhotoScaleUp" Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1.2" ScaleY="1.2" CenterX="24" CenterY="24" EasingMode="EaseOut"  EasingType="Cubic" />
-                                    <ToolkitBehaviors:Scale x:Name="PhotoScaleDown"  Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1" ScaleY="1" CenterX="24" CenterY="24" EasingMode="EaseOut"   EasingType="Cubic"/>
-                                </Interactivity:Interaction.Behaviors>
-                            </PersonPicture>
-                            <TextBlock Text="{x:Bind Sub, Mode=OneTime}" FontSize="30" FontWeight="SemiBold" Grid.RowSpan="3" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="0,0,0,16" Grid.Column="1" Grid.Row="0" Foreground="{ThemeResource SystemAccentColor}">
+                                    <PersonPicture x:Name="ProfilePicture" ProfilePicture="{Binding Path=ProfileUrlImage, Mode=OneWay, TargetNullValue={Binding Path=NullValue}}"  Opacity="1" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3">
+                                        <Interactivity:Interaction.Behaviors>
+                                            <ToolkitBehaviors:Scale x:Name="PhotoScaleUp" Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1.2" ScaleY="1.2" CenterX="24" CenterY="24" EasingMode="EaseOut"  EasingType="Cubic" />
+                                            <ToolkitBehaviors:Scale x:Name="PhotoScaleDown"  Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1" ScaleY="1" CenterX="24" CenterY="24" EasingMode="EaseOut"   EasingType="Cubic"/>
+                                        </Interactivity:Interaction.Behaviors>
+                                    </PersonPicture>
+                                    <TextBlock Text="{x:Bind Sub, Mode=OneTime}" FontSize="30" FontWeight="SemiBold" Grid.RowSpan="3" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="0,0,0,16" Grid.Column="1" Grid.Row="0" Foreground="{ThemeResource SystemAccentColor}">
                                     <Interactivity:Interaction.Behaviors>
                                         <ToolkitBehaviors:Offset x:Name="NameOffsetRight" Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="10" OffsetY="-15" EasingMode="EaseOut"  EasingType="Cubic" />
                                         <ToolkitBehaviors:Offset x:Name="NameOffsetLeft"  Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="0" OffsetY="0"  EasingMode="EaseOut"   EasingType="Cubic"/>
                                     </Interactivity:Interaction.Behaviors>
-                            </TextBlock>
-                            <TextBlock Grid.RowSpan="3" Text="{x:Bind Firstname, Mode=OneTime}" HorizontalAlignment="Left" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Margin="0,50,0,0" Grid.Column="1" Grid.Row="1">
+                                    </TextBlock>
+                                    <TextBlock Grid.RowSpan="3" Text="{x:Bind Firstname, Mode=OneTime}" HorizontalAlignment="Left" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Margin="0,50,0,0" Grid.Column="1" Grid.Row="1">
                                     <Interactivity:Interaction.Behaviors>
                                         <ToolkitBehaviors:Offset x:Name="PositionOffsetRight" Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="10" OffsetY="10" EasingMode="EaseOut" EasingType="Cubic" />
                                         <ToolkitBehaviors:Offset x:Name="PositionOffsetLeft"  Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="0" OffsetY="0" EasingMode="EaseOut"  EasingType="Cubic" />
                                     </Interactivity:Interaction.Behaviors>
-                            </TextBlock>
+                                    </TextBlock>
 
-                            <TextBlock Text="{x:Bind SchoolName, Mode=OneTime}" FontSize="20" Opacity="0" Grid.RowSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,15,0,0" Grid.Column="1" Grid.Row="1">
+                                    <TextBlock Text="{x:Bind SchoolName, Mode=OneTime}" FontSize="20" Opacity="0" Grid.RowSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,15,0,0" Grid.Column="1" Grid.Row="1">
                                     <Interactivity:Interaction.Behaviors>
                                         <ToolkitBehaviors:Offset x:Name="LocationOffsetRight" Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="10" EasingMode="EaseOut" EasingType="Cubic" />
                                         <ToolkitBehaviors:Offset x:Name="LocationOffsetLeft"  Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="0" EasingMode="EaseOut"  EasingType="Cubic" />
                                       <ToolkitBehaviors:Fade x:Name="LocationFadeIn" Duration="300" Delay="0" AutomaticallyStart="False" Value="1" EasingMode="EaseOut" EasingType="Cubic" />
                                         <ToolkitBehaviors:Fade x:Name="LocationFadeOut"  Duration="300" Delay="0" AutomaticallyStart="False" Value="0" EasingMode="EaseOut"  EasingType="Cubic" />
                                     </Interactivity:Interaction.Behaviors>
-                            </TextBlock>
-                            <TextBlock Text="{x:Bind Day, Mode=OneTime}" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="22" FontWeight="SemiBold" Margin="0,0,10,0"/>
-                            <Grid Grid.Column="2" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Interactivity:Interaction.Behaviors>
-                                    <ToolkitBehaviors:Fade x:Name="ActionGridFadeIn" Duration="300" Delay="0" AutomaticallyStart="False" Value="1" EasingMode="EaseOut" EasingType="Cubic" />
-                                    <ToolkitBehaviors:Fade x:Name="ActionGridFadeOut"  Duration="300" Delay="0" AutomaticallyStart="False" Value="0" EasingMode="EaseOut"  EasingType="Cubic" />
-                                </Interactivity:Interaction.Behaviors>
+                                    </TextBlock>
+                                    <TextBlock Text="{x:Bind Day, Mode=OneTime}" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="22" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                                    <Grid Grid.Column="2" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Interactivity:Interaction.Behaviors>
+                                            <ToolkitBehaviors:Fade x:Name="ActionGridFadeIn" Duration="300" Delay="0" AutomaticallyStart="False" Value="1" EasingMode="EaseOut" EasingType="Cubic" />
+                                            <ToolkitBehaviors:Fade x:Name="ActionGridFadeOut"  Duration="300" Delay="0" AutomaticallyStart="False" Value="0" EasingMode="EaseOut"  EasingType="Cubic" />
+                                        </Interactivity:Interaction.Behaviors>
 
-                                <Button Width="40" BorderThickness="1" Margin="-8,0,0,0" Height="50" Grid.Row="0" Background="Transparent" Foreground="#69797e" Style="{StaticResource ButtonRevealStyle}">
-                                    <Button.Content>
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="15" Glyph="&#xE717;" />
-                                    </Button.Content>
-                                </Button>
-                                <Button Width="40" BorderThickness="1" Margin="-8,5,0,0" Height="50" Grid.Row="1" Background="Transparent" Foreground="#69797e  " Style="{StaticResource ButtonRevealStyle}">
-                                    <Button.Content>
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="15" Glyph="&#xE714;" />
-                                    </Button.Content>
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </DataTemplate>
-                </controls:AdaptiveGridView.ItemTemplate>
-            </controls:AdaptiveGridView>
+                                        <Button Width="40" BorderThickness="1" Margin="-8,0,0,0" Height="50" Grid.Row="0" Background="Transparent" Foreground="#69797e" Style="{StaticResource ButtonRevealStyle}">
+                                            <Button.Content>
+                                                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="15" Glyph="&#xE717;" />
+                                            </Button.Content>
+                                        </Button>
+                                        <Button Width="40" BorderThickness="1" Margin="-8,5,0,0" Height="50" Grid.Row="1" Background="Transparent" Foreground="#69797e  " Style="{StaticResource ButtonRevealStyle}">
+                                            <Button.Content>
+                                                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="15" Glyph="&#xE714;" />
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </controls:AdaptiveGridView.ItemTemplate>
+                    </controls:AdaptiveGridView>
+                </Grid>
+            </Windows10version1809:RefreshContainer>
             <Windows10version1809:ListView x:Name="HotRequest" Grid.Column="1">
                 <Windows10version1809:ListView.ItemContainerTransitions>
                     <Windows10version1809:TransitionCollection>
@@ -648,7 +691,8 @@
                     Windows10version1809:CenterPoint="25,25,0"
                     Margin="35" FontFamily="Segoe MDL2 Assets" Grid.Row="0" 
                     Background="OrangeRed" Width="50" Height="50" 
-                    Windows10version1809:CornerRadius="50" Windows10version1809:Translation="0,-300,0">
+                    Windows10version1809:CornerRadius="50" 
+                    Windows10version1809:Translation="0,-300,0">
                 <Windows10version1809:Button.TranslationTransition>
                     <Windows10version1809:Vector3Transition Duration="0:0:1"/>
                 </Windows10version1809:Button.TranslationTransition>
@@ -675,11 +719,12 @@
                             <animations:OpacityAnimation Duration="0:0:0.450" From="0" To="1.0"/>
                         </animations:Implicit.ShowAnimations>
                     </PersonPicture>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <Button x:Name="HomeWork" Content="Bài Tập" FontWeight="Bold" Margin="0,5,5,5" Background="{ThemeResource SystemAccentColor}" Visibility="Collapsed"/>
                         <Button x:Name="Presentation" Content="Thuyết Trình" FontWeight="Bold" Margin="5" Background="{ThemeResource SystemAccentColor}" Visibility="Collapsed"/>
                         <Button x:Name="Laboratory" Content="Thực Hành" FontWeight="Bold" Margin="5" Background="{ThemeResource SystemAccentColor}" Visibility="Collapsed"/>
                     </StackPanel>
+                    <TextBlock x:Name="SubjectNameInDetail" HorizontalAlignment="Left" FontWeight="ExtraBold" FontSize="30" Foreground="{ThemeResource SystemAccentColor}"/>
                 </Grid>
 
                 <StackPanel HorizontalAlignment="Center" Grid.Row="1" Margin="0,5,0,0" Padding="10">

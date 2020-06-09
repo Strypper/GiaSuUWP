@@ -21,6 +21,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
@@ -35,19 +36,16 @@ namespace Gia_Sư.Pages.Subject
         public ObservableCollection<OverviewRequest> SubjectRequestList;
         OverviewRequest selectedItem;
         private int PageNumber = 0;
-        private int RequestNumber;
         private SubjectRequest sr;
-        public string GetRequestUrl(int PageNumber) => $"https://localhost:44316/api/SubjectControllers/RequestPage/{PageNumber}";
-        public string GetRequestDetailUrl(int RequestNumber) => $"https://localhost:44316/api/SubjectControllers/RequestDetail/{RequestNumber}";
+        public string GetRequestUrl(int PageNumber) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/RequestPage/{PageNumber}";
+        public string GetRequestDetailUrl(int RequestNumber) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/RequestDetail/{RequestNumber}";
 
         private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
         private readonly HttpClient httpClient = new HttpClient(handler);
 
         private bool HomeWorkVisible { get; set; }
         private bool PresentationVisible { get; set; }
-        private bool LaboratoryVisible { get; set; }
-
-
+        private bool LaboratoryVisible { get; set; }    
         public RootSubject()
         {
             this.InitializeComponent();
@@ -62,8 +60,6 @@ namespace Gia_Sư.Pages.Subject
 
 
         }
-
-
         private async void Subject_ItemClick(object sender, ItemClickEventArgs e)
         {
             GridViewItem ClickedItem = SubjectGridView.ContainerFromItem(e.ClickedItem) as GridViewItem;
@@ -75,7 +71,7 @@ namespace Gia_Sư.Pages.Subject
                 //System.Diagnostics.Debug.WriteLine(selectedItem);
                 //We only need to pass the image
                 PersonThumbnail.ProfilePicture = new BitmapImage(new Uri(selectedItem.ProfileUrlImage));
-
+                SubjectNameInDetail.Text = selectedItem.Sub;
 
                 //Start the Connected Animation
                 ConnectedAnimation ConnectedAnimation = SubjectGridView.PrepareConnectedAnimation("forwardAnimation", selectedItem, "ProfilePicture");
@@ -126,7 +122,6 @@ namespace Gia_Sư.Pages.Subject
                 Laboratory.Visibility = LaboratoryVisible ? Visibility.Visible : Visibility.Collapsed;
             }
         }
-
         private async void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             LeftSide.Translation = new System.Numerics.Vector3(-500, 0, 0);
@@ -167,38 +162,32 @@ namespace Gia_Sư.Pages.Subject
             Presentation.Visibility = Visibility.Collapsed;
             Laboratory.Visibility = Visibility.Collapsed;
         }
-
         private void ConnectedAnimation_Completed(ConnectedAnimation sender, object args)
         {
             OverlayPopup.Visibility = Visibility.Collapsed;
         }
-
         private async void PersonalSchedule_Click(object sender, RoutedEventArgs e)
         {
             PersonalSchedulePopUp p = new PersonalSchedulePopUp() { };
             await p.ShowAsync();
         }
-
-
         private async void PageClickEvent(object sender, PaginationRouteEvent e)
         {
             Debug.WriteLine(e.PageNumber);
             await GetOverViewRequestsAsync(e.PageNumber);
         }
-
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
            //httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + App.Token);
            await GetOverViewRequestsAsync(0);
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e) 
         {
-
+                
         }
-
         public async Task GetOverViewRequestsAsync(int page)
         {
+            GetOverViewSubjectRequest.IsActive = true;
             PageNumber = page;
             var response = await httpClient.GetAsync(GetRequestUrl(PageNumber));
             var result = await response.Content.ReadAsStringAsync();
@@ -206,13 +195,17 @@ namespace Gia_Sư.Pages.Subject
             SubjectRequestList = JsonConvert.DeserializeObject<ObservableCollection<OverviewRequest>>(result);
             System.Diagnostics.Debug.WriteLine(SubjectRequestList);
             SubjectGridView.ItemsSource = SubjectRequestList;
+            GetOverViewSubjectRequest.IsActive = false;
         }
-        
-
         private async void CreateRequest_Click(object sender, RoutedEventArgs e)
         {
             RequestSubject rs = new RequestSubject();
             await rs.ShowAsync();
+        }
+
+        private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+        {
+            await GetOverViewRequestsAsync(0);
         }
     }
 }

@@ -10,5 +10,7 @@ namespace Gia_Sư.Models.SubjectData
     {
         public int StudyGroupID { get; set; }
         public string StudyGroupName { get; set; }
+        public string StudyGroupImage { get; set; }
+        public string TitleColor { get; set; }
     }
 }

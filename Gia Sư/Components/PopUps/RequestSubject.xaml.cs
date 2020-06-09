@@ -1,9 +1,11 @@
 ﻿using Gia_Sư.Models;
+using Gia_Sư.Models.AppTools;
 using Gia_Sư.Models.Location;
 using Gia_Sư.Models.SubjectData;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -21,6 +23,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -31,14 +34,14 @@ namespace Gia_Sư.Components.PopUps
 
     {
         private int CityId, DistrictId, GroupId;
-        private readonly string CreateRequestUrl = "https://localhost:44316/api/SubjectControllers/CreateRequest";
+        private readonly string CreateRequestUrl = "https://giasuapi.azurewebsites.net/api/SubjectControllers/CreateRequest";
         private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
         private readonly HttpClient httpClient = new HttpClient(handler);
-        private readonly string CitiesUrl = "https://localhost:44316/api/VietNamLocation/CitiesList";
-        private readonly string StudyGroupUrl = "https://localhost:44316/api/SubjectControllers/StudyGroupList";
-        public string StudyFieldUrl(int groupid) => $"https://localhost:44316/api/SubjectControllers/StudyFieldList/{GroupId}";
-        public string SchoolUrl(int districtid) => $"https://localhost:44316/api/SubjectControllers/SchoolList/{DistrictId}";
-        public string DistrictUrl(int PageNumber) => $"https://localhost:44316/api/VietNamLocation/DistrictsList/{CityId}";
+        private readonly string CitiesUrl = "https://giasuapi.azurewebsites.net/api/VietNamLocation/CitiesList";
+        private readonly string StudyGroupUrl = "https://giasuapi.azurewebsites.net/api/SubjectControllers/StudyGroupList";
+        public string StudyFieldUrl(int groupid) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/StudyFieldList/{GroupId}";
+        public string SchoolUrl(int districtid) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/SchoolList/{DistrictId}";
+        public string DistrictUrl(int PageNumber) => $"https://giasuapi.azurewebsites.net/api/VietNamLocation/DistrictsList/{CityId}";
         private VietNamCity ObjectCity;
         private VietNamDistrict ObjectDistrict;
         private List<VietNamCity> VNCity;
@@ -52,6 +55,7 @@ namespace Gia_Sư.Components.PopUps
         private string Descript;
         private int ValidErr;
 
+        private ObservableCollection<WeekDay> Choosentimes;
 
         public RequestSubject()
         {
@@ -59,8 +63,17 @@ namespace Gia_Sư.Components.PopUps
         }
         private async void ContentDialog_Loaded(object sender, RoutedEventArgs e)
         {
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.UriSource = new Uri(App.User.ProfileImageUrl);
+            ProfileImage.ProfilePicture = bitmap;
             await GetCitiesAsync();
             await GetStudyGroupAsync();
+
+            Choosentimes = new ObservableCollection<WeekDay>();
+            ListOfDay.ItemsSource = Choosentimes;
+            //WeekDay Combobox bind to the Enum
+            var DaysOfWeek = Enum.GetValues(typeof(WeekDaysEnum)).Cast<WeekDaysEnum>();
+            DayOfWeek.ItemsSource = DaysOfWeek.ToList();
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -96,7 +109,8 @@ namespace Gia_Sư.Components.PopUps
                                     { "SchoolID", sc.schoolID },
                                     { "HomeWork", HomeWork.IsChecked },
                                     { "Presentation", Presentation.IsChecked },
-                                    { "Laboratory", Lab.IsChecked }
+                                    { "Laboratory", Lab.IsChecked },
+                                    { "WeekDays", Choosentimes }
                                 };
                     var content = new StringContent(JsonConvert.SerializeObject(value), Encoding.UTF8, "application/json");
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token.token);
@@ -202,6 +216,7 @@ namespace Gia_Sư.Components.PopUps
             DistrictId = ObjectDistrict.districtID;
             await GetSchoolsAsync(DistrictId);
         }
+
         private async void City_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ObjectCity = (VietNamCity)City.SelectedItem;
@@ -233,6 +248,67 @@ namespace Gia_Sư.Components.PopUps
                 ValidErr = 0;
                 return false;
             } 
+            return true;
+        }
+
+        private void TimeStart_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
+        {
+            System.Diagnostics.Debug.WriteLine(TimeStart.Time);
+            System.Diagnostics.Debug.WriteLine(TimeStart.Time.TotalMinutes);
+        }
+
+        private void TimeEnd_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
+        {
+            System.Diagnostics.Debug.WriteLine(TimeEnd.Time);
+            System.Diagnostics.Debug.WriteLine(TimeEnd.Time.TotalMinutes);
+            TimeSpan TotalTime = TimeEnd.Time - TimeStart.Time;
+            System.Diagnostics.Debug.WriteLine(TotalTime);
+            System.Diagnostics.Debug.WriteLine(TotalTime.TotalMinutes);
+        }
+
+        private void WeekDayAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var dow = (WeekDaysEnum)DayOfWeek.SelectedItem; 
+            WeekDay wd = new WeekDay(dow, TimeStart.Time, TimeEnd.Time);
+            if (addWeekDay(wd) == false) 
+            {
+                TimeStart.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+                TimeEnd.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+                Add.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+            };
+        }
+
+        public bool addWeekDay(WeekDay wd)
+        {
+            if (Choosentimes.Count > 0)
+            {
+                if (wd.TimeStart >= wd.TimeEnd) return false;
+                foreach (WeekDay WD in Choosentimes)
+                {
+                    if (wd.weekDay == WD.weekDay)
+                    {
+                        if (wd.TimeStart <= WD.TimeStart)
+                        {
+                            if (wd.TimeEnd >= WD.TimeStart)
+                            {
+                                System.Diagnostics.Debug.WriteLine("Conflict Time request time end {0} is bigger than existing time start {1}", wd.TimeEnd, WD.TimeStart);
+                                return false;
+                            }
+                        }
+                        if (wd.TimeStart >= WD.TimeStart)
+                        {
+                            if (wd.TimeStart <= WD.TimeEnd)
+                            {
+                                System.Diagnostics.Debug.WriteLine("Conflict Time request time start {0} is smaller than existing time end {1}", wd.TimeStart, WD.TimeEnd);
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            Choosentimes.Add(wd);
+            System.Diagnostics.Debug.WriteLine("No Conflict");
+            System.Diagnostics.Debug.WriteLine("Added " + wd.weekDay + wd.TimeStart + wd.TimeEnd);
             return true;
         }
     }

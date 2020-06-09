@@ -30,7 +30,8 @@ namespace Gia_Sư
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
-        public static Token Token;
+        public static Token Token = new Token();
+        public static UserModel User = new UserModel();
 
 
 
@@ -38,7 +39,6 @@ namespace Gia_Sư
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            Token = new Token();
         }
 
         /// <summary>
@@ -59,13 +59,16 @@ namespace Gia_Sư
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                if (e.PreviousExecutionState != ApplicationExecutionState.Terminated)
                 {
-                    //TODO: Load state from previously suspended application
+                    bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
+                    splash extendedSplash = new splash(e.SplashScreen, loadState);
+                    rootFrame.Content = extendedSplash;
+                    Window.Current.Content = rootFrame;
                 }
 
                 // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
+                //Window.Current.Content = rootFrame;
             }
 
             if (e.PrelaunchActivated == false)

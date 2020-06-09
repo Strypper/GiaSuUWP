@@ -34,6 +34,8 @@ using Gia_Sư.Models.Location;
 using Gia_Sư.Components.PopUps;
 using Gia_Sư.Models.SubjectData;
 using Gia_Sư.Models;
+using Microsoft.Toolkit.Uwp.UI.Animations;
+using System.Net.Http.Headers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -48,13 +50,14 @@ namespace Gia_Sư
         private string UserRole = "";
         private double PredictAge;
         private int CityId, DistrictId, GroupId;
-        private readonly string RegisterUrl = "https://localhost:44316/api/LoginRegister/Register";
-        private readonly string LoginUrl = "https://localhost:44316/api/LoginRegister/Login";
-        private readonly string CitiesUrl = "https://localhost:44316/api/VietNamLocation/CitiesList";
-        private readonly string StudyGroupUrl = "https://localhost:44316/api/SubjectControllers/StudyGroupList";
-        private string DistrictUrl(int cityid) => $"https://localhost:44316/api/VietNamLocation/DistrictsList/{CityId}";
-        private string StudyFieldUrl(int groupid) => $"https://localhost:44316/api/SubjectControllers/StudyFieldList/{GroupId}";
-        private string SchoolUrl(int districtid) => $"https://localhost:44316/api/SubjectControllers/SchoolList/{DistrictId}";
+        private readonly string RegisterUrl = "https://giasuapi.azurewebsites.net/api/LoginRegister/Register";
+        private readonly string LoginUrl = "https://giasuapi.azurewebsites.net/api/LoginRegister/Login";
+        private readonly string GetUserInfoUrl = "https://giasuapi.azurewebsites.net/api/LoginRegister/GetUserInfo";
+        private readonly string CitiesUrl = "https://giasuapi.azurewebsites.net/api/VietNamLocation/CitiesList";
+        private readonly string StudyGroupUrl = "https://giasuapi.azurewebsites.net/api/SubjectControllers/StudyGroupList";
+        private string DistrictUrl(int cityid) => $"https://giasuapi.azurewebsites.net/api/VietNamLocation/DistrictsList/{CityId}";
+        private string StudyFieldUrl(int groupid) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/StudyFieldList/{GroupId}";
+        private string SchoolUrl(int districtid) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/SchoolList/{DistrictId}";
         private StorageFile userPhoto;
         private List<Validation> ValidForm;
         private VietNamCity ObjectCity;
@@ -79,11 +82,23 @@ namespace Gia_Sư
 
             Loaded += Page_Loaded;
         }
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ExecuteAnimation();
+            IsInternetAvaible();
+            ValidForm = new List<Validation>();
+            //City and District ComboBox
+            await GetCitiesAsync();
+            await GetStudyGroupAsync();
+            //Initalize the popup for quicker load time
+            contentSuccess = new SignUpSuccess();
+        }
         private void ExecuteAnimation()
         {
             Head.Visibility = Visibility.Visible;
             Form.Translation = new Vector3(0, -300, 0);
-            Intro.Translation = new Vector3(0, 100, 0);
+            IntroLayout.Translation = new Vector3(0, 60, 0);
+            LogoImage.Scale = new Vector3(1, 1, 0);
             Logo.Scale = new Vector3(1, 1, 0);
         }
         private void LoginForm_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -261,16 +276,6 @@ namespace Gia_Sư
             }
             return true;
         }
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            ExecuteAnimation();
-            ValidForm = new List<Validation>();
-            //City and District ComboBox
-            await GetCitiesAsync();
-            await GetStudyGroupAsync();
-            //Initalize the popup for quicker load time
-            contentSuccess = new SignUpSuccess();
-        }
         private async void SignUp_Click(object sender, RoutedEventArgs e)
         {
             WaitingRegisterBar.Visibility = Visibility.Visible;
@@ -289,7 +294,7 @@ namespace Gia_Sư
         private async void GuessEnter_Click(object sender, RoutedEventArgs e)
         {
             Form.Translation = new Vector3(0, 0, 0);
-            Intro.Translation = new Vector3(0, 0, 0);
+            IntroLayout.Translation = new Vector3(0, -60, 0);
             Logo.Scale = new Vector3(0, 0, 0);
             await Task.Delay(100);
             Frame.Navigate(typeof(MainPage));
@@ -382,6 +387,7 @@ namespace Gia_Sư
             if (Status == "OK")
             {
                 App.Token = JsonConvert.DeserializeObject<Token>(responseString);
+                await GetUserInfo(App.Token.token);
                 System.Diagnostics.Debug.WriteLine(App.Token);
                 WaitingLoginBar.Visibility = Visibility.Collapsed;
                 Frame.Navigate(typeof(MainPage));
@@ -395,6 +401,13 @@ namespace Gia_Sư
                 WaitingLoginBar.ShowError = true;
             }
 
+        }
+        private async Task GetUserInfo(string token)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await httpClient.GetAsync(GetUserInfoUrl);
+            var result = await response.Content.ReadAsStringAsync();
+            App.User = JsonConvert.DeserializeObject<UserModel>(result);
         }
         private async Task GetCitiesAsync()
         {
@@ -612,6 +625,21 @@ namespace Gia_Sư
             TimeSpan PredictAgeTimeSpan = now - UserYear;
             CalculateAge = Math.Floor((now - UserYear).TotalDays) / ((DateTime.IsLeapYear(year: now.Year) ? 366 : 365));
             PredictAge = (CalculateAge % 1) >= 0.951 ? Math.Round(CalculateAge) : Math.Floor(CalculateAge);
+        }
+        private void IsInternetAvaible()
+        {
+            var temp = Windows.Networking.Connectivity.NetworkInformation.GetInternetConnectionProfile();
+            if (temp == null)
+            {
+                LottiePlayer.PlaybackRate = 1;
+            }
+            else LottiePlayer.Visibility = Visibility.Collapsed;
+        }
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            await this.Scale(1.05f, 1.05f, (float)this.ActualWidth / 2, (float)this.ActualHeight / 2, 0).StartAsync();
+            await this.Scale(1, 1, (float)this.ActualWidth / 2, (float)this.ActualHeight / 2, 200).StartAsync();
         }
     }
 }

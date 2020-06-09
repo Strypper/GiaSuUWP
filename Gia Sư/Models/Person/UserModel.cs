@@ -10,7 +10,6 @@ namespace Gia_Sư.Models.Person
     public class UserModel
     {
         public string Role { get; set; }
-        public string Pass { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,11 +17,11 @@ namespace Gia_Sư.Models.Person
         public string CoverImageUrl { get; set; }
         public DateTime DayOfBirth { get; set; }
         public string Email { get; set; }
-        public int Gender { get; set; }
+        public bool Gender { get; set; }
         public int Age { get; set; }
-        public int PhoneNumber { get; set; }
-        public School School { get; set; }
-        public PersonalLocation Location { get; set; }
+        public string PhoneNumber { get; set; }
+        public string SchoolName { get; set; }
+        public string UserAddress { get; set; }
     }
     public class Token 
     {

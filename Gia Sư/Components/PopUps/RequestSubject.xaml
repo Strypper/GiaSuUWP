@@ -4,16 +4,27 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Gia_Sư.Components.PopUps" Loaded="ContentDialog_Loaded"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" xmlns:data="using:Gia_Sư.Models.Location" xmlns:data2="using:Gia_Sư.Models" xmlns:data1="using:Gia_Sư.Models.SubjectData"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
+    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" 
+    xmlns:data="using:Gia_Sư.Models.Location" xmlns:data2="using:Gia_Sư.Models" 
+    xmlns:data1="using:Gia_Sư.Models.SubjectData" xmlns:data3="using:Gia_Sư.Models.AppTools" BorderBrush="{ThemeResource SystemAccentColor}"
     mc:Ignorable="d" Background="{ThemeResource SystemControlAcrylicElementBrush}">
 
+    <ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogBorderWidth">5</Thickness>
+        <Style x:Key="ListViewItemStretchStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </ContentDialog.Resources>
+    
     <Windows10version1809:ScrollViewer Height="600" IsTabStop="True">
         <StackPanel x:Name="MainLayout" Opacity="1">
             <StackPanel.OpacityTransition>
                 <ScalarTransition Duration="0:0:1"/>
             </StackPanel.OpacityTransition>
 
-            <PersonPicture Margin="5"/>
+            <PersonPicture x:Name="ProfileImage" Margin="5"/>
             <TextBlock Text="YÊU CẦU MÔN HỌC" HorizontalAlignment="Center"
                    Margin="5" FontSize="30" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColor}"/>
             <Grid HorizontalAlignment="Center">
@@ -84,7 +95,18 @@
                         </ComboBox.Header>
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data1:StudyGroup">
-                                <Windows10version1809:TextBlock Text="{x:Bind StudyGroupName}"/>
+                                <Border Width="280" Height="50">
+                                    <Border.Background>
+                                        <ImageBrush>
+                                            <ImageBrush.ImageSource>
+                                                <BitmapImage UriSource="{x:Bind StudyGroupImage}" DecodePixelWidth="300" DecodePixelHeight="250"/>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                    <Windows10version1809:TextBlock Text="{x:Bind StudyGroupName}" FontWeight="ExtraBold"
+                                                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                    FontSize="12"/>
+                                </Border>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -164,6 +186,14 @@
                         <ToggleButton x:Name="Presentation" Content="Thuyết Trình" Margin="5"/>
                         <ToggleButton x:Name="Lab" Content="Thực Hành" Margin="5"/>
                     </StackPanel>
+                    <TextBlock Text="Bạn Sẽ Thanh Toán Như Thế Nào ?" HorizontalAlignment="Center"
+                           Margin="5"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                            Margin="5">
+                        <ToggleButton x:Name="HourPay" Content="Theo Giờ" Margin="5"/>
+                        <ToggleButton x:Name="WeekPay" Content="Theo Tuần" Margin="5"/>
+                        <ToggleButton x:Name="MonthPay" Content="Theo Tháng" Margin="5"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
             <TextBlock Text="MIÊU TẢ" HorizontalAlignment="Center"
@@ -174,11 +204,27 @@
             <ComboBox x:Name="DayOfWeek" PlaceholderText="Chọn Thứ Trong Tuần" Margin="5" 
                       Windows10version1809:CornerRadius="0" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
-                <TimePicker x:Name="TimeStart" Header="Thời Gian Bắt Đầu" Margin="5" Windows10version1809:CornerRadius="0"/>
-                <TimePicker x:Name="TimeEnd" Header="Thời Gian Kết Thúc"  Margin="5" Windows10version1809:CornerRadius="0"/>
-                <Button x:Name="Add" Margin="5" Content="&#xE710;" FontFamily="Segoe MDL2 Assets" Width="50" VerticalAlignment="Bottom" Height="35"/>
+                <TimePicker x:Name="TimeStart" Header="Thời Gian Bắt Đầu" Margin="5" Windows10version1809:CornerRadius="0" ClockIdentifier="24HourClock" SelectedTimeChanged="TimeStart_SelectedTimeChanged"/>
+                <TimePicker x:Name="TimeEnd" Header="Thời Gian Kết Thúc"  Margin="5" Windows10version1809:CornerRadius="0" ClockIdentifier="24HourClock" SelectedTimeChanged="TimeEnd_SelectedTimeChanged"/>
+                <Button x:Name="Add" Margin="5" Content="&#xE710;" FontFamily="Segoe MDL2 Assets" Width="50" VerticalAlignment="Bottom" Height="35" Click="WeekDayAdd_Click"/>
             </StackPanel>
-            <ListView x:Name="ListOfDay" Margin="5"></ListView>
+            <TextBlock x:Name="ErrorTime" HorizontalAlignment="Center" Foreground="Red" Margin="5"/>
+            <Grid HorizontalAlignment="Stretch">
+                <TextBlock Text="Thứ trong tuần" HorizontalAlignment="Left" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColor}"/>
+                <TextBlock Text="Giờ bắt đầu" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="Giờ kết thúc" HorizontalAlignment="Right" FontWeight="Bold"/>
+            </Grid>
+            <ListView x:Name="ListOfDay" Margin="5" ItemContainerStyle="{StaticResource ListViewItemStretchStyle}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data3:WeekDay">
+                        <Grid HorizontalAlignment="Stretch">
+                            <TextBlock HorizontalAlignment="Left" Text="{x:Bind weekDay}" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColor}"/>
+                            <TextBlock HorizontalAlignment="Center" Text="{x:Bind TimeStart}"/>
+                            <TextBlock HorizontalAlignment="Right" Text="{x:Bind TimeEnd}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <muxc:ProgressBar x:Name="WaitingBar" Width="200" IsIndeterminate="True" ShowPaused="False" ShowError="False" Margin="5" Visibility="Collapsed"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
                 <Button x:Name="UploadRequest" Content="ĐĂNG YÊU CẦU" Width="150" Margin="5" Click="UploadRequest_Click" Foreground="{ThemeResource SystemAccentColor}" FontWeight="Bold"/>
