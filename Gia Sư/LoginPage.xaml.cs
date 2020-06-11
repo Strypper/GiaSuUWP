@@ -36,6 +36,11 @@ using Gia_Sư.Models.SubjectData;
 using Gia_Sư.Models;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using System.Net.Http.Headers;
+using System.Diagnostics;
+using Windows.Media.Capture;
+using Windows.System.Display;
+using Windows.Graphics.Display;
+using Windows.Graphics.Imaging;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -74,7 +79,7 @@ namespace Gia_Sư
         private readonly HttpClient httpClient = new HttpClient(handler);
 
 
-        SignUpSuccess contentSuccess;
+        SignUpSuccess contentSuccess = new SignUpSuccess();
 
         public LoginPage()
         {
@@ -90,13 +95,11 @@ namespace Gia_Sư
             //City and District ComboBox
             await GetCitiesAsync();
             await GetStudyGroupAsync();
-            //Initalize the popup for quicker load time
-            contentSuccess = new SignUpSuccess();
         }
         private void ExecuteAnimation()
         {
             Head.Visibility = Visibility.Visible;
-            Form.Translation = new Vector3(0, -300, 0);
+            Form.Translation = new Vector3(0, -200, 0);
             IntroLayout.Translation = new Vector3(0, 60, 0);
             LogoImage.Scale = new Vector3(1, 1, 0);
             Logo.Scale = new Vector3(1, 1, 0);
@@ -383,7 +386,7 @@ namespace Gia_Sư
             var response = await httpClient.PostAsync(LoginUrl, content);
             string Status = response.StatusCode.ToString();
             var responseString = await response.Content.ReadAsStringAsync();
-            System.Diagnostics.Debug.WriteLine(Status);
+            Debug.WriteLine(Status);
             if (Status == "OK")
             {
                 App.Token = JsonConvert.DeserializeObject<Token>(responseString);
@@ -509,16 +512,51 @@ namespace Gia_Sư
         }
         private async Task saveUserPhoto(StorageFile photo)
         {
-            CloudStorageAccount storageAccount = createStorageAccountFromConnectionString();
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = blobClient.GetContainerReference("profileimagecontainer");
-            await container.CreateIfNotExistsAsync();
-            CloudBlockBlob blob = container.GetBlockBlobReference(photo.Name);
-            await blob.UploadFromFileAsync(photo);
-            AzureProfileImageUrl = blob.Uri.AbsoluteUri;
+            if(photo == null)
+            {
+                Debug.WriteLine("No Photo Attach");
+                SignUp.Content = "\uE114";
+                SignUp.FontFamily = new FontFamily("Segoe MDL2 Assets");
+                SignUp.FontSize = 30;
+                SignUp.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+            }
+            else
+            {
+                CloudStorageAccount storageAccount = createStorageAccountFromConnectionString();
+                CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+                CloudBlobContainer container = blobClient.GetContainerReference("profileimagecontainer");
+                await container.CreateIfNotExistsAsync();
+                CloudBlockBlob blob = container.GetBlockBlobReference(photo.Name);
+                await blob.UploadFromFileAsync(photo);
+                AzureProfileImageUrl = blob.Uri.AbsoluteUri;
+            }
         }
         private async void TurnOnCamera_Click(object sender, RoutedEventArgs e)
         {
+            CameraCaptureUI captureUI = new CameraCaptureUI();
+            captureUI.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
+            captureUI.PhotoSettings.CroppedSizeInPixels = new Size(200, 200);
+
+            StorageFile photo = await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
+
+            if (photo == null)
+            {
+                // User cancelled photo capture
+                return;
+            }
+            else
+            {
+                //StorageFolder destinationFolder =
+                //    await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePhotoFolder",
+                //        CreationCollisionOption.OpenIfExists);
+
+                //await photo.CopyAsync(destinationFolder, "ProfilePhoto.jpg", NameCollisionOption.ReplaceExisting);
+                //await photo.DeleteAsync();
+                var filestream = await photo.OpenAsync(FileAccessMode.Read);
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.SetSource(filestream);
+                ProfilePic.ProfilePicture = bitmapImage;
+            }
         }
         private void LostFocus(object sender, RoutedEventArgs e)
         {

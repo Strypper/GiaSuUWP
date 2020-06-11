@@ -6,6 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    PrimaryButtonText="Đăng yêu cầu"
+    CloseButtonClick="ContentDialog_CloseButtonClick"
+    CloseButtonText="Đóng"
     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" 
     xmlns:data="using:Gia_Sư.Models.Location" xmlns:data2="using:Gia_Sư.Models" 
     xmlns:data1="using:Gia_Sư.Models.SubjectData" xmlns:data3="using:Gia_Sư.Models.AppTools" BorderBrush="{ThemeResource SystemAccentColor}"
@@ -18,7 +22,7 @@
         </Style>
     </ContentDialog.Resources>
     
-    <Windows10version1809:ScrollViewer Height="600" IsTabStop="True">
+    <ScrollViewer Height="600" IsTabStop="True">
         <StackPanel x:Name="MainLayout" Opacity="1">
             <StackPanel.OpacityTransition>
                 <ScalarTransition Duration="0:0:1"/>
@@ -37,59 +41,59 @@
                                Margin="5" FontSize="15" FontWeight="Bold"/>
                     <TextBox x:Name="SubjectName" Margin="5"
                              TextAlignment="Center"
-                             Windows10version1809:CornerRadius="0">
+                             CornerRadius="0">
                         <TextBox.Header>
                             <TextBlock Text="Môn Học" HorizontalTextAlignment="Center"/>
                         </TextBox.Header>
                     </TextBox>
                     <ComboBox x:Name="SchoolCity" Margin="5" Width="280"
                               HorizontalContentAlignment="Center"
-                              PlaceholderText="Chọn Thành Phố Trường Bạn" Windows10version1809:CornerRadius="0"
+                              PlaceholderText="Chọn Thành Phố Trường Bạn" CornerRadius="0"
                               SelectionChanged="SchoolCity_SelectionChanged" HorizontalAlignment="Stretch">
                         <ComboBox.Header>
                             <TextBlock Text="Trường Ở Thành Phố Nào" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data:VietNamCity">
-                                <Windows10version1809:TextBlock Text="{x:Bind cityName}"/>
+                                <TextBlock Text="{x:Bind cityName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <ComboBox x:Name="SchoolDistrict" Margin="5" Width="280"
                               HorizontalContentAlignment="Center"
-                              PlaceholderText="Chọn Quận Trường Bạn" Windows10version1809:CornerRadius="0"
+                              PlaceholderText="Chọn Quận Trường Bạn" CornerRadius="0"
                               SelectionChanged="SchoolDistrict_SelectionChanged" HorizontalAlignment="Stretch">
                         <ComboBox.Header>
                             <TextBlock Text="Trường Ở Quận Nào" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data:VietNamDistrict">
-                                <Windows10version1809:TextBlock Text="{x:Bind districtName}"/>
+                                <TextBlock Text="{x:Bind districtName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <ComboBox x:Name="School" HorizontalAlignment="Stretch" Margin="5" 
-                         Windows10version1809:CornerRadius="0" PlaceholderText="Chọn Trường Có Sẵn" HorizontalContentAlignment="Center">
+                         CornerRadius="0" PlaceholderText="Chọn Trường Có Sẵn" HorizontalContentAlignment="Center">
                         <ComboBox.Header>
                             <TextBlock Text="Môn Này Của Trường Nào" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data2:School">
-                                <Windows10version1809:StackPanel Orientation="Horizontal" Width="350">
-                                    <Windows10version1809:Image Source="{x:Bind schoolLogo}" Width="50" Height="50" Margin="5"/>
-                                    <Windows10version1809:TextBlock Text="{x:Bind schoolName}" Margin="5" VerticalAlignment="Center"/>
-                                </Windows10version1809:StackPanel>
+                                <StackPanel Orientation="Horizontal" Width="350">
+                                    <Image Source="{x:Bind schoolLogo}" Width="50" Height="50" Margin="5"/>
+                                    <TextBlock Text="{x:Bind schoolName}" Margin="5" VerticalAlignment="Center"/>
+                                </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBox x:Name="Teacher" Margin="5" HorizontalContentAlignment="Center"
-                         Windows10version1809:CornerRadius="0" TextAlignment="Center">
+                         CornerRadius="0" TextAlignment="Center">
                         <TextBox.Header>
                             <TextBlock Text="Môn Này Giáo Viên Nào Dạy" HorizontalAlignment="Center"/>
                         </TextBox.Header>
                     </TextBox>
                     <ComboBox x:Name="StudyGroup" HorizontalAlignment="Stretch" Margin="5" 
-                         Windows10version1809:CornerRadius="0" SelectionChanged="StudyGroup_SelectionChanged">
+                         CornerRadius="0" SelectionChanged="StudyGroup_SelectionChanged">
                         <ComboBox.Header>
                             <TextBlock Text="Khối Môn Học" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
@@ -103,7 +107,7 @@
                                             </ImageBrush.ImageSource>
                                         </ImageBrush>
                                     </Border.Background>
-                                    <Windows10version1809:TextBlock Text="{x:Bind StudyGroupName}" FontWeight="ExtraBold"
+                                    <TextBlock Text="{x:Bind StudyGroupName}" FontWeight="ExtraBold"
                                                                     HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                     FontSize="12"/>
                                 </Border>
@@ -111,13 +115,13 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <ComboBox x:Name="StudyField" HorizontalAlignment="Stretch" Margin="5" 
-                          Windows10version1809:CornerRadius="0">
+                          CornerRadius="0">
                         <ComboBox.Header>
                             <TextBlock Text="Ngành" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data1:StudyField">
-                                <Windows10version1809:TextBlock Text="{x:Bind StudyFieldName}"/>
+                                <TextBlock Text="{x:Bind StudyFieldName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -135,35 +139,35 @@
                     <TextBlock Text="KHU VỰC HỌC" HorizontalAlignment="Center"
                            Margin="5" FontSize="15" FontWeight="Bold"/>
                     <ComboBox x:Name="PartnerLocation" HorizontalAlignment="Stretch" Margin="5" 
-                          Windows10version1809:CornerRadius="0" PlaceholderText="Beta" HorizontalContentAlignment="Center">
+                          CornerRadius="0" PlaceholderText="Beta" HorizontalContentAlignment="Center">
                         <ComboBox.Header>
                             <TextBlock Text="Khu Vực Có Sẵn" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
                     </ComboBox>
                     <ComboBox x:Name="City" Margin="5" HorizontalAlignment="Stretch" 
-                              Windows10version1809:CornerRadius="0" SelectionChanged="City_SelectionChanged">
+                              CornerRadius="0" SelectionChanged="City_SelectionChanged">
                         <ComboBox.Header>
                             <TextBlock Text="Thành Phố" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data:VietNamCity">
-                                <Windows10version1809:TextBlock Text="{x:Bind cityName}"/>
+                                <TextBlock Text="{x:Bind cityName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <ComboBox x:Name="District" Margin="5" HorizontalAlignment="Stretch" 
-                              Windows10version1809:CornerRadius="0">
+                              CornerRadius="0">
                         <ComboBox.Header>
                             <TextBlock Text="Quận Huyện" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data:VietNamDistrict">
-                                <Windows10version1809:TextBlock Text="{x:Bind districtName}"/>
+                                <TextBlock Text="{x:Bind districtName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBox x:Name="Address" HorizontalAlignment="Stretch" Margin="5" 
-                         Windows10version1809:CornerRadius="0" TextAlignment="Center">
+                         CornerRadius="0" TextAlignment="Center">
                         <TextBox.Header>
                             <TextBlock Text="Địa Chỉ" HorizontalAlignment="Center"/>
                         </TextBox.Header>
@@ -198,14 +202,14 @@
             </Grid>
             <TextBlock Text="MIÊU TẢ" HorizontalAlignment="Center"
                    Margin="5" FontSize="15" FontWeight="Bold"/>
-            <Windows10version1809:RichEditBox x:Name="Description" Height="150" Margin="5"/>
+            <RichEditBox x:Name="Description" Height="150" Margin="5"/>
             <TextBlock Text="NGÀY HỌC TRONG TUẦN" HorizontalAlignment="Center"
                    Margin="5" FontSize="15" FontWeight="Bold"/>
             <ComboBox x:Name="DayOfWeek" PlaceholderText="Chọn Thứ Trong Tuần" Margin="5" 
-                      Windows10version1809:CornerRadius="0" HorizontalAlignment="Center"/>
+                      CornerRadius="0" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
-                <TimePicker x:Name="TimeStart" Header="Thời Gian Bắt Đầu" Margin="5" Windows10version1809:CornerRadius="0" ClockIdentifier="24HourClock" SelectedTimeChanged="TimeStart_SelectedTimeChanged"/>
-                <TimePicker x:Name="TimeEnd" Header="Thời Gian Kết Thúc"  Margin="5" Windows10version1809:CornerRadius="0" ClockIdentifier="24HourClock" SelectedTimeChanged="TimeEnd_SelectedTimeChanged"/>
+                <TimePicker x:Name="TimeStart" Header="Thời Gian Bắt Đầu" Margin="5" CornerRadius="0" ClockIdentifier="24HourClock" SelectedTimeChanged="TimeStart_SelectedTimeChanged"/>
+                <TimePicker x:Name="TimeEnd" Header="Thời Gian Kết Thúc"  Margin="5" CornerRadius="0" ClockIdentifier="24HourClock" SelectedTimeChanged="TimeEnd_SelectedTimeChanged"/>
                 <Button x:Name="Add" Margin="5" Content="&#xE710;" FontFamily="Segoe MDL2 Assets" Width="50" VerticalAlignment="Bottom" Height="35" Click="WeekDayAdd_Click"/>
             </StackPanel>
             <TextBlock x:Name="ErrorTime" HorizontalAlignment="Center" Foreground="Red" Margin="5"/>
@@ -226,10 +230,6 @@
                 </ListView.ItemTemplate>
             </ListView>
             <muxc:ProgressBar x:Name="WaitingBar" Width="200" IsIndeterminate="True" ShowPaused="False" ShowError="False" Margin="5" Visibility="Collapsed"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
-                <Button x:Name="UploadRequest" Content="ĐĂNG YÊU CẦU" Width="150" Margin="5" Click="UploadRequest_Click" Foreground="{ThemeResource SystemAccentColor}" FontWeight="Bold"/>
-                <Button x:Name="Cancel" Content="HỦY BỎ" Width="150" Margin="5" Click="Cancel_Click" Foreground="{ThemeResource SystemAccentColor}" FontWeight="Bold"/>
-            </StackPanel>
         </StackPanel>
-    </Windows10version1809:ScrollViewer>
+    </ScrollViewer>
 </ContentDialog>

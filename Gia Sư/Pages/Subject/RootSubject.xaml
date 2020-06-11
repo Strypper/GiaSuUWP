@@ -231,12 +231,13 @@
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
                 <Button Margin="5" Content="&#xE16E;" FontFamily="Segoe MDL2 Assets" Width="50" Height="50"
                         FontWeight="ExtraBold" Background="Transparent" FontSize="20" Style="{StaticResource ButtonRevealStyle}"/>
-                <Windows10version1809:TextBox x:Name="SubjectFinder" Width="1000" Height="40" VerticalAlignment="Center" FontWeight="ExtraBold"
+                <TextBox x:Name="SubjectFinder" Width="1000" Height="40" VerticalAlignment="Center" FontWeight="ExtraBold"
                             HorizontalAlignment="Center" VerticalContentAlignment="Center" CornerRadius="0"
                             HorizontalTextAlignment="Center" FontSize="20" TextAlignment="Center" PlaceholderText="Kiếm môn học"
                             BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}"/>
-                <Button Margin="5" Content="&#xE1A3;" FontFamily="Segoe MDL2 Assets" Width="50" Height="50"
-                        FontWeight="ExtraBold" Background="Transparent" FontSize="20" Style="{StaticResource ButtonRevealStyle}"/>
+                <Button x:Name="SearchButton" Margin="5" Content="&#xE1A3;" FontFamily="Segoe MDL2 Assets" Width="50" Height="50"
+                        FontWeight="ExtraBold" Background="Transparent" FontSize="20" Style="{StaticResource ButtonRevealStyle}"
+                        Click="SearchButton_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel.ChildrenTransitions>
@@ -244,51 +245,51 @@
                         <EntranceThemeTransition IsStaggeringEnabled="True" FromHorizontalOffset="1500" />
                     </TransitionCollection>
                 </StackPanel.ChildrenTransitions>
-                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Công nghệ thông tin" FontWeight="bold">
-                    <Windows10version1809:ToggleButton.Background>
+                <ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Công nghệ thông tin" FontWeight="bold">
+                    <ToggleButton.Background>
                         <ImageBrush>
                             <ImageBrush.ImageSource>
                                 <BitmapImage UriSource="/Assets/AppImage/CNTT.png" DecodePixelWidth="280" DecodePixelHeight="50"/>
                             </ImageBrush.ImageSource>
                         </ImageBrush>
-                    </Windows10version1809:ToggleButton.Background>
-                </Windows10version1809:ToggleButton>
-                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Ứng dụng và Khoa học Cơ bản" FontWeight="bold">
-                    <Windows10version1809:ToggleButton.Background>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Ứng dụng và Khoa học Cơ bản" FontWeight="bold">
+                    <ToggleButton.Background>
                         <ImageBrush>
                             <ImageBrush.ImageSource>
                                 <BitmapImage UriSource="/Assets/AppImage/Science.jpg" DecodePixelWidth="280" DecodePixelHeight="50"/>
                             </ImageBrush.ImageSource>
                         </ImageBrush>
-                    </Windows10version1809:ToggleButton.Background>
-                </Windows10version1809:ToggleButton>
-                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Kinh doanh và Quản Lý" FontWeight="bold">
-                    <Windows10version1809:ToggleButton.Background>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Kinh doanh và Quản Lý" FontWeight="bold">
+                    <ToggleButton.Background>
                         <ImageBrush>
                             <ImageBrush.ImageSource>
                                 <BitmapImage UriSource="/Assets/AppImage/Business.jpg" DecodePixelWidth="280" DecodePixelHeight="50"/>
                             </ImageBrush.ImageSource>
                         </ImageBrush>
-                    </Windows10version1809:ToggleButton.Background>
-                </Windows10version1809:ToggleButton>
-                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Kiến trúc và Xây dựng" FontWeight="bold">
-                    <Windows10version1809:ToggleButton.Background>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Kiến trúc và Xây dựng" FontWeight="bold">
+                    <ToggleButton.Background>
                         <ImageBrush>
                             <ImageBrush.ImageSource>
                                 <BitmapImage UriSource="/Assets/AppImage/KienTrucXayDung.jpg" DecodePixelWidth="280" DecodePixelHeight="50"/>
                             </ImageBrush.ImageSource>
                         </ImageBrush>
-                    </Windows10version1809:ToggleButton.Background>
-                </Windows10version1809:ToggleButton>
-                <Windows10version1809:ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Luật" FontWeight="bold">
-                    <Windows10version1809:ToggleButton.Background>
+                    </ToggleButton.Background>
+                </ToggleButton>
+                <ToggleButton Width="280" Height="50" Margin="15,0,15,15" Content="Luật" FontWeight="bold">
+                    <ToggleButton.Background>
                         <ImageBrush>
                             <ImageBrush.ImageSource>
                                 <BitmapImage UriSource="/Assets/AppImage/Law.png" DecodePixelWidth="280" DecodePixelHeight="50"/>
                             </ImageBrush.ImageSource>
                         </ImageBrush>
-                    </Windows10version1809:ToggleButton.Background>
-                </Windows10version1809:ToggleButton>
+                    </ToggleButton.Background>
+                </ToggleButton>
             </StackPanel>
         </StackPanel>
         <Grid x:Name="RequestPage" Grid.Row="1">
@@ -296,7 +297,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="475"/>
             </Grid.ColumnDefinitions>
-            <Windows10version1809:RefreshContainer x:Name="RefreshContainer" RefreshRequested="RefreshContainer_RefreshRequested">
+            <RefreshContainer x:Name="RefreshContainer" RefreshRequested="RefreshContainer_RefreshRequested">
                 <Grid>
                     <ProgressRing x:Name="GetOverViewSubjectRequest" IsActive="False"  Width="100" Height="100"/>
                     <controls:AdaptiveGridView x:Name="SubjectGridView" animations:ReorderGridAnimation.Duration="1400"
@@ -311,23 +312,23 @@
                         </controls:AdaptiveGridView.ItemContainerTransitions>
                         <GridView.Header>
                             <Grid HorizontalAlignment="Stretch">
-                                <Windows10version1809:TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
                                                         FontSize="25" ToolTipService.ToolTip="Yêu cầu cá nhân"
                                                         Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}">
                                     <Run FontFamily="Segoe MDL2 Assets" Text="&#xE77B;"/>
                                     <Run Text="45"/>
-                                </Windows10version1809:TextBlock>
-                                <Windows10version1809:TextBlock FontSize="25" Foreground="{ThemeResource SystemAccentColor}"
+                                </TextBlock>
+                                <TextBlock FontSize="25" Foreground="{ThemeResource SystemAccentColor}"
                                                         FontWeight="ExtraBold" HorizontalAlignment="Center">
-                                    <Windows10version1809:Run Text="&#xE1D3;" FontFamily="Segoe MDL2 Assets"/>
-                                    <Windows10version1809:Run Text="MÔN HỌC"/>
-                                </Windows10version1809:TextBlock>
-                                <Windows10version1809:TextBlock VerticalAlignment="Center" HorizontalAlignment="Right"
+                                    <Run Text="&#xE1D3;" FontFamily="Segoe MDL2 Assets"/>
+                                    <Run Text="MÔN HỌC"/>
+                                </TextBlock>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right"
                                                         FontSize="25" ToolTipService.ToolTip="Yêu cầu theo nhóm"
                                                         Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}">
                                     <Run FontFamily="Segoe MDL2 Assets" Text="&#xE125;"/>
                                     <Run Text="20"/>
-                                </Windows10version1809:TextBlock>
+                                </TextBlock>
                             </Grid>
                         </GridView.Header>
                         <!--MainGridView-->
@@ -413,43 +414,64 @@
                         </controls:AdaptiveGridView.ItemTemplate>
                     </controls:AdaptiveGridView>
                 </Grid>
-            </Windows10version1809:RefreshContainer>
-            <Windows10version1809:ListView x:Name="HotRequest" Grid.Column="1">
-                <Windows10version1809:ListView.ItemContainerTransitions>
-                    <Windows10version1809:TransitionCollection>
+            </RefreshContainer>
+            <ListView x:Name="HotRequest" Grid.Column="1">
+                <ListView.ItemContainerTransitions>
+                    <TransitionCollection>
                         <ContentThemeTransition VerticalOffset="950"/>
-                    </Windows10version1809:TransitionCollection>
-                </Windows10version1809:ListView.ItemContainerTransitions>
-                <Windows10version1809:ListView.Header>
-                    <Windows10version1809:TextBlock FontSize="30" FontWeight="ExtraBold"  
+                    </TransitionCollection>
+                </ListView.ItemContainerTransitions>
+                <ListView.Header>
+                    <TextBlock FontSize="30" FontWeight="ExtraBold"  
                                                     Foreground="Yellow"
                                                     HorizontalAlignment="Center">
-                        <Windows10version1809:Run Text="&#xECAD;" FontFamily="Segoe MDL2 Assets"/>
-                        <Windows10version1809:Run Text="YÊU CẦU CẤP"/>
-                    </Windows10version1809:TextBlock>
-                </Windows10version1809:ListView.Header>
-            </Windows10version1809:ListView>
+                        <Run Text="&#xECAD;" FontFamily="Segoe MDL2 Assets"/>
+                        <Run Text="YÊU CẦU CẤP"/>
+                    </TextBlock>
+                </ListView.Header>
+            </ListView>
         </Grid>
 
         <!--Command Bar-->
         <CommandBar IsOpen="False" DefaultLabelPosition="Bottom"
                     VerticalAlignment="Bottom" Grid.Row="1">
             <AppBarButton x:Name="CreateRequest" Icon="Add" Label="Tạo yêu cầu dạy học" Click="CreateRequest_Click"/>
-            <AppBarButton Icon="Upload" Label="Đẩy yêu cầu"/>
-            <AppBarButton Icon="OpenWith" Label="Danh sách yêu cầu"/>
-            <AppBarButton Icon="People" Label="Danh sách chào giá"/>
+            <AppBarButton x:Name="PushRequest" Icon="Upload" Label="Đẩy yêu cầu"/>
+            <AppBarButton x:Name="RequestList" Icon="OpenWith" Label="Danh sách yêu cầu"/>
+            <AppBarButton x:Name="RequestPrice" Icon="People" Label="Danh sách chào giá"/>
             <AppBarButton x:Name="PersonalSchedule" Icon="Calendar" Label="Thời khóa biểu cá nhân" Click="PersonalSchedule_Click"/>
+            <AppBarButton Label="Báo lỗi" AllowFocusOnInteraction="True">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xEBE8;" />
+                </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Center" Margin="5" Text="Xin lỗi vì sự cố 😓😓"
+                                       FontWeight="ExtraBold" FontSize="20"/>
+                            <TextBlock HorizontalAlignment="Center" Text="Hãy tóm tắt lỗi của bạn ❗❗" Margin="5"/>
+                            <TextBox x:Name="BugTitle" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="5" Width="300"/>
+                            <TextBlock HorizontalAlignment="Center" Margin="5" Text="Miêu tả chi tiết"/>
+                            <RichEditBox x:Name="BugDetailBox" HorizontalAlignment="Stretch"
+                                                              Height="300" Margin="5"/>
+                            <TextBlock HorizontalAlignment="Center" Text="Nền tảng bạn đang sử dụng" Margin="5"/>
+                            <ComboBox x:Name="PlatformCombobox" HorizontalAlignment="Stretch" Margin="5" HorizontalContentAlignment="Center">
+                                <x:String>Windows 10 UWP 🖥💻</x:String>
+                                <x:String>Android</x:String>
+                                <x:String>IOS</x:String>
+                                <x:String>Web 🌍</x:String>
+                            </ComboBox>
+                            <Button x:Name="SubmitFeedBack" HorizontalAlignment="Stretch" Content="Đăng lỗi" Width="150" Margin="5" Click="SubmitFeedBack_Click"/>
+                            </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
             <CommandBar.Content>
                 <UserControl:Pagination x:Name="PaginationControl"/>
             </CommandBar.Content>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Setting" Label="Cài đặt"/>
-                <AppBarButton Icon="Sync" Label="Tải lại"/>
-                <AppBarButton Label="Báo lỗi">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xEBE8;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                <AppBarButton x:Name="RefreshPage" Icon="Sync" Label="Tải lại" Click="RefreshPage_Click"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
 
@@ -458,10 +480,10 @@
                 <AcrylicBrush BackgroundSource="Backdrop" TintColor="#88484848" TintOpacity="0.4" FallbackColor="#FF484848"/>
             </Grid.Background>
 
-            <StackPanel x:Name="LeftSide" HorizontalAlignment="Left" VerticalAlignment="Center" Windows10version1809:Translation="-500,0,0">
-                <Windows10version1809:StackPanel.TranslationTransition>
-                    <Windows10version1809:Vector3Transition Duration="0:0:1"/>
-                </Windows10version1809:StackPanel.TranslationTransition>
+            <StackPanel x:Name="LeftSide" HorizontalAlignment="Left" VerticalAlignment="Center" Translation="-500,0,0">
+                <StackPanel.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1"/>
+                </StackPanel.TranslationTransition>
 
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
@@ -572,7 +594,7 @@
 
 
                 <ListView x:Name="JoinRequest" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10"
-                                           Width="400" Windows10version1809:CornerRadius="5" 
+                                           Width="400" CornerRadius="5" 
                                            Background="{ThemeResource SystemAltMediumLowColor}"
                                            Padding="10" Height="220">
                     <ListView.Header>
@@ -584,10 +606,10 @@
                 </ListView>
             </StackPanel>
 
-            <StackPanel x:Name="RightSide" HorizontalAlignment="Right" VerticalAlignment="Center" Windows10version1809:Translation="500,0,0">
-                <Windows10version1809:StackPanel.TranslationTransition>
-                    <Windows10version1809:Vector3Transition Duration="0:0:1"/>
-                </Windows10version1809:StackPanel.TranslationTransition>
+            <StackPanel x:Name="RightSide" HorizontalAlignment="Right" VerticalAlignment="Center" Translation="500,0,0">
+                <StackPanel.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1"/>
+                </StackPanel.TranslationTransition>
 
                 <StackPanel x:Name="LocationRequest" Margin="10"
                             Background="{ThemeResource SystemAltMediumLowColor}" CornerRadius="5" Padding="10" Width="400">
@@ -616,39 +638,39 @@
                             <Run Text="Quận: "/>
                             <Run Text="Thủ Đức"/>
                     </TextBlock>
-                    <Windows10version1809:StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC3F;" Margin="5" />
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED56;" Margin="5" />
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC32;" Margin="5" />
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE913;" Margin="5" />
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE9CA;" Margin="5" />
-                    </Windows10version1809:StackPanel>
-                    <Windows10version1809:Button Content="Khám phá" Margin="5" HorizontalAlignment="Center" Background="#ea8024" Foreground="White"/>
-                    <Windows10version1809:FlipView Width="380" Height="220" HorizontalAlignment="Center">
-                        <Windows10version1809:Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/1.jpg"/>
-                        <Windows10version1809:Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/2.jpg"/>
-                        <Windows10version1809:Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/3.jpg"/>
-                        <Windows10version1809:Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/4.jpg"/>
-                        <Windows10version1809:Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/5.jpg"/>
-                    </Windows10version1809:FlipView>
+                    </StackPanel>
+                    <Button Content="Khám phá" Margin="5" HorizontalAlignment="Center" Background="#ea8024" Foreground="White"/>
+                    <FlipView Width="380" Height="220" HorizontalAlignment="Center">
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/1.jpg"/>
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/2.jpg"/>
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/3.jpg"/>
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/4.jpg"/>
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/5.jpg"/>
+                    </FlipView>
                 </StackPanel>
 
                 <ListView x:Name="WelcomePrice" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Padding="10" Height="250"
-                          Width="400" Windows10version1809:CornerRadius="5" Background="{ThemeResource SystemAltMediumLowColor}">
+                          Width="400" CornerRadius="5" Background="{ThemeResource SystemAltMediumLowColor}">
                     <ListView.Header>
-                        <Windows10version1809:TextBlock FontWeight="Bold" FontSize="20" HorizontalAlignment="Center">
+                        <TextBlock FontWeight="Bold" FontSize="20" HorizontalAlignment="Center">
                             <Run Text="&#xE10B;" FontFamily="Segoe MDL2 Assets"/>
                             <Run Text="Danh sách nhận dạy"/>
-                        </Windows10version1809:TextBlock>
+                        </TextBlock>
                     </ListView.Header>
                 </ListView>
             </StackPanel>
 
             <StackPanel x:Name="DaysOfWeekField" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                        Height="470" Windows10version1809:Translation="0,300,0">
-                <Windows10version1809:StackPanel.TranslationTransition>
-                    <Windows10version1809:Vector3Transition Duration="0:0:1"/>
-                </Windows10version1809:StackPanel.TranslationTransition>
+                        Height="470" Translation="0,300,0">
+                <StackPanel.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1"/>
+                </StackPanel.TranslationTransition>
 
                 <TextBlock HorizontalAlignment="Center" FontWeight="Bold" Margin="5"
                                FontSize="20" Style="{ThemeResource BaseTextBlockStyle}">
@@ -663,22 +685,22 @@
                     <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal" Margin="-30">
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center"
                             Width="150" Height="40" Margin="5"
-                            Background="#0c9c4a" Windows10version1809:CornerRadius="5">
+                            Background="#0c9c4a" CornerRadius="5">
                         <TextBlock Text="Liên Lạc" FontWeight="Bold"/>
                     </Button>
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center"
                             Width="150" Height="40" Margin="5"
-                            Background="Red" Windows10version1809:CornerRadius="5">
+                            Background="Red" CornerRadius="5">
                         <TextBlock Text="Nhắn Tin" FontWeight="Bold"/>
                     </Button>
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center"
                             Width="150" Height="40" Margin="5"
-                            Background="Yellow" Windows10version1809:CornerRadius="5">
+                            Background="Yellow" CornerRadius="5">
                         <TextBlock Text="Nhận Dạy" FontWeight="Bold"/>
                     </Button>
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center"
                             Width="150" Height="40" Margin="5"
-                            Background="Blue" Windows10version1809:CornerRadius="5">
+                            Background="Blue" CornerRadius="5">
                         <TextBlock Text="Học Chung" FontWeight="Bold"/>
                     </Button>
                 </StackPanel>
@@ -688,17 +710,17 @@
             <Button x:Name="CloseBtn" VerticalAlignment="Top" HorizontalAlignment="Center" 
                     Content="&#xE106;" ToolTipService.ToolTip="Close" 
                     AutomationProperties.Name="Close" Click="CloseBtn_Click" 
-                    Windows10version1809:CenterPoint="25,25,0"
+                    CenterPoint="25,25,0"
                     Margin="35" FontFamily="Segoe MDL2 Assets" Grid.Row="0" 
                     Background="OrangeRed" Width="50" Height="50" 
-                    Windows10version1809:CornerRadius="50" 
-                    Windows10version1809:Translation="0,-300,0">
-                <Windows10version1809:Button.TranslationTransition>
-                    <Windows10version1809:Vector3Transition Duration="0:0:1"/>
-                </Windows10version1809:Button.TranslationTransition>
-                <Windows10version1809:Button.RotationTransition>
+                    CornerRadius="50" 
+                    Translation="0,-300,0">
+                <Button.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1"/>
+                </Button.TranslationTransition>
+                <Button.RotationTransition>
                     <ScalarTransition Duration="0:0:1.5"/>
-                </Windows10version1809:Button.RotationTransition>
+                </Button.RotationTransition>
             </Button>
 
 

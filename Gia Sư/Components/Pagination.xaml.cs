@@ -43,7 +43,7 @@ namespace Gia_Sư.Components
             var response = await httpClient.GetAsync(GetNumberOfPage);
             var result = await response.Content.ReadAsStringAsync();
             NumberOfRequest = JsonConvert.DeserializeObject<int>(result);
-            double NumberOfPage = (double)NumberOfRequest / 50;
+            double NumberOfPage = (double)NumberOfRequest / 18;
             for (int i = 0; i < NumberOfPage; i++)
             {
                 ToggleButton tb = new ToggleButton();

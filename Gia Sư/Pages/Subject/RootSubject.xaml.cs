@@ -12,11 +12,15 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -34,32 +38,28 @@ namespace Gia_Sư.Pages.Subject
     public sealed partial class RootSubject : Page
     {
         public ObservableCollection<OverviewRequest> SubjectRequestList;
-        OverviewRequest selectedItem;
+        OverviewRequest selectedItem = new OverviewRequest();
         private int PageNumber = 0;
-        private SubjectRequest sr;
+        private string BugDetail;
+        private SubjectRequest sr = new SubjectRequest();
         public string GetRequestUrl(int PageNumber) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/RequestPage/{PageNumber}";
         public string GetRequestDetailUrl(int RequestNumber) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/RequestDetail/{RequestNumber}";
-
+        public string SearchRequestUrl(string SubName) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/SearchSubject/{SubName}";
+        public string FeedBackSubmitUrl = "https://giasuapi.azurewebsites.net/api/FeedbackControllers/CreateFeedBack";
         private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
         private readonly HttpClient httpClient = new HttpClient(handler);
 
         private bool HomeWorkVisible { get; set; }
         private bool PresentationVisible { get; set; }
-        private bool LaboratoryVisible { get; set; }    
+        private bool LaboratoryVisible { get; set; }
         public RootSubject()
         {
             this.InitializeComponent();
-
-            sr = new SubjectRequest();
-
-            //SubjectRequestList = SubjectData.getData();
-
             PaginationControl.pageClick += PageClickEvent;
             //Animate Size Changed
             HotRequest.EnableImplicitAnimation(VisualPropertyType.Offset, 1400);
-
-
         }
+
         private async void Subject_ItemClick(object sender, ItemClickEventArgs e)
         {
             GridViewItem ClickedItem = SubjectGridView.ContainerFromItem(e.ClickedItem) as GridViewItem;
@@ -178,14 +178,23 @@ namespace Gia_Sư.Pages.Subject
         }
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-           //httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + App.Token);
-           await GetOverViewRequestsAsync(0);
+            if (App.User.UserName == null)
+            {
+                CreateRequest.Visibility = Visibility.Collapsed;
+                PushRequest.Visibility = Visibility.Collapsed;
+                RequestList.Visibility = Visibility.Collapsed;
+                RequestPrice.Visibility = Visibility.Collapsed;
+                PersonalSchedule.Visibility = Visibility.Collapsed;
+            }
+
+            //httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + App.Token);
+            await GetOverViewRequestsAsync(0);
         }
         protected override void OnNavigatedTo(NavigationEventArgs e) 
         {
                 
         }
-        public async Task GetOverViewRequestsAsync(int page)
+        private async Task GetOverViewRequestsAsync(int page)
         {
             GetOverViewSubjectRequest.IsActive = true;
             PageNumber = page;
@@ -197,15 +206,68 @@ namespace Gia_Sư.Pages.Subject
             SubjectGridView.ItemsSource = SubjectRequestList;
             GetOverViewSubjectRequest.IsActive = false;
         }
+        private async Task SearchSubjectRequest(string subname)
+        {
+            GetOverViewSubjectRequest.IsActive = true;
+            var response = await httpClient.GetAsync(SearchRequestUrl(subname));
+            var result = await response.Content.ReadAsStringAsync();
+            System.Diagnostics.Debug.WriteLine(result);
+            SubjectRequestList = JsonConvert.DeserializeObject<ObservableCollection<OverviewRequest>>(result);
+            System.Diagnostics.Debug.WriteLine(SubjectRequestList);
+            SubjectGridView.ItemsSource = SubjectRequestList;
+            GetOverViewSubjectRequest.IsActive = false;
+        }
+        private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+        {
+            GetOverViewSubjectRequest.IsActive = true;
+            await GetOverViewRequestsAsync(0);
+            SubjectFinder.Text = "";
+            GetOverViewSubjectRequest.IsActive = false;
+        }
         private async void CreateRequest_Click(object sender, RoutedEventArgs e)
         {
             RequestSubject rs = new RequestSubject();
+            rs.PrimaryButtonClick += SubmitEvent;
             await rs.ShowAsync();
         }
-
-        private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+        private async void SubmitEvent(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            if (PageNumber == 0)
+            {
+                GetOverViewSubjectRequest.IsActive = true;
+                await GetOverViewRequestsAsync(0);
+                GetOverViewSubjectRequest.IsActive = false;
+            }
+        }
+        private async void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            await SearchSubjectRequest(SubjectFinder.Text);
+        }
+
+        private async void RefreshPage_Click(object sender, RoutedEventArgs e)
+        {
+            GetOverViewSubjectRequest.IsActive = true;
             await GetOverViewRequestsAsync(0);
+            SubjectFinder.Text = "";
+            GetOverViewSubjectRequest.IsActive = false;
+        }
+
+        private async void SubmitFeedBack_Click(object sender, RoutedEventArgs e)
+        {
+            BugDetailBox.Document.GetText(TextGetOptions.None, out BugDetail);
+            var values = new Dictionary<string, string>
+            {
+               {"title" , BugTitle.Text},
+               {"detail", BugDetail},
+               {"platform", PlatformCombobox.SelectedItem.ToString()},
+               {"timeUpload", DateTime.Now.ToString()}
+            };
+            var content = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token.token);
+            var response = await httpClient.PostAsync(FeedBackSubmitUrl, content);
+            string Status = response.StatusCode.ToString();
+            var responseString = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine(Status);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Gia_Sư.Models.AppTools;
 using Gia_Sư.Models.Location;
 using Gia_Sư.Models.SubjectData;
+using Gia_Sư.Pages.Subject;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace Gia_Sư.Components.PopUps
 
     {
         private int CityId, DistrictId, GroupId;
+        private string Descript;
         private readonly string CreateRequestUrl = "https://giasuapi.azurewebsites.net/api/SubjectControllers/CreateRequest";
         private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
         private readonly HttpClient httpClient = new HttpClient(handler);
@@ -51,9 +53,10 @@ namespace Gia_Sư.Components.PopUps
         private StudyGroup ObjectSG;
         private List<StudyGroup> SG;
         private List<StudyField> SF;
-
-        private string Descript;
         private int ValidErr;
+
+        //Delegate
+        //public event EventHandler rootSubjectRefresh;
 
         private ObservableCollection<WeekDay> Choosentimes;
 
@@ -74,75 +77,6 @@ namespace Gia_Sư.Components.PopUps
             //WeekDay Combobox bind to the Enum
             var DaysOfWeek = Enum.GetValues(typeof(WeekDaysEnum)).Cast<WeekDaysEnum>();
             DayOfWeek.ItemsSource = DaysOfWeek.ToList();
-        }
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-        }
-
-        private async void UploadRequest_Click(object sender, RoutedEventArgs e)
-        {
-            WaitingBar.Visibility = Visibility.Visible;
-            //Prepare popup component
-            VietNamDistrict district = (VietNamDistrict)District.SelectedValue;
-            VietNamCity city = (VietNamCity)City.SelectedValue;
-            StudyGroup sg = (StudyGroup)StudyGroup.SelectedItem;
-            StudyField sf = (StudyField)StudyField.SelectedItem;
-            School sc = (School)School.SelectedItem;
-            Description.Document.GetText(TextGetOptions.None, out Descript);
-            //Validation
-            if(InfoValid() == true)
-            {
-                try
-                {
-                    var value = new Dictionary<string, object>
-                                {
-                                    { "SubjectName", SubjectName.Text },
-                                    { "StudyGroup", sg.StudyGroupID },
-                                    { "StudyField", sf.StudyFieldID },
-                                    { "SubjectTeacher", Teacher.Text},
-                                    { "Price", Price.Value },
-                                    { "LearningAddress", Address.Text },
-                                    { "LearningDistrict", district.districtID },
-                                    { "LearningCity", city.cityID },
-                                    { "Description", Descript },
-                                    { "SchoolID", sc.schoolID },
-                                    { "HomeWork", HomeWork.IsChecked },
-                                    { "Presentation", Presentation.IsChecked },
-                                    { "Laboratory", Lab.IsChecked },
-                                    { "WeekDays", Choosentimes }
-                                };
-                    var content = new StringContent(JsonConvert.SerializeObject(value), Encoding.UTF8, "application/json");
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token.token);
-                    var response = await httpClient.PostAsync(CreateRequestUrl, content);
-                    string Status = response.StatusCode.ToString();
-                    var responseString = await response.Content.ReadAsStringAsync();
-                    System.Diagnostics.Debug.WriteLine(Status);
-                    System.Diagnostics.Debug.WriteLine(App.Token.token);
-                    if (Status == "OK")
-                    {
-                        //Show Success Status
-                        WaitingBar.Visibility = Visibility.Collapsed;
-                        //Trigger the page refresh
-
-                        //Close the popup
-                        this.Hide();
-                    }
-                    else
-                    {
-                        WaitingBar.ShowError = true;
-                    }
-                }
-                catch (Exception)
-                {
-                    WaitingBar.ShowError = true;
-                    throw new Exception("Some thing wrong");
-                }
-            }
-            else
-            {
-                WaitingBar.ShowError = true;
-            }
         }
         private async Task GetCitiesAsync()
         {
@@ -266,6 +200,77 @@ namespace Gia_Sư.Components.PopUps
             System.Diagnostics.Debug.WriteLine(TotalTime.TotalMinutes);
         }
 
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            WaitingBar.Visibility = Visibility.Visible;
+            //Prepare popup component
+            VietNamDistrict district = (VietNamDistrict)District.SelectedValue;
+            VietNamCity city = (VietNamCity)City.SelectedValue;
+            StudyGroup sg = (StudyGroup)StudyGroup.SelectedItem;
+            StudyField sf = (StudyField)StudyField.SelectedItem;
+            School sc = (School)School.SelectedItem;
+            Description.Document.GetText(TextGetOptions.None, out Descript);
+            //Validation
+            if (InfoValid() == true)
+            {
+                try
+                {
+                    var value = new Dictionary<string, object>
+                                {
+                                    { "SubjectName", SubjectName.Text },
+                                    { "StudyGroup", sg.StudyGroupID },
+                                    { "StudyField", sf.StudyFieldID },
+                                    { "SubjectTeacher", Teacher.Text},
+                                    { "Price", Price.Value },
+                                    { "LearningAddress", Address.Text },
+                                    { "LearningDistrict", district.districtID },
+                                    { "LearningCity", city.cityID },
+                                    { "Description", Descript },
+                                    { "SchoolID", sc.schoolID },
+                                    { "HomeWork", HomeWork.IsChecked },
+                                    { "Presentation", Presentation.IsChecked },
+                                    { "Laboratory", Lab.IsChecked },
+                                    { "WeekDays", Choosentimes }
+                                };
+                    var content = new StringContent(JsonConvert.SerializeObject(value), Encoding.UTF8, "application/json");
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token.token);
+                    var response = await httpClient.PostAsync(CreateRequestUrl, content);
+                    string Status = response.StatusCode.ToString();
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine(Status);
+                    System.Diagnostics.Debug.WriteLine(App.Token.token);
+                    if (Status == "OK")
+                    {
+                        //Show Success Status
+                        WaitingBar.Visibility = Visibility.Collapsed;
+                        //Trigger the page refresh
+                        //Delegate is not working demand a look
+                        //OnRootSubjectPageRefresh();
+                        //Close the popup
+                        this.Hide();
+                    }
+                    else
+                    {
+                        WaitingBar.ShowError = true;
+                    }
+                }
+                catch (Exception)
+                {
+                    WaitingBar.ShowError = true;
+                    throw new Exception("Some thing wrong");
+                }
+            }
+            else
+            {
+                WaitingBar.ShowError = true;
+            }
+        }
+
+        private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            this.Hide();
+        }
+
         private void WeekDayAdd_Click(object sender, RoutedEventArgs e)
         {
             var dow = (WeekDaysEnum)DayOfWeek.SelectedItem; 
@@ -311,5 +316,10 @@ namespace Gia_Sư.Components.PopUps
             System.Diagnostics.Debug.WriteLine("Added " + wd.weekDay + wd.TimeStart + wd.TimeEnd);
             return true;
         }
+        //Delegate is not working demand a look
+        //protected void OnRootSubjectPageRefresh()
+        //{
+        //    rootSubjectRefresh?.Invoke(this, EventArgs.Empty);
+        //}
     }
 }
