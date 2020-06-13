@@ -445,24 +445,28 @@
                     <FontIcon Glyph="&#xEBE8;" />
                 </AppBarButton.Icon>
                 <AppBarButton.Flyout>
-                    <Flyout>
-                        <StackPanel>
-                            <TextBlock HorizontalAlignment="Center" Margin="5" Text="Xin lỗi vì sự cố 😓😓"
+                    <Flyout x:Name="BugWindow">
+                        <Grid>
+                            <StackPanel x:Name="InsideBugWindow">
+                                <TextBlock HorizontalAlignment="Center" Margin="5" Text="Xin lỗi vì sự cố 😓😓"
                                        FontWeight="ExtraBold" FontSize="20"/>
-                            <TextBlock HorizontalAlignment="Center" Text="Hãy tóm tắt lỗi của bạn ❗❗" Margin="5"/>
-                            <TextBox x:Name="BugTitle" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="5" Width="300"/>
-                            <TextBlock HorizontalAlignment="Center" Margin="5" Text="Miêu tả chi tiết"/>
-                            <RichEditBox x:Name="BugDetailBox" HorizontalAlignment="Stretch"
+                                <TextBlock HorizontalAlignment="Center" Text="Hãy tóm tắt lỗi của bạn ❗❗" Margin="5"/>
+                                <TextBox x:Name="BugTitle" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="5" Width="300"/>
+                                <TextBlock HorizontalAlignment="Center" Margin="5" Text="Miêu tả chi tiết"/>
+                                <RichEditBox x:Name="BugDetailBox" HorizontalAlignment="Stretch"
                                                               Height="300" Margin="5"/>
-                            <TextBlock HorizontalAlignment="Center" Text="Nền tảng bạn đang sử dụng" Margin="5"/>
-                            <ComboBox x:Name="PlatformCombobox" HorizontalAlignment="Stretch" Margin="5" HorizontalContentAlignment="Center">
-                                <x:String>Windows 10 UWP 🖥💻</x:String>
-                                <x:String>Android</x:String>
-                                <x:String>IOS</x:String>
-                                <x:String>Web 🌍</x:String>
-                            </ComboBox>
-                            <Button x:Name="SubmitFeedBack" HorizontalAlignment="Stretch" Content="Đăng lỗi" Width="150" Margin="5" Click="SubmitFeedBack_Click"/>
+                                <TextBlock HorizontalAlignment="Center" Text="Nền tảng bạn đang sử dụng" Margin="5"/>
+                                <ComboBox x:Name="PlatformCombobox" HorizontalAlignment="Stretch" Margin="5" 
+                                          HorizontalContentAlignment="Center" SelectionChanged="PlatformCombobox_SelectionChanged">
+                                    <x:String>Windows 10 UWP 🖥</x:String>
+                                    <x:String>Android</x:String>
+                                    <x:String>IOS</x:String>
+                                    <x:String>Web 🌍</x:String>
+                                </ComboBox>
+                                <Button x:Name="SubmitFeedBack" HorizontalAlignment="Stretch" Content="Đăng lỗi" Width="150" Margin="5" Click="SubmitFeedBack_Click"/>
                             </StackPanel>
+                            <ProgressRing x:Name="BugLoadingRing" Width="50" Height="50"/>
+                        </Grid>
                     </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>

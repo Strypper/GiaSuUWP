@@ -20,6 +20,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
+using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -59,7 +60,6 @@ namespace Gia_Sư.Pages.Subject
             //Animate Size Changed
             HotRequest.EnableImplicitAnimation(VisualPropertyType.Offset, 1400);
         }
-
         private async void Subject_ItemClick(object sender, ItemClickEventArgs e)
         {
             GridViewItem ClickedItem = SubjectGridView.ContainerFromItem(e.ClickedItem) as GridViewItem;
@@ -234,16 +234,13 @@ namespace Gia_Sư.Pages.Subject
         {
             if (PageNumber == 0)
             {
-                GetOverViewSubjectRequest.IsActive = true;
                 await GetOverViewRequestsAsync(0);
-                GetOverViewSubjectRequest.IsActive = false;
             }
         }
         private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             await SearchSubjectRequest(SubjectFinder.Text);
         }
-
         private async void RefreshPage_Click(object sender, RoutedEventArgs e)
         {
             GetOverViewSubjectRequest.IsActive = true;
@@ -251,23 +248,39 @@ namespace Gia_Sư.Pages.Subject
             SubjectFinder.Text = "";
             GetOverViewSubjectRequest.IsActive = false;
         }
-
         private async void SubmitFeedBack_Click(object sender, RoutedEventArgs e)
         {
-            BugDetailBox.Document.GetText(TextGetOptions.None, out BugDetail);
-            var values = new Dictionary<string, string>
+            if(PlatformCombobox.SelectedItem == null)
             {
-               {"title" , BugTitle.Text},
-               {"detail", BugDetail},
-               {"platform", PlatformCombobox.SelectedItem.ToString()},
-               {"timeUpload", DateTime.Now.ToString()}
-            };
-            var content = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token.token);
-            var response = await httpClient.PostAsync(FeedBackSubmitUrl, content);
-            string Status = response.StatusCode.ToString();
-            var responseString = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine(Status);
+                PlatformCombobox.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+                PlatformCombobox.Header = "Xin hãy chọn nền tảng của bạn";
+            }
+            else
+            {
+                BugLoadingRing.IsActive = true;
+                BugDetailBox.Document.GetText(TextGetOptions.None, out BugDetail);
+                var values = new Dictionary<string, string>
+                    {
+                       {"title" , BugTitle.Text},
+                       {"detail", BugDetail},
+                       {"platform", PlatformCombobox.SelectedItem.ToString()},
+                       {"timeUpload", DateTime.Now.ToString()}
+                    };
+                var content = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token.token);
+                var response = await httpClient.PostAsync(FeedBackSubmitUrl, content);
+                string Status = response.StatusCode.ToString();
+                var responseString = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(Status);
+                BugLoadingRing.IsActive = false;
+                BugWindow.Hide();
+                BugTitle.Text = "";
+                BugDetailBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
+            }
+        }
+        private void PlatformCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PlatformCombobox.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
         }
     }
 }

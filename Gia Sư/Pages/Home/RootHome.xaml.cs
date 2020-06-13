@@ -3,12 +3,14 @@ using Gia_Sư.Models.Services;
 using Gia_Sư.Pages.Subject;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -33,6 +35,10 @@ namespace Gia_Sư.Pages.Home
         public RootHome()
         {
             this.InitializeComponent();
+
+            var scaleFactor = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+            Debug.WriteLine(scaleFactor);
+
             Below.Opacity = 1;
             Welcome.Translation = new Vector3(0, 0, 0);
             services = ServiceList.GetServices();

@@ -108,8 +108,8 @@
                                         </ImageBrush>
                                     </Border.Background>
                                     <TextBlock Text="{x:Bind StudyGroupName}" FontWeight="ExtraBold"
-                                                                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                                    FontSize="12"/>
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                                               FontSize="12"/>
                                 </Border>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
@@ -145,7 +145,8 @@
                         </ComboBox.Header>
                     </ComboBox>
                     <ComboBox x:Name="City" Margin="5" HorizontalAlignment="Stretch" 
-                              CornerRadius="0" SelectionChanged="City_SelectionChanged">
+                              CornerRadius="0" SelectionChanged="City_SelectionChanged"
+                              HorizontalContentAlignment="Center">
                         <ComboBox.Header>
                             <TextBlock Text="Thành Phố" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
@@ -156,7 +157,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <ComboBox x:Name="District" Margin="5" HorizontalAlignment="Stretch" 
-                              CornerRadius="0">
+                              CornerRadius="0" HorizontalContentAlignment="Center">
                         <ComboBox.Header>
                             <TextBlock Text="Quận Huyện" HorizontalAlignment="Center"/>
                         </ComboBox.Header>
@@ -175,9 +176,9 @@
                     <TextBlock Text="THÔNG TIN BỔ SUNG" HorizontalAlignment="Center"
                            Margin="5" FontSize="15" FontWeight="Bold"/>
                     <muxc:NumberBox x:Name="People" Margin="5"
-                        LargeChange="5" SmallChange="1" 
-                        HorizontalContentAlignment="Center"
-                        SpinButtonPlacementMode="Compact" Value="1">
+                                    LargeChange="5" SmallChange="1" 
+                                    HorizontalContentAlignment="Center"
+                                    SpinButtonPlacementMode="Compact" Value="1">
                         <muxc:NumberBox.Header>
                             <TextBlock Text="Số Lượng Học Chung" HorizontalAlignment="Center"/>
                         </muxc:NumberBox.Header>
@@ -194,9 +195,9 @@
                            Margin="5"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                             Margin="5">
-                        <ToggleButton x:Name="HourPay" Content="Theo Giờ" Margin="5"/>
-                        <ToggleButton x:Name="WeekPay" Content="Theo Tuần" Margin="5"/>
-                        <ToggleButton x:Name="MonthPay" Content="Theo Tháng" Margin="5"/>
+                        <ToggleButton x:Name="HourPay" Content="Theo Giờ" Margin="5" Checked="Pay_Checked"/>
+                        <ToggleButton x:Name="WeekPay" Content="Theo Tuần" Margin="5" Checked="Pay_Checked"/>
+                        <ToggleButton x:Name="MonthPay" Content="Theo Tháng" Margin="5" Checked="Pay_Checked"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -205,8 +206,8 @@
             <RichEditBox x:Name="Description" Height="150" Margin="5"/>
             <TextBlock Text="NGÀY HỌC TRONG TUẦN" HorizontalAlignment="Center"
                    Margin="5" FontSize="15" FontWeight="Bold"/>
-            <ComboBox x:Name="DayOfWeek" PlaceholderText="Chọn Thứ Trong Tuần" Margin="5" 
-                      CornerRadius="0" HorizontalAlignment="Center"/>
+            <ComboBox x:Name="DayOfWeek" PlaceholderText="Chọn Thứ Trong Tuần" Margin="5" HorizontalContentAlignment="Center"
+                      CornerRadius="0" HorizontalAlignment="Center" SelectionChanged="DayOfWeek_SelectionChanged"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
                 <TimePicker x:Name="TimeStart" Header="Thời Gian Bắt Đầu" Margin="5" CornerRadius="0" ClockIdentifier="24HourClock" SelectedTimeChanged="TimeStart_SelectedTimeChanged"/>
                 <TimePicker x:Name="TimeEnd" Header="Thời Gian Kết Thúc"  Margin="5" CornerRadius="0" ClockIdentifier="24HourClock" SelectedTimeChanged="TimeEnd_SelectedTimeChanged"/>
@@ -214,7 +215,8 @@
             </StackPanel>
             <TextBlock x:Name="ErrorTime" HorizontalAlignment="Center" Foreground="Red" Margin="5"/>
             <Grid HorizontalAlignment="Stretch">
-                <TextBlock Text="Thứ trong tuần" HorizontalAlignment="Left" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColor}"/>
+                <TextBlock Text="Thứ trong tuần" HorizontalAlignment="Left" FontWeight="Bold" 
+                           Foreground="{ThemeResource SystemAccentColor}"/>
                 <TextBlock Text="Giờ bắt đầu" HorizontalAlignment="Center" FontWeight="Bold"/>
                 <TextBlock Text="Giờ kết thúc" HorizontalAlignment="Right" FontWeight="Bold"/>
             </Grid>

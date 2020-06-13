@@ -70,17 +70,12 @@ namespace Gia_Sư
         private List<VietNamCity> VNCity;
         private List<VietNamDistrict> VNDistrict;
         private List<School> _Sc;
-
         private StudyGroup ObjectSG;
         private List<StudyGroup> SG;
         private List<StudyField> SF;
-
         private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
         private readonly HttpClient httpClient = new HttpClient(handler);
-
-
         SignUpSuccess contentSuccess = new SignUpSuccess();
-
         public LoginPage()
         {
             this.InitializeComponent();
@@ -537,22 +532,16 @@ namespace Gia_Sư
             captureUI.PhotoSettings.Format = CameraCaptureUIPhotoFormat.Jpeg;
             captureUI.PhotoSettings.CroppedSizeInPixels = new Size(200, 200);
 
-            StorageFile photo = await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
+            userPhoto = await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
 
-            if (photo == null)
+            if (userPhoto == null)
             {
                 // User cancelled photo capture
                 return;
             }
             else
             {
-                //StorageFolder destinationFolder =
-                //    await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePhotoFolder",
-                //        CreationCollisionOption.OpenIfExists);
-
-                //await photo.CopyAsync(destinationFolder, "ProfilePhoto.jpg", NameCollisionOption.ReplaceExisting);
-                //await photo.DeleteAsync();
-                var filestream = await photo.OpenAsync(FileAccessMode.Read);
+                var filestream = await userPhoto.OpenAsync(FileAccessMode.Read);
                 BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.SetSource(filestream);
                 ProfilePic.ProfilePicture = bitmapImage;

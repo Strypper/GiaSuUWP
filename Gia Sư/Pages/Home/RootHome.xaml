@@ -14,10 +14,6 @@
     mc:Ignorable="d" Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.Resources>
-        
-    </Page.Resources>
-
 
     <Grid x:Name="Root">
         <VisualStateManager.VisualStateGroups>
@@ -101,6 +97,42 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+
+
+            <!--<VisualStateGroup>
+                <VisualState x:Name="SurfaceBookAdaptHeight">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="3000"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="WelComeSection.Background" Value="Yellow"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DesktopAdaptHeight">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="2500"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="WelComeSection.Background" Value="Blue"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PhoneAdaptHeight">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="1280"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="WelComeSection.Background" Value="Green"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PhoneAdapt1Height">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="WelComeSection.Background" Value="Red"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>-->
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.8*"/>

@@ -34,8 +34,8 @@ namespace Gia_Sư.Components.PopUps
     public sealed partial class RequestSubject : ContentDialog
 
     {
-        private int CityId, DistrictId, GroupId;
-        private string Descript;
+        private int CityId, DistrictId, GroupId, ValidErr;
+        private string Descript, PayType;
         private readonly string CreateRequestUrl = "https://giasuapi.azurewebsites.net/api/SubjectControllers/CreateRequest";
         private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
         private readonly HttpClient httpClient = new HttpClient(handler);
@@ -53,10 +53,6 @@ namespace Gia_Sư.Components.PopUps
         private StudyGroup ObjectSG;
         private List<StudyGroup> SG;
         private List<StudyField> SF;
-        private int ValidErr;
-
-        //Delegate
-        //public event EventHandler rootSubjectRefresh;
 
         private ObservableCollection<WeekDay> Choosentimes;
 
@@ -136,21 +132,18 @@ namespace Gia_Sư.Components.PopUps
             CityId = ObjectCity.cityID;
             await GetDistrictsAsync(CityId, 1);
         }
-
         private async void StudyGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ObjectSG = (StudyGroup)StudyGroup.SelectedItem;
             GroupId = ObjectSG.StudyGroupID;
             await GetStudyFieldAsync(GroupId);
         }
-
         private async void SchoolDistrict_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ObjectDistrict = (VietNamDistrict)SchoolDistrict.SelectedItem;
             DistrictId = ObjectDistrict.districtID;
             await GetSchoolsAsync(DistrictId);
         }
-
         private async void City_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ObjectCity = (VietNamCity)City.SelectedItem;
@@ -184,13 +177,11 @@ namespace Gia_Sư.Components.PopUps
             } 
             return true;
         }
-
         private void TimeStart_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
         {
             System.Diagnostics.Debug.WriteLine(TimeStart.Time);
             System.Diagnostics.Debug.WriteLine(TimeStart.Time.TotalMinutes);
         }
-
         private void TimeEnd_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
         {
             System.Diagnostics.Debug.WriteLine(TimeEnd.Time);
@@ -199,7 +190,6 @@ namespace Gia_Sư.Components.PopUps
             System.Diagnostics.Debug.WriteLine(TotalTime);
             System.Diagnostics.Debug.WriteLine(TotalTime.TotalMinutes);
         }
-
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             WaitingBar.Visibility = Visibility.Visible;
@@ -230,7 +220,8 @@ namespace Gia_Sư.Components.PopUps
                                     { "HomeWork", HomeWork.IsChecked },
                                     { "Presentation", Presentation.IsChecked },
                                     { "Laboratory", Lab.IsChecked },
-                                    { "WeekDays", Choosentimes }
+                                    { "WeekDays", Choosentimes },
+                                    { "PaymentType", PayType}
                                 };
                     var content = new StringContent(JsonConvert.SerializeObject(value), Encoding.UTF8, "application/json");
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token.token);
@@ -243,9 +234,6 @@ namespace Gia_Sư.Components.PopUps
                     {
                         //Show Success Status
                         WaitingBar.Visibility = Visibility.Collapsed;
-                        //Trigger the page refresh
-                        //Delegate is not working demand a look
-                        //OnRootSubjectPageRefresh();
                         //Close the popup
                         this.Hide();
                     }
@@ -265,24 +253,33 @@ namespace Gia_Sư.Components.PopUps
                 WaitingBar.ShowError = true;
             }
         }
-
         private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             this.Hide();
         }
-
+        private void DayOfWeek_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DayOfWeek.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+        }
         private void WeekDayAdd_Click(object sender, RoutedEventArgs e)
         {
-            var dow = (WeekDaysEnum)DayOfWeek.SelectedItem; 
-            WeekDay wd = new WeekDay(dow, TimeStart.Time, TimeEnd.Time);
-            if (addWeekDay(wd) == false) 
+            if(DayOfWeek.SelectedItem == null)
             {
-                TimeStart.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
-                TimeEnd.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
-                Add.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
-            };
+                DayOfWeek.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+                DayOfWeek.Header = "Bạn cần phải chọn thứ trong ngày";
+            }
+            else
+            {
+                var dow = (WeekDaysEnum)DayOfWeek.SelectedItem;
+                WeekDay wd = new WeekDay(dow, TimeStart.Time, TimeEnd.Time);
+                if (addWeekDay(wd) == false)
+                {
+                    TimeStart.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+                    TimeEnd.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+                    Add.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+                };
+            }
         }
-
         public bool addWeekDay(WeekDay wd)
         {
             if (Choosentimes.Count > 0)
@@ -316,10 +313,27 @@ namespace Gia_Sư.Components.PopUps
             System.Diagnostics.Debug.WriteLine("Added " + wd.weekDay + wd.TimeStart + wd.TimeEnd);
             return true;
         }
-        //Delegate is not working demand a look
-        //protected void OnRootSubjectPageRefresh()
-        //{
-        //    rootSubjectRefresh?.Invoke(this, EventArgs.Empty);
-        //}
+        private void Pay_Checked(object sender, RoutedEventArgs e)
+        {
+            ToggleButton tb = sender as ToggleButton;
+            if(tb.Name == "HourPay")
+            {
+                WeekPay.IsChecked = false;
+                MonthPay.IsChecked = false;
+                PayType = "Hour";
+            }
+            if (tb.Name == "WeekPay")
+            {
+                HourPay.IsChecked = false;
+                MonthPay.IsChecked = false;
+                PayType = "Week";
+            }
+            if (tb.Name == "MonthPay")
+            {
+                WeekPay.IsChecked = false;
+                HourPay.IsChecked = false;
+                PayType = "Month";
+            }
+        }
     }
 }
