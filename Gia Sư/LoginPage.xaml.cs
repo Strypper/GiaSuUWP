@@ -628,8 +628,15 @@ namespace Gia_Sư
         private async void SchoolDistrict_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ObjectDistrict = (VietNamDistrict)SchoolDistrict.SelectedItem;
-            DistrictId = ObjectDistrict.districtID;
-            await GetSchoolsAsync(DistrictId);
+            if (ObjectDistrict == null)
+            {
+                SchoolDistrict.SelectedItem = null;
+            }
+            else
+            {
+                DistrictId = ObjectDistrict.districtID;
+                await GetSchoolsAsync(DistrictId);
+            }
         }
         private async void SchoolCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -646,12 +653,18 @@ namespace Gia_Sư
         private void DateOfBirth_Closed(object sender, object e)
         {
             double CalculateAge;
-
-            DateTimeOffset UserYear = (DateTimeOffset)DateOfBirth.Date;
-            DateTimeOffset now = DateTimeOffset.Now;
-            TimeSpan PredictAgeTimeSpan = now - UserYear;
-            CalculateAge = Math.Floor((now - UserYear).TotalDays) / ((DateTime.IsLeapYear(year: now.Year) ? 366 : 365));
-            PredictAge = (CalculateAge % 1) >= 0.951 ? Math.Round(CalculateAge) : Math.Floor(CalculateAge);
+            if(DateOfBirth.Date == null)
+            {
+                DateOfBirth.Date = null;
+            }
+            else
+            {
+                DateTimeOffset UserYear = (DateTimeOffset)DateOfBirth.Date;
+                DateTimeOffset now = DateTimeOffset.Now;
+                TimeSpan PredictAgeTimeSpan = now - UserYear;
+                CalculateAge = Math.Floor((now - UserYear).TotalDays) / ((DateTime.IsLeapYear(year: now.Year) ? 366 : 365));
+                PredictAge = (CalculateAge % 1) >= 0.951 ? Math.Round(CalculateAge) : Math.Floor(CalculateAge);
+            }
         }
         private void IsInternetAvaible()
         {

@@ -22,6 +22,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -50,7 +51,6 @@ namespace Gia_Sư
                 Microsoft.UI.Xaml.Controls.NavigationViewItem item = args.SelectedItem as Microsoft.UI.Xaml.Controls.NavigationViewItem;
                 NavView_Navigate(item);
         }
-
         private void NavView_Navigate(Microsoft.UI.Xaml.Controls.NavigationViewItem item)
         {
             switch (item.Name)
@@ -63,7 +63,6 @@ namespace Gia_Sư
                     break;
             }
         }
-
         private void NavigationViewPanel_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
             On_BackRequested();
@@ -79,9 +78,18 @@ namespace Gia_Sư
             }
             return false;
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if(App.User.ProfileImageUrl == null)
+            {
+                User.ProfilePicture = null;
+            }
+            else
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.UriSource = new Uri(App.User.ProfileImageUrl);
+                User.ProfilePicture = bitmap;
+            }
             //Start the page
             MainFrame.Navigate(typeof(RootHome));
             //Animate the gear
@@ -99,7 +107,6 @@ namespace Gia_Sư
             rotate.InsertExpressionKeyFrame(1.0f, startingValue + 360f);
             rotate.Duration = TimeSpan.FromMilliseconds(1000);
         }
-
         //Dectect what page on the Frame when it navigated
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
@@ -121,7 +128,6 @@ namespace Gia_Sư
 
 
         }
-
         private async void Setting(object sender, RoutedEventArgs e)
         {
             Settings s = new Settings();
@@ -150,6 +156,11 @@ namespace Gia_Sư
         private void NavigationViewPanel_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Control) _isCtrlKeyPressed = false;
+        }
+
+        private void User_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+
         }
     }
 }

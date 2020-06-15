@@ -141,8 +141,15 @@ namespace Gia_Sư.Components.PopUps
         private async void SchoolDistrict_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ObjectDistrict = (VietNamDistrict)SchoolDistrict.SelectedItem;
-            DistrictId = ObjectDistrict.districtID;
-            await GetSchoolsAsync(DistrictId);
+            if (ObjectDistrict == null)
+            {
+                SchoolDistrict.SelectedItem = null;
+            }
+            else
+            {
+                DistrictId = ObjectDistrict.districtID;
+                await GetSchoolsAsync(DistrictId);
+            }
         }
         private async void City_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

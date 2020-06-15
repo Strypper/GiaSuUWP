@@ -123,14 +123,17 @@
             <Image Source="Assets/AppImage/TutorLogo.png"/>
         </muxc:NavigationView.PaneHeader>
         <muxc:NavigationView.PaneFooter>
-            <Button x:Name="Settings" Tag="Settings" Background="Transparent"
+            <StackPanel Orientation="Horizontal">
+                <PersonPicture x:Name="User" Width="25" Margin="5" PointerPressed="User_PointerPressed"/>
+                <Button x:Name="Settings" Tag="Settings" Background="Transparent"
                     Click="Setting" PointerEntered="Settings_PointerEntered">
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon x:Name="GearIcon" Glyph="&#xE713;" FontSize="20"
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon x:Name="GearIcon" Glyph="&#xE713;" FontSize="20"
                               Width="20" Height="20"/>
-                    <TextBlock Text="Cài Đặt" Margin="5"/>
-                </StackPanel>
-            </Button>
+                        <TextBlock Text="Cài Đặt" Margin="5"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </muxc:NavigationView.PaneFooter>
     </muxc:NavigationView>
 </Page>
