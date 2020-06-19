@@ -1,4 +1,4 @@
-![](GiaSu-master/Demo/TutorLogo.png)
+![](Demo/TutorLogo.png)
 # Gia Su Version 1.0.5
 This is a project creating nativa UI on Windows 10, for the "Gia Su" services.
 This native app will have 100% feature of the service for both
@@ -24,14 +24,14 @@ This native app will have 100% feature of the service for both
 * Request Detail now show up PaymentType (Hours/Weeks/Months)
 # Demo
 - Payment Type
-![](GiaSu-master/Demo/PaymentType.jpg)
+![](Demo/PaymentType.jpg)
 - New Login/Register-Screen
-![](GiaSu-master/Demo/NewLoginScreen.jpg)
-![](GiaSu-master/Demo/Mobile.jpg)
+![](Demo/NewLoginScreen.jpg)
+![](Demo/Mobile.jpg)
 - Color Bloom
-![](GiaSu-master/Demo/ColorBloom.png)
+![](Demo/ColorBloom.png)
 - User-Login
-![](GiaSu-master/Demo/UserLogin.jpg)
+![](Demo/UserLogin.jpg)
 
 
 
