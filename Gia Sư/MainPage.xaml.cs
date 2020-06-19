@@ -44,8 +44,6 @@ namespace Gia_Sư
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
         }
-
-
         private void NavigationViewPanel_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
                 Microsoft.UI.Xaml.Controls.NavigationViewItem item = args.SelectedItem as Microsoft.UI.Xaml.Controls.NavigationViewItem;
@@ -133,12 +131,10 @@ namespace Gia_Sư
             Settings s = new Settings();
             await s.ShowAsync();
         }
-
         private void Settings_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             backVisual.StartAnimation(nameof(Visual.RotationAngleInDegrees), rotate);
         }
-
         private void NavigationViewPanel_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Control) _isCtrlKeyPressed = true;
@@ -152,12 +148,10 @@ namespace Gia_Sư
                 }
             }
         }
-
         private void NavigationViewPanel_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Control) _isCtrlKeyPressed = false;
         }
-
         private void User_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
 

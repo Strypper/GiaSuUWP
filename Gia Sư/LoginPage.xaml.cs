@@ -387,6 +387,7 @@ namespace Gia_Sư
                 App.Token = JsonConvert.DeserializeObject<Token>(responseString);
                 await GetUserInfo(App.Token.token);
                 System.Diagnostics.Debug.WriteLine(App.Token);
+                splash.localData.Values["UserToken"] = App.Token.token;
                 WaitingLoginBar.Visibility = Visibility.Collapsed;
                 Frame.Navigate(typeof(MainPage));
             }
@@ -398,7 +399,6 @@ namespace Gia_Sư
                 LogIn.Foreground = new SolidColorBrush(Colors.Orange);
                 WaitingLoginBar.ShowError = true;
             }
-
         }
         private async Task GetUserInfo(string token)
         {

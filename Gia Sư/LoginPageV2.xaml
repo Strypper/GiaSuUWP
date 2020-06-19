@@ -1,0 +1,534 @@
+﻿<Page
+    x:Class="Gia_Sư.LoginPageV2" Loaded="Page_Loaded"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Gia_Sư" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions" 
+    xmlns:data="using:Gia_Sư.Models.Location" xmlns:data1="using:Gia_Sư.Models.SubjectData" xmlns:data2="using:Gia_Sư.Models" xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <AcrylicBrush x:Key="BackgroundAcrylicBrush" BackgroundSource="HostBackdrop" 
+                      TintColor="White" TintOpacity="0.2" FallbackColor="White"/>
+        <Style TargetType="TextBox" x:Key="GiaSuTextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="Width" Value="300"/>
+        </Style>
+    </Page.Resources>
+    <Grid x:Name="Layout">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowsState">
+                <VisualState x:Name="SurfaceBookAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="2000"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GuessLoginMobile.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DesktopAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1300"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GuessLoginMobile.Visibility" Value="Collapsed"/>
+                        <Setter Target="GiaSuBrand.(UIElement.Visibility)"
+                                Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PhoneAdapt">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ThirdPartySignUp.Orientation" Value="Vertical"/>
+                        <Setter Target="Layout.ColumnDefinitions[0].Width" Value="0"/>
+                        <Setter Target="GiaSuBrand.(UIElement.Visibility)"
+                                Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PhoneAdapt1">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ThirdPartySignUp.Orientation" Value="Vertical"/>
+                        <Setter Target="Layout.ColumnDefinitions[0].Width" Value="0"/>
+                        <Setter Target="RegisterForm.ColumnDefinitions[1].Width" Value="0"/>
+                        <Setter Target="Right.(Grid.Row)" Value="1"/>
+                        <Setter Target="Right.(Grid.Column)" Value="0"/>
+                        <Setter Target="GiaSuBrand.(UIElement.Visibility)"
+                                Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="GiaSuBrand" Grid.Column="0" Background="{StaticResource BackgroundAcrylicBrush}">
+            <StackPanel x:Name="LogoLayout" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Translation="0,-500,0">
+                <StackPanel.TranslationTransition>
+                    <Vector3Transition Duration="0:0:2"/>
+                </StackPanel.TranslationTransition>
+                <TextBlock x:Name="AppTitle" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="GIA SƯ" FontSize="50" FontWeight="ExtraBold"
+                       Foreground="{ThemeResource SystemAccentColor}" 
+                       Margin="5" Scale="0,0,0">
+                    <TextBlock.ScaleTransition>
+                        <Vector3Transition Duration="0:0:1.5"/>
+                    </TextBlock.ScaleTransition>
+                </TextBlock>
+                <Image x:Name="LogoImage" Width="200" Height="200"
+                   CenterPoint="75,75,0" Scale="0,0,0" Source="Assets/TutorLogo.png"
+                   HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image.ScaleTransition>
+                        <Vector3Transition Duration="0:0:3"/>
+                    </Image.ScaleTransition>
+                </Image>
+                <Button x:Name="GuessLogin" Content="Khám Phá" Margin="5" 
+                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                        FontSize="30" FontWeight="Bold" Background="#39c7f4"
+                        Foreground="White" Click="GuessLogin_Click"/>
+            </StackPanel>
+            <Image x:Name="Mountain" HorizontalAlignment="Stretch" Stretch="UniformToFill"
+                   Source="Assets/AppImage/Wallpapers/Mountain.png"
+                   VerticalAlignment="Bottom" Height="200" Translation="0,300,0">
+                <Image.TranslationTransition>
+                    <Vector3Transition Duration="0:0:3"/>
+                </Image.TranslationTransition>
+            </Image>
+        </Grid>
+        <Grid x:Name="Form" Grid.Column="1" 
+              SizeChanged="Form_SizeChanged">
+            <Rectangle x:Name="hostForVisual"/>
+            <Rectangle x:Name="anotherHost"/>
+            <Pivot x:Name="MainPivot" SelectionChanged="MainPivot_SelectionChanged"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <PivotItem x:Name="firstPivotItem" Background="Transparent">
+                    <PivotItem.Header>
+                        <StackPanel x:Name="firstPivot" Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1E2;" Margin="5" FontWeight="Bold"
+                                      FontSize="30" Foreground="White"/>
+                            <TextBlock Text="ĐĂNG KÝ" FontWeight="ExtraBold" VerticalAlignment="Center"
+                                       Foreground="White"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <ScrollViewer>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="IntroMess" FontSize="40" FontWeight="ExtraBold"
+                                   VerticalAlignment="Top" HorizontalAlignment="Center"
+                                   Text="CHÀO MỪNG TỚI CỘNG ĐỒNG SINH VIÊN" Margin="10"
+                                   Foreground="White" Grid.Row="0"
+                                   MaxWidth="1000" TextWrapping="Wrap" TextAlignment="Center"/>
+                            <StackPanel Grid.Row="1">
+                                <StackPanel>
+                                    <Grid x:Name="ProfileImageLayout" 
+                                          PointerEntered="ProfileImageLayout_PointerEntered"
+                                          PointerExited="ProfileImageLayout_PointerExited">
+                                        <PersonPicture x:Name="ProfilePic" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                                       Width="150" Height="150" Margin="5"/>
+                                        <StackPanel x:Name="PhotoAction" Orientation="Horizontal" Opacity="0"
+                                                    VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <StackPanel.OpacityTransition>
+                                                <ScalarTransition />
+                                            </StackPanel.OpacityTransition>
+                                            <Button x:Name="TakePhoto" FontFamily="Segoe MDL2 Assets" 
+                                                    Content="&#xE114;" Background="Transparent" FontSize="30" Margin="5"
+                                                    Click="TurnOnCamera_Click"/>
+                                            <Button x:Name="BrowsePhotoButton" FontFamily="Segoe MDL2 Assets" 
+                                                    Content="&#xEC51;" Background="Transparent" FontSize="30" Margin="5"
+                                                    Click="BrowsePhoto"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <TextBox x:Name="UserName" Margin="5" MaxWidth="330"
+                                         TextAlignment="Center" FontWeight="Bold"
+                                         PlaceholderText="Đặt NickName của bạn"
+                                         LostFocus="LostFocus"
+                                         extensions:TextBoxRegex.Regex="^[A-Za-zăâîșțĂÂÎȘȚ\s-]*[A-Za-zăâîșțĂÂÎȘȚ-][A-Za-zăâîșțĂÂÎȘȚ\s-][0-9]*$"
+                                         extensions:TextBoxRegex.ValidationMode="Forced"/>
+                                    <StackPanel x:Name="ThirdPartySignUp" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button x:Name="SignInWithFacebook" HorizontalAlignment="Center" Margin="5"
+                                            Width="330" FontWeight="ExtraBold" Background="#3f5aa9">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image Source="Assets/AppImage/CompanyLogos/Facebook.png"
+                                                       Width="30" Height="30"/>
+                                                <TextBlock Text="ĐĂNG KÝ BẰNG TÀI KHOẢN FACEBOOK" Margin="3"
+                                                           VerticalAlignment="Center" FontSize="10"
+                                                           Foreground="White"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="SignInWithMicrosoft" HorizontalAlignment="Center" Margin="5"
+                                            Width="330" FontWeight="ExtraBold" Background="#2c75e9">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image Source="Assets/AppImage/CompanyLogos/Microsoft.png"
+                                                       Width="30" Height="30"/>
+                                                <TextBlock Text="ĐĂNG KÝ BẰNG TÀI KHOẢN MICROSOFT" Margin="3"
+                                                           VerticalAlignment="Center" FontSize="10"
+                                                           Foreground="White"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="SignInWithGoogle" HorizontalAlignment="Center" Margin="5"
+                                            Width="330" FontWeight="ExtraBold" Background="#ca463c">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image Source="Assets/AppImage/CompanyLogos/Google.png"
+                                                       Width="30" Height="30"/>
+                                                <TextBlock Text="ĐĂNG KÝ BẰNG TÀI KHOẢN GOOGLE" Margin="3"
+                                                           VerticalAlignment="Center" FontSize="10"
+                                                           Foreground="White"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Grid x:Name="RegisterForm">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel x:Name="Left" Grid.Column="0" Margin="15">
+                                        <StackPanel.ChildrenTransitions>
+                                            <TransitionCollection>
+                                                <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                                 FromVerticalOffset="550"
+                                                                 FromHorizontalOffset="250"/>
+                                            </TransitionCollection>
+                                        </StackPanel.ChildrenTransitions>
+                                        <Grid x:Name="UserRealName" HorizontalAlignment="Stretch" Margin="10" MaxWidth="700">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="FirstName" HorizontalAlignment="Stretch" Margin="0,5,5,5" MaxWidth="350" Grid.Column="0"
+                                                     TextAlignment="Center" LostFocus="LostFocus"
+                                                     extensions:TextBoxRegex.Regex="\b\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*\b"
+                                                     extensions:TextBoxRegex.ValidationMode="Forced">
+                                                <TextBox.Header>
+                                                    <TextBlock Text="Tên" FontSize="20" HorizontalAlignment="Center"/>
+                                                </TextBox.Header>
+                                            </TextBox>
+                                            <TextBox x:Name="LastName" HorizontalAlignment="Stretch" Margin="5,5,0,5" MaxWidth="350" Grid.Column="1"
+                                                     TextAlignment="Center" LostFocus="LostFocus"
+                                                     extensions:TextBoxRegex.Regex="\b\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*\b"
+                                                     extensions:TextBoxRegex.ValidationMode="Forced">
+                                                <TextBox.Header>
+                                                    <TextBlock Text="Họ" FontSize="20" HorizontalAlignment="Center"/>
+                                                </TextBox.Header>
+                                            </TextBox>
+                                        </Grid>
+                                        <TextBox x:Name="Email" MaxWidth="700" TextAlignment="Center" Margin="10,10,10,10"
+                                                 LostFocus="LostFocus"
+                                                 extensions:TextBoxRegex.ValidationType="Email"
+                                                 extensions:TextBoxRegex.ValidationMode="Forced">
+                                            <TextBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F4EB;" FontSize="30"/>
+                                                    <TextBlock Text="Email" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#cccccc"/>
+                                                </StackPanel>
+                                            </TextBox.Header>
+                                        </TextBox>
+                                        <ComboBox x:Name="City" MaxWidth="700" HorizontalAlignment="Stretch" Margin="10,20,10,10" 
+                                                  SelectionChanged="City_SelectionChanged" HorizontalContentAlignment="Center">
+                                            <ComboBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F303;" FontSize="30"/>
+                                                    <TextBlock Text="Thành Phố" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#00bcf2"/>
+                                                </StackPanel>
+                                            </ComboBox.Header>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data:VietNamCity">
+                                                    <TextBlock Text="{x:Bind cityName}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox x:Name="District" MaxWidth="700" HorizontalAlignment="Stretch" Margin="10,20,10,10"
+                                                  HorizontalContentAlignment="Center">
+                                            <ComboBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F3D8;" FontSize="30"/>
+                                                    <TextBlock Text="Quận Huyện" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#e5e5e5"/>
+                                                </StackPanel>
+                                            </ComboBox.Header>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data:VietNamDistrict">
+                                                    <TextBlock Text="{x:Bind districtName}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <TextBox x:Name="Address" MaxWidth="700" TextAlignment="Center" Margin="10,20,10,10"
+                                                 extensions:TextBoxRegex.Regex="\b\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*\b"
+                                                 extensions:TextBoxRegex.ValidationMode="Forced">
+                                            <TextBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F3E1;" FontSize="30"/>
+                                                    <TextBlock Text="Địa Chỉ" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#16c60c"/>
+                                                </StackPanel>
+                                            </TextBox.Header>
+                                        </TextBox>
+                                        <TextBox x:Name="Mobile" MaxWidth="700" TextAlignment="Center" Margin="10,20,10,10"
+                                                 LostFocus="LostFocus"
+                                                 extensions:TextBoxRegex.ValidationType="Number"
+                                                 extensions:TextBoxRegex.ValidationMode="Forced">
+                                            <TextBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F4F1;" FontSize="30"/>
+                                                    <TextBlock Text="Điện Thoại" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#00bcf2"/>
+                                                </StackPanel>
+                                            </TextBox.Header>
+                                        </TextBox>
+                                        <CalendarDatePicker x:Name="DateOfBirth" MaxWidth="700" HorizontalAlignment="Stretch" 
+                                                            Margin="10,20,10,10" BorderBrush="#8e562e" Closed="DateOfBirth_Closed">
+                                            <CalendarDatePicker.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F382;" FontSize="30"/>
+                                                    <TextBlock Text="Ngày Sinh" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#8e562e"/>
+                                                </StackPanel>
+                                            </CalendarDatePicker.Header>
+                                        </CalendarDatePicker>
+                                        <ComboBox x:Name="Gender" MaxWidth="700" HorizontalAlignment="Stretch" Margin="10,20,10,10"
+                                                  HorizontalContentAlignment="Center">
+                                            <ComboBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F467;" FontSize="30"/>
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F466;" FontSize="30"/>
+                                                    <TextBlock Text="Giới Tính" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#ffc83d"/>
+                                                </StackPanel>
+                                            </ComboBox.Header>
+                                            <x:String>👦 Nam</x:String>
+                                            <x:String>👧 Nữ</x:String>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel x:Name="Right" Grid.Column="1" Margin="15">
+                                        <StackPanel.ChildrenTransitions>
+                                            <TransitionCollection>
+                                                <EntranceThemeTransition IsStaggeringEnabled="True"
+                                                                         FromVerticalOffset="550"
+                                                                         FromHorizontalOffset="250"/>
+                                            </TransitionCollection>
+                                        </StackPanel.ChildrenTransitions>
+                                        <PasswordBox x:Name="Password" MaxWidth="700" Margin="10,0,10,10"
+                                                     LostFocus="Password_LostFocus">
+                                            <PasswordBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F512;" FontSize="30"/>
+                                                    <TextBlock Text="Mật Khẩu" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#ffc83d"/>
+                                                </StackPanel>
+                                            </PasswordBox.Header>
+                                        </PasswordBox>
+                                        <PasswordBox x:Name="ConfirmPassword" MaxWidth="700" Margin="10,15,10,10"
+                                                     LostFocus="ConfirmPassword_LostFocus">
+                                            <PasswordBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F510;" FontSize="30"/>
+                                                    <TextBlock Text="Xác Thực Mật Khẩu" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#ffc83d"/>
+                                                </StackPanel>
+                                            </PasswordBox.Header>
+                                        </PasswordBox>
+                                        <ComboBox x:Name="SchoolCity" MaxWidth="700" HorizontalAlignment="Stretch" Margin="10,20,10,10"
+                                                  SelectionChanged="SchoolCity_SelectionChanged" HorizontalContentAlignment="Center">
+                                            <ComboBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F306;" FontSize="30"/>
+                                                    <TextBlock Text="Trường Bạn Thuộc Thành Phố Nào" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#ca5010"/>
+                                                </StackPanel>
+                                            </ComboBox.Header>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data:VietNamCity">
+                                                    <TextBlock Text="{x:Bind cityName}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox x:Name="SchoolDistrict" MaxWidth="700" HorizontalAlignment="Stretch" Margin="10,20,10,10"
+                                                  SelectionChanged="SchoolDistrict_SelectionChanged" HorizontalContentAlignment="Center">
+                                            <ComboBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F3D9;" FontSize="30"/>
+                                                    <TextBlock Text="Trường Bạn Thuộc Quận Nào" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#31d2f7"/>
+                                                </StackPanel>
+                                            </ComboBox.Header>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data:VietNamDistrict">
+                                                    <TextBlock Text="{x:Bind districtName}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox x:Name="ExistingSchool" MaxWidth="700" HorizontalAlignment="Stretch" Margin="10,20,10,10"
+                                                  HorizontalContentAlignment="Center">
+                                            <ComboBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F3EB;" FontSize="30"/>
+                                                    <TextBlock Text="Trường Có Sẵn" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#e81224"/>
+                                                </StackPanel>
+                                            </ComboBox.Header>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data2:School">
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                                        <Image Source="{x:Bind schoolLogo}" Width="50" Height="50" Margin="5"/>
+                                                        <TextBlock Text="{x:Bind schoolName}" Margin="5" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox x:Name="StudyGroup" MaxWidth="700" HorizontalAlignment="Stretch" Margin="10,20,10,10"
+                                                  SelectionChanged="StudyGroup_SelectionChanged" HorizontalContentAlignment="Center">
+                                            <ComboBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F393;" FontSize="30"/>
+                                                    <TextBlock Text="Khối Đại Học" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#757575"/>
+                                                </StackPanel>
+                                            </ComboBox.Header>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data1:StudyGroup">
+                                                    <Border Width="280" Height="50">
+                                                        <Border.Background>
+                                                            <ImageBrush>
+                                                                <ImageBrush.ImageSource>
+                                                                    <BitmapImage UriSource="{x:Bind StudyGroupImage}" DecodePixelWidth="280" DecodePixelHeight="50"/>
+                                                                </ImageBrush.ImageSource>
+                                                            </ImageBrush>
+                                                        </Border.Background>
+                                                        <TextBlock Text="{x:Bind StudyGroupName}" FontWeight="ExtraBold"
+                                                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                   FontSize="12"/>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox x:Name="StudyField" MaxWidth="700" HorizontalAlignment="Stretch" Margin="10,20,10,10"
+                                                  HorizontalContentAlignment="Center">
+                                            <ComboBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F52C;" FontSize="30"/>
+                                                    <TextBlock Text="Chuyên Ngành Đại Học" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#f2f2f2"/>
+                                                </StackPanel>
+                                            </ComboBox.Header>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate x:DataType="data1:StudyField">
+                                                    <TextBlock Text="{x:Bind StudyFieldName}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox x:Name="Role" MaxWidth="700" HorizontalAlignment="Stretch" Margin="10,20,10,10"
+                                                  HorizontalContentAlignment="Center">
+                                            <ComboBox.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F603;" FontSize="30"/>
+                                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F60E;" FontSize="30"/>
+                                                    <TextBlock Text="Tư Cách" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#ffc83d"/>
+                                                </StackPanel>
+                                            </ComboBox.Header>
+                                            <x:String>⚙🛠 Admin</x:String>
+                                            <x:String>👩‍🎓👨‍🎓 Sinh Viên</x:String>
+                                            <x:String>👨‍🏫👩‍🏫 Gia Sư</x:String>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+                                <muxc:ProgressBar x:Name="WaitingRegisterBar" Width="200" Margin="5"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center" IsIndeterminate="True" ShowPaused="False" ShowError="False"
+                                        Foreground="{ThemeResource SystemAccentColor}" Visibility="Collapsed">
+                                    <muxc:ProgressBar.Transitions>
+                                        <TransitionCollection>
+                                            <RepositionThemeTransition />
+                                        </TransitionCollection>
+                                    </muxc:ProgressBar.Transitions>
+                                </muxc:ProgressBar>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button x:Name="SignUp" Width="150" Height="60" 
+                                            VerticalAlignment="Center" HorizontalAlignment="Center"
+                                            Margin="20" FontWeight="ExtraBold" Click="SignUp_Click"
+                                            Background="{ThemeResource SystemAccentColor}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1E2;" Margin="5" FontWeight="Bold"
+                                                  FontSize="20" Foreground="White"/>
+                                            <TextBlock Text="ĐĂNG KÝ" FontWeight="ExtraBold" VerticalAlignment="Center"
+                                                   Foreground="White" CharacterSpacing="100"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="GuessLoginMobile" Click="GuessLogin_Click"
+                                            VerticalAlignment="Center" HorizontalAlignment="Center"
+                                            Width="150" Height="60" Margin="20" FontWeight="ExtraBold"
+                                            Background="{ThemeResource SystemAccentColor}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE726;" Margin="5" FontWeight="Bold"
+                                                  FontSize="20" Foreground="White"/>
+                                            <TextBlock Text="KHÁM PHÁ" FontWeight="ExtraBold" VerticalAlignment="Center"
+                                                   Foreground="White" CharacterSpacing="100"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </PivotItem>
+                <PivotItem x:Name="secondPivotItem" Background="Transparent">
+                    <PivotItem.Header>
+                        <StackPanel x:Name="secondPivot" Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB67;" Margin="5" FontWeight="Bold"
+                                      FontSize="30" Foreground="White"/>
+                            <TextBlock Text="ĐĂNG NHẬP" FontWeight="ExtraBold" VerticalAlignment="Center"
+                                       Foreground="White"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <Grid>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <TextBlock x:Name="ErrorMessage" HorizontalAlignment="Center" Margin="5" Text="ỐI HÌNH NHƯ CÁI GÌ ĐÓ SAI SAI 🤔"
+                                       FontWeight="ExtraBold" Foreground="Orange" Visibility="Collapsed"/>
+                            <TextBox x:Name="EmailLogin" HorizontalAlignment="Stretch"
+                                     Margin="5" MaxWidth="400">
+                                <TextBox.Header>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F4EB;" FontSize="30"/>
+                                        <TextBlock Text="Email" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#cccccc"/>
+                                    </StackPanel>
+                                </TextBox.Header>
+                            </TextBox>
+                            <PasswordBox x:Name="PasswordLogin" MaxWidth="400" Margin="10,0,10,10"
+                                         LostFocus="Password_LostFocus">
+                                <PasswordBox.Header>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F512;" FontSize="30"/>
+                                        <TextBlock Text="Mật Khẩu" VerticalAlignment="Center" Margin="5" FontSize="20" Foreground="#ffc83d"/>
+                                    </StackPanel>
+                                </PasswordBox.Header>
+                            </PasswordBox>
+                            <HyperlinkButton Content="QUÊN MẬT KHẨU @@ ?" FontWeight="Bold"
+                                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <muxc:ProgressBar x:Name="WaitingLoginBar" Width="200" Margin="5"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                        IsIndeterminate="True" ShowPaused="False" ShowError="False" Visibility="Collapsed">
+                                <muxc:ProgressBar.Transitions>
+                                    <TransitionCollection>
+                                        <RepositionThemeTransition />
+                                    </TransitionCollection>
+                                </muxc:ProgressBar.Transitions>
+                            </muxc:ProgressBar>
+                            <Button x:Name="SignIn" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    Height="60" Margin="20" FontWeight="ExtraBold" Click="LogIn_Click"
+                                    Background="{ThemeResource SystemAccentColor}">
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F513;" FontSize="30" Margin="5"/>
+                                    <TextBlock Text="ĐĂNG NHẬP" FontWeight="ExtraBold" VerticalAlignment="Bottom"
+                                               Foreground="#ffc83d" CharacterSpacing="100" FontSize="30"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </PivotItem>
+            </Pivot>
+        </Grid>
+    </Grid>
+</Page>

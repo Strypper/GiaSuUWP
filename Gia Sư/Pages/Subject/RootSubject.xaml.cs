@@ -4,6 +4,7 @@ using Gia_Sư.Components.SubjectUI;
 using Gia_Sư.Helpers.ResizeHelper;
 using Gia_Sư.Models.AppTools;
 using Gia_Sư.Models.SubjectData;
+using Microsoft.Graphics.Canvas.Effects;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +23,8 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
 using Windows.UI;
+using Windows.UI.Composition;
+using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -38,7 +42,6 @@ namespace Gia_Sư.Pages.Subject
 {
     public sealed partial class RootSubject : Page
     {
-        public ObservableCollection<OverviewRequest> SubjectRequestList;
         OverviewRequest selectedItem = new OverviewRequest();
         private int PageNumber = 0;
         private string BugDetail;
@@ -53,12 +56,32 @@ namespace Gia_Sư.Pages.Subject
         private bool HomeWorkVisible { get; set; }
         private bool PresentationVisible { get; set; }
         private bool LaboratoryVisible { get; set; }
+        private bool FirstTime = false;
+
+        //Blur Animation
+        private Compositor compositor = Window.Current.Compositor;
+        private SpriteVisual effectVisual;
+        private CompositionEffectBrush effectBrush;
+        private CompositionEffectFactory effectFactory;
+        private SpringScalarNaturalMotionAnimation _springAnimation;
+
+        private ICollection<RequestSchedules> SchedulesData;
         public RootSubject()
         {
             this.InitializeComponent();
             PaginationControl.pageClick += PageClickEvent;
             //Animate Size Changed
             HotRequest.EnableImplicitAnimation(VisualPropertyType.Offset, 1400);
+            //Verify User
+            if (App.User.UserName == null)
+            {
+                CreateRequest.Visibility = Visibility.Collapsed;
+                PushRequest.Visibility = Visibility.Collapsed;
+                RequestList.Visibility = Visibility.Collapsed;
+                RequestPrice.Visibility = Visibility.Collapsed;
+                PersonalSchedule.Visibility = Visibility.Collapsed;
+            }
+            this.NavigationCacheMode = NavigationCacheMode.Required;
         }
         private async void Subject_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -90,6 +113,20 @@ namespace Gia_Sư.Pages.Subject
                 var response = await httpClient.GetAsync(GetRequestDetailUrl(selectedItem.RequestID));
                 var result = await response.Content.ReadAsStringAsync();
                 sr = JsonConvert.DeserializeObject<SubjectRequest>(result);
+                SchedulesData = sr.requestSchedules;
+
+                switch (sr.payMentTime)
+                {
+                    case 0:
+                        XamlPaymentTime.Text = "Trả theo giờ/Tiền mặt";
+                        break;
+                    case 1:
+                        XamlPaymentTime.Text = "Trả theo tuần/Tiền mặt";
+                        break;
+                    case 2:
+                        XamlPaymentTime.Text = "Trả theo tháng/Tiền mặt";
+                        break;
+                }
 
                 Price.Text = sr.VNDPrice;
 
@@ -141,6 +178,7 @@ namespace Gia_Sư.Pages.Subject
 
             await Task.Delay(500);
             Price.Text = "Đang Tải";
+            XamlPaymentTime.Text = "Đang Tải";
 
             SubjectNameValue.Text = "Đang Tải";
             StudyGroupValue.Text = "Đang Tải";
@@ -173,49 +211,67 @@ namespace Gia_Sư.Pages.Subject
         }
         private async void PageClickEvent(object sender, PaginationRouteEvent e)
         {
-            Debug.WriteLine(e.PageNumber);
-            await GetOverViewRequestsAsync(e.PageNumber);
+            GetOverViewSubjectRequest.IsActive = true;
+            SubjectGridView.ItemsSource = await GetOverViewRequestsAsync(e.PageNumber);
+            GetOverViewSubjectRequest.IsActive = false;
         }
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (App.User.UserName == null)
+            if (FirstTime == false)
             {
-                CreateRequest.Visibility = Visibility.Collapsed;
-                PushRequest.Visibility = Visibility.Collapsed;
-                RequestList.Visibility = Visibility.Collapsed;
-                RequestPrice.Visibility = Visibility.Collapsed;
-                PersonalSchedule.Visibility = Visibility.Collapsed;
-            }
+                //Create Blur Animation
+                effectVisual = compositor.CreateSpriteVisual();
+                var destinationBrush = compositor.CreateBackdropBrush();
+                var graphicsEffect = new GaussianBlurEffect
+                {
+                    Name = "Blur",
+                    BlurAmount = 0f,
+                    BorderMode = EffectBorderMode.Hard,
+                    Source = new CompositionEffectSourceParameter("Background")
+                };
+                effectFactory = compositor.CreateEffectFactory(graphicsEffect, new[] { "Blur.BlurAmount" });
+                effectBrush = effectFactory.CreateBrush();
+                effectBrush.SetSourceParameter("Background", destinationBrush);
+                effectVisual.Brush = effectBrush;
+                ResizeVisual();
+                ElementCompositionPreview.SetElementChildVisual(BlurLayout, effectVisual);
+                _springAnimation = compositor.CreateSpringScalarAnimation();
+                _springAnimation.Period = TimeSpan.FromSeconds(0.5);
+                _springAnimation.DampingRatio = 0.75f;
 
-            //httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + App.Token);
-            await GetOverViewRequestsAsync(0);
+
+
+                _springAnimation.FinalValue = 30f;
+                effectBrush.StartAnimation("Blur.BlurAmount", _springAnimation);
+                await Task.Delay(150);
+                GetOverViewSubjectRequest.IsActive = true;
+                SubjectGridView.ItemsSource = await GetOverViewRequestsAsync(0);
+                await Task.Delay(3000);
+                GetOverViewSubjectRequest.IsActive = false;
+                FirstTime = true;
+                _springAnimation.FinalValue = 0f;
+                effectBrush.StartAnimation("Blur.BlurAmount", _springAnimation);
+                await Task.Delay(2000);
+                BlurLayout.Visibility = Visibility.Collapsed;
+            }
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e) 
+        private void ResizeVisual()
         {
-                
+            if (effectVisual == null) return;
+            effectVisual.Size = new Vector2((float)BlurLayout.ActualWidth, (float)BlurLayout.ActualHeight);
         }
-        private async Task GetOverViewRequestsAsync(int page)
+        private async Task<ObservableCollection<OverviewRequest>> GetOverViewRequestsAsync(int page)
         {
-            GetOverViewSubjectRequest.IsActive = true;
             PageNumber = page;
             var response = await httpClient.GetAsync(GetRequestUrl(PageNumber));
             var result = await response.Content.ReadAsStringAsync();
-            System.Diagnostics.Debug.WriteLine(result);
-            SubjectRequestList = JsonConvert.DeserializeObject<ObservableCollection<OverviewRequest>>(result);
-            System.Diagnostics.Debug.WriteLine(SubjectRequestList);
-            SubjectGridView.ItemsSource = SubjectRequestList;
-            GetOverViewSubjectRequest.IsActive = false;
+            return JsonConvert.DeserializeObject<ObservableCollection<OverviewRequest>>(result);
         }
-        private async Task SearchSubjectRequest(string subname)
+        private async Task<ObservableCollection<OverviewRequest>> SearchSubjectRequest(string subname)
         {
-            GetOverViewSubjectRequest.IsActive = true;
             var response = await httpClient.GetAsync(SearchRequestUrl(subname));
             var result = await response.Content.ReadAsStringAsync();
-            System.Diagnostics.Debug.WriteLine(result);
-            SubjectRequestList = JsonConvert.DeserializeObject<ObservableCollection<OverviewRequest>>(result);
-            System.Diagnostics.Debug.WriteLine(SubjectRequestList);
-            SubjectGridView.ItemsSource = SubjectRequestList;
-            GetOverViewSubjectRequest.IsActive = false;
+            return JsonConvert.DeserializeObject<ObservableCollection<OverviewRequest>>(result);
         }
         private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
         {
@@ -236,10 +292,14 @@ namespace Gia_Sư.Pages.Subject
             {
                 await GetOverViewRequestsAsync(0);
             }
+            //Start Animation
+            await StartAnimation();
         }
         private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            await SearchSubjectRequest(SubjectFinder.Text);
+            GetOverViewSubjectRequest.IsActive = true;
+            SubjectGridView.ItemsSource = await SearchSubjectRequest(SubjectFinder.Text);
+            GetOverViewSubjectRequest.IsActive = false;
         }
         private async void RefreshPage_Click(object sender, RoutedEventArgs e)
         {
@@ -270,17 +330,34 @@ namespace Gia_Sư.Pages.Subject
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token.token);
                 var response = await httpClient.PostAsync(FeedBackSubmitUrl, content);
                 string Status = response.StatusCode.ToString();
-                var responseString = await response.Content.ReadAsStringAsync();
                 Debug.WriteLine(Status);
                 BugLoadingRing.IsActive = false;
                 BugWindow.Hide();
                 BugTitle.Text = "";
                 BugDetailBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
+                //Show Success Status
+                await StartAnimation();
             }
         }
         private void PlatformCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PlatformCombobox.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+        }
+        private async Task StartAnimation()
+        {
+            BlurLayout.Visibility = Visibility.Visible;
+            _springAnimation.FinalValue = 30f;
+            effectBrush.StartAnimation("Blur.BlurAmount", _springAnimation);
+            UniversalToast ut = new UniversalToast();
+            ut.VerticalAlignment = VerticalAlignment.Bottom;
+            ut.HorizontalAlignment = HorizontalAlignment.Center;
+            RequestPage.Children.Add(ut);
+            await Task.Delay(3700);
+            RequestPage.Children.Remove(ut);
+            _springAnimation.FinalValue = 0f;
+            effectBrush.StartAnimation("Blur.BlurAmount", _springAnimation);
+            await Task.Delay(1700);
+            BlurLayout.Visibility = Visibility.Collapsed;
         }
     }
 }

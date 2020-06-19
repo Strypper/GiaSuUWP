@@ -26,7 +26,8 @@ namespace Gia_Sư.Models.SubjectData
         public string schoolAddress { get; set; }
         public string schooldistrict { get; set; }
         public string schoolcity { get; set; }
-
+        public int payMentTime { get; set; }
+        public ICollection<RequestSchedules> requestSchedules { get; set; }
         public string VNDPrice { get => Price.ToString("####.000") + "VNĐ"; }
     }
     public class OverviewRequest 

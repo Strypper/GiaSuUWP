@@ -145,8 +145,8 @@
                                             </ComboBox>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                                <PasswordBox x:Name="Password" Header="Mật Khẩu" Margin="5" Windows10version1809:CornerRadius="0" Width="300" LostFocus="Password_LostFocus"/>
-                                                <PasswordBox x:Name="ConfirmPassword" Header="Xác Thực Mật Khẩu" Margin="5" Windows10version1809:CornerRadius="0" Width="300" LostFocus="ConfirmPassword_LostFocus"/>
+                                                <PasswordBox x:Name="Password" Header="Mật Khẩu" Margin="5" CornerRadius="0" Width="300" LostFocus="Password_LostFocus"/>
+                                                <PasswordBox x:Name="ConfirmPassword" Header="Xác Thực Mật Khẩu" Margin="5" CornerRadius="0" Width="300" LostFocus="ConfirmPassword_LostFocus"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                                 <TextBox x:Name="Address" Header="Địa Chỉ" Style="{StaticResource GiaSuTextBox}"
@@ -158,15 +158,15 @@
                                                          extensions:TextBoxRegex.ValidationMode="Forced"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <Windows10version1809:ComboBox x:Name="City" Header="Thành Phố" Margin="5" Width="300" 
+                                            <ComboBox x:Name="City" Header="Thành Phố" Margin="5" Width="300" 
                                                                            PlaceholderText="Chọn Thành Phố" CornerRadius="0"
                                                                            SelectionChanged="City_SelectionChanged">
-                                                <Windows10version1809:ComboBox.ItemTemplate>
+                                                <ComboBox.ItemTemplate>
                                                     <DataTemplate x:DataType="data:VietNamCity">
-                                                        <Windows10version1809:TextBlock Text="{x:Bind cityName}"/>
+                                                        <TextBlock Text="{x:Bind cityName}"/>
                                                     </DataTemplate>
-                                                </Windows10version1809:ComboBox.ItemTemplate>
-                                            </Windows10version1809:ComboBox>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
                                             <Windows10version1809:ComboBox x:Name="District" Header="Quận Huyện" Margin="5" Width="300" 
                                                                                PlaceholderText="Chọn Quận Huyện" CornerRadius="0">
                                                 <Windows10version1809:ComboBox.ItemTemplate>
@@ -215,24 +215,24 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Windows10version1809:ComboBox x:Name="SchoolCity" Header="Trường Ở Thành Phố Nào" Margin="5" Width="300"
+                                        <ComboBox x:Name="SchoolCity" Header="Trường Ở Thành Phố Nào" Margin="5" Width="300"
                                                       PlaceholderText="Chọn Thành Phố Trường Bạn" Windows10version1809:CornerRadius="0"
                                                       SelectionChanged="SchoolCity_SelectionChanged">
-                                            <Windows10version1809:ComboBox.ItemTemplate>
+                                            <ComboBox.ItemTemplate>
                                                 <DataTemplate x:DataType="data:VietNamCity">
                                                     <Windows10version1809:TextBlock Text="{x:Bind cityName}"/>
                                                 </DataTemplate>
-                                            </Windows10version1809:ComboBox.ItemTemplate>
-                                        </Windows10version1809:ComboBox>
-                                        <Windows10version1809:ComboBox x:Name="SchoolDistrict" Header="Trường Ở Quận Nào" Margin="5" Width="300"
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox x:Name="SchoolDistrict" Header="Trường Ở Quận Nào" Margin="5" Width="300"
                                                       PlaceholderText="Chọn Quận Trường Bạn" Windows10version1809:CornerRadius="0"
                                                       SelectionChanged="SchoolDistrict_SelectionChanged">
-                                            <Windows10version1809:ComboBox.ItemTemplate>
+                                            <ComboBox.ItemTemplate>
                                                 <DataTemplate x:DataType="data:VietNamDistrict">
                                                     <Windows10version1809:TextBlock Text="{x:Bind districtName}"/>
                                                 </DataTemplate>
-                                            </Windows10version1809:ComboBox.ItemTemplate>
-                                        </Windows10version1809:ComboBox>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <ComboBox x:Name="ExistingSchool" Header="Trường Có Sẵn" Margin="5" Width="300" SelectionChanged="ExistingSchool_SelectionChanged"
