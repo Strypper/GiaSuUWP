@@ -109,6 +109,7 @@ namespace Gia_Sư
                 this.Unloaded += ColorBloomTransition_Unloaded;
             }
             ExecuteAnimation();
+            await Task.Delay(150);
             //City and District ComboBox
             await GetCitiesAsync();
             await GetStudyGroupAsync();
@@ -267,7 +268,8 @@ namespace Gia_Sư
             bool validation = TextBoxRegex.GetIsValid(tb);
             if (validation == false)
             {
-                tb.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86)); tb.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+                tb.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86)); 
+                tb.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
                 SignUp.Content = "\uE814";
                 SignUp.FontFamily = new FontFamily("Segoe MDL2 Assets");
                 SignUp.FontSize = 30;
