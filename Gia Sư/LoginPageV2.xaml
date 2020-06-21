@@ -46,8 +46,7 @@
                     <VisualState.Setters>
                         <Setter Target="ThirdPartySignUp.Orientation" Value="Vertical"/>
                         <Setter Target="Layout.ColumnDefinitions[0].Width" Value="0"/>
-                        <Setter Target="GiaSuBrand.(UIElement.Visibility)"
-                                Value="Collapsed" />
+                        <Setter Target="GiaSuBrand.(UIElement.Visibility)" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="PhoneAdapt1">
@@ -60,8 +59,7 @@
                         <Setter Target="RegisterForm.ColumnDefinitions[1].Width" Value="0"/>
                         <Setter Target="Right.(Grid.Row)" Value="1"/>
                         <Setter Target="Right.(Grid.Column)" Value="0"/>
-                        <Setter Target="GiaSuBrand.(UIElement.Visibility)"
-                                Value="Collapsed" />
+                        <Setter Target="GiaSuBrand.(UIElement.Visibility)" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

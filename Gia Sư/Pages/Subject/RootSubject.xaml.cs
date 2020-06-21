@@ -70,8 +70,6 @@ namespace Gia_Sư.Pages.Subject
         {
             this.InitializeComponent();
             PaginationControl.pageClick += PageClickEvent;
-            //Animate Size Changed
-            HotRequest.EnableImplicitAnimation(VisualPropertyType.Offset, 1400);
             //Verify User
             if (App.User.UserName == null)
             {
@@ -82,6 +80,8 @@ namespace Gia_Sư.Pages.Subject
                 PersonalSchedule.Visibility = Visibility.Collapsed;
             }
             this.NavigationCacheMode = NavigationCacheMode.Required;
+            //Animate Size Changed
+            HotRequest.EnableImplicitAnimation(VisualPropertyType.Offset, 1400);
         }
         private async void Subject_ItemClick(object sender, ItemClickEventArgs e)
         {

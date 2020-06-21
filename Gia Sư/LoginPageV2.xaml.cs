@@ -127,7 +127,6 @@ namespace Gia_Sư
             GiaSuBrand.EnableFluidVisibilityAnimation(showFromScale: 0.6f, hideToScale: 0.8f, showDuration: 400, hideDuration: 250);
             GiaSuBrand.EnableImplicitAnimation(VisualPropertyType.Offset, 400);
             Right.EnableImplicitAnimation(VisualPropertyType.Offset, 1400);
-            //Right.EnableFluidVisibilityAnimation(showFromScale: 0.6f, hideToScale: 0.8f, showDuration: 400, hideDuration: 250);
         }
         private async Task GetCitiesAsync()
         {
@@ -293,6 +292,11 @@ namespace Gia_Sư
             else if (Password.Password.Any(char.IsUpper) == false)
             {
                 Password.Header = "Mật khẩu phải có ít nhất 1 chữ HOA";
+                Password.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
+            }
+            else if(Password.Password.Any(char.IsLower) == false) 
+            {
+                Password.Header = "Mật khẩu phải có ít nhất 1 chữ THƯỜNG";
                 Password.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
             }
             else if (Password.Password.Any(char.IsNumber) == false)
