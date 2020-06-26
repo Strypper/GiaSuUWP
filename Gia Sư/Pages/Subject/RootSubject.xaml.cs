@@ -1,6 +1,4 @@
-﻿using Gia_Sư.Components;
-using Gia_Sư.Components.PopUps;
-using Gia_Sư.Components.SubjectUI;
+﻿using Gia_Sư.Components.PopUps;
 using Gia_Sư.Helpers.ResizeHelper;
 using Gia_Sư.Models.AppTools;
 using Gia_Sư.Models.SubjectData;
@@ -10,28 +8,17 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.Composition;
-using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
@@ -64,8 +51,6 @@ namespace Gia_Sư.Pages.Subject
         private CompositionEffectBrush effectBrush;
         private CompositionEffectFactory effectFactory;
         private SpringScalarNaturalMotionAnimation _springAnimation;
-
-        private ICollection<RequestSchedules> SchedulesData;
         public RootSubject()
         {
             this.InitializeComponent();
@@ -103,18 +88,23 @@ namespace Gia_Sư.Pages.Subject
 
                 //Animate the layout
                 OverlayPopup.Visibility = Visibility.Visible;
-                LeftSide.Translation = new System.Numerics.Vector3(0, 0, 0);
-                RightSide.Translation = new System.Numerics.Vector3(0, 0, 0);
-                DaysOfWeekField.Translation = new System.Numerics.Vector3(0, 0, 0);
-                CloseBtn.Translation = new System.Numerics.Vector3(0, 0, 0);
+                LeftSide.Translation = new Vector3(0, 0, 0);
+                RightSide.Translation = new Vector3(0, 0, 0);
+                DaysOfWeekField.Translation = new Vector3(0, 0, 0);
+                CloseBtn.Translation = new Vector3(0, 0, 0);
                 CloseBtn.Rotation = 90;
 
                 //Get the detail info
                 var response = await httpClient.GetAsync(GetRequestDetailUrl(selectedItem.RequestID));
                 var result = await response.Content.ReadAsStringAsync();
                 sr = JsonConvert.DeserializeObject<SubjectRequest>(result);
-                SchedulesData = sr.requestSchedules;
 
+                //Get the Schedules
+                //SchedulesData = sr.requestSchedules;
+                ScheduleBoard.Schedules = sr.requestSchedules;
+                ScheduleBoard.AnalyzeData();
+
+                //Get the PayMentTime
                 switch (sr.payMentTime)
                 {
                     case 0:
@@ -127,7 +117,6 @@ namespace Gia_Sư.Pages.Subject
                         XamlPaymentTime.Text = "Trả theo tháng/Tiền mặt";
                         break;
                 }
-
                 Price.Text = sr.VNDPrice;
 
                 SubjectNameValue.Text = sr.name;
@@ -161,10 +150,11 @@ namespace Gia_Sư.Pages.Subject
         }
         private async void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
-            LeftSide.Translation = new System.Numerics.Vector3(-500, 0, 0);
-            RightSide.Translation = new System.Numerics.Vector3(500, 0, 0);
-            DaysOfWeekField.Translation = new System.Numerics.Vector3(0, 300, 0);
-            CloseBtn.Translation = new System.Numerics.Vector3(0, -300, 0);
+            ScheduleBoard.ClearData();
+            LeftSide.Translation = new Vector3(-500, 0, 0);
+            RightSide.Translation = new Vector3(500, 0, 0);
+            DaysOfWeekField.Translation = new Vector3(0, 300, 0);
+            CloseBtn.Translation = new Vector3(0, -300, 0);
             CloseBtn.Rotation = 0;
 
             SubjectGridView.ScrollIntoView(selectedItem, ScrollIntoViewAlignment.Default);
@@ -176,7 +166,8 @@ namespace Gia_Sư.Pages.Subject
             await SubjectGridView.TryStartConnectedAnimationAsync(ConnectedAnimation, selectedItem, "ProfilePicture");
 
 
-            await Task.Delay(500);
+            await Task.Delay(400);
+
             Price.Text = "Đang Tải";
             XamlPaymentTime.Text = "Đang Tải";
 
@@ -351,9 +342,9 @@ namespace Gia_Sư.Pages.Subject
             UniversalToast ut = new UniversalToast();
             ut.VerticalAlignment = VerticalAlignment.Bottom;
             ut.HorizontalAlignment = HorizontalAlignment.Center;
-            RequestPage.Children.Add(ut);
+            OuterLayer.Children.Add(ut);
             await Task.Delay(3700);
-            RequestPage.Children.Remove(ut);
+            OuterLayer.Children.Remove(ut);
             _springAnimation.FinalValue = 0f;
             effectBrush.StartAnimation("Blur.BlurAmount", _springAnimation);
             await Task.Delay(1700);

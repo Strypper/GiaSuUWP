@@ -300,7 +300,7 @@
                 </ToggleButton>
             </StackPanel>
         </StackPanel>
-        <Grid Grid.Row="1">
+        <Grid x:Name="OuterLayer" Grid.Row="1">
             <Grid x:Name="RequestPage">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -429,8 +429,7 @@
                     </ListView.ItemContainerTransitions>
                     <ListView.Header>
                         <TextBlock FontSize="30" FontWeight="ExtraBold"  
-                                                    Foreground="Yellow"
-                                                    HorizontalAlignment="Center">
+                                   Foreground="Yellow" HorizontalAlignment="Center">
                         <Run Text="&#xECAD;" FontFamily="Segoe MDL2 Assets"/>
                         <Run Text="YÊU CẦU CẤP"/>
                         </TextBlock>
@@ -695,7 +694,7 @@
                 </TextBlock>
 
                 <Border x:Name="DaysOfWeek" Width="700" Height="400" CornerRadius="5" Background="{ThemeResource SystemAltMediumLowColor}">
-                    <PopUp:SubjectRequestSchedule/>
+                    <PopUp:SubjectRequestSchedule x:Name="ScheduleBoard"/>
                 </Border>
 
                     <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal" Margin="-30">

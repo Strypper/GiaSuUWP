@@ -9,7 +9,7 @@
     d:DesignHeight="400"
     d:DesignWidth="700">
 
-    <Grid>
+    <Grid x:Name="BoardUI">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="*"/>
@@ -33,20 +33,11 @@
         <TextBlock Grid.Row="0" Grid.Column="5" Text="Thứ 6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="0" Grid.Column="6" Text="Thứ 7" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="0" Grid.Column="7" Text="Chủ Nhật" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Sáng (6AM đến 12AM)" VerticalAlignment="Center"
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Sáng (6AM đến 12PM)" VerticalAlignment="Center"
                     FontSize="10" Width="30" TextWrapping="Wrap" Margin="5"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Chiều (12PM đến 5PM)" VerticalAlignment="Center"
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Chiều (12PM đến 6PM)" VerticalAlignment="Center"
                     FontSize="10" Width="30" TextWrapping="Wrap" Margin="5"/>
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Chiều (5PM đến 11PM)" VerticalAlignment="Center"
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Chiều (6PM đến 12PM)" VerticalAlignment="Center"
                     FontSize="10" Width="30" TextWrapping="Wrap" Margin="5"/>
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="Green" Height="30" VerticalAlignment="Top" ToolTipService.ToolTip="6AM --> 8AM" Margin="5"/>
-        <Rectangle Grid.Row="1" Grid.Column="4" Fill="Green" Height="30" VerticalAlignment="Bottom" Margin="5"/>
-        <Rectangle Grid.Row="1" Grid.Column="5" Fill="Green" Height="30" VerticalAlignment="Center" Margin="5"/>
-        <Rectangle Grid.Row="2" Grid.Column="2" Fill="Yellow" Margin="5"/>
-        <Rectangle Grid.Row="2" Grid.Column="3" Fill="Yellow" Height="60" VerticalAlignment="Bottom" Margin="5"/>
-        <Rectangle Grid.Row="2" Grid.Column="7" Fill="Yellow" Height="30" VerticalAlignment="Top" Margin="5"/>
-        <Rectangle Grid.Row="3" Grid.Column="5" Fill="Blue" Margin="5"/>
-        <Rectangle Grid.Row="3" Grid.Column="1" Fill="Blue" Height="30" VerticalAlignment="Top" Margin="5"/>
-        <Rectangle Grid.Row="3" Grid.Column="1" Fill="Blue" Height="30" VerticalAlignment="Bottom" Margin="5"/>
     </Grid>
 </UserControl>

@@ -142,7 +142,6 @@ namespace Gia_Sư
             CityId = Cid;
             var response = await httpClient.GetAsync(DistrictUrl(CityId));
             var result = await response.Content.ReadAsStringAsync();
-            System.Diagnostics.Debug.WriteLine(result);
             VNDistrict = JsonConvert.DeserializeObject<List<VietNamDistrict>>(result);
             switch (who)
             {

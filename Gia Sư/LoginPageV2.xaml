@@ -67,7 +67,7 @@
         
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid x:Name="GiaSuBrand" Grid.Column="0" Background="{StaticResource BackgroundAcrylicBrush}">
@@ -158,32 +158,32 @@
                                          extensions:TextBoxRegex.ValidationMode="Forced"/>
                                     <StackPanel x:Name="ThirdPartySignUp" Orientation="Horizontal" HorizontalAlignment="Center">
                                         <Button x:Name="SignInWithFacebook" HorizontalAlignment="Center" Margin="5"
-                                            Width="330" FontWeight="ExtraBold" Background="#3f5aa9">
+                                            Width="200" FontWeight="ExtraBold" Background="#3f5aa9">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <Image Source="Assets/AppImage/CompanyLogos/Facebook.png"
                                                        Width="30" Height="30"/>
-                                                <TextBlock Text="ĐĂNG KÝ BẰNG TÀI KHOẢN FACEBOOK" Margin="3"
-                                                           VerticalAlignment="Center" FontSize="10"
+                                                <TextBlock Text="FACEBOOK" Margin="3"
+                                                           VerticalAlignment="Center" FontSize="20"
                                                            Foreground="White"/>
                                             </StackPanel>
                                         </Button>
                                         <Button x:Name="SignInWithMicrosoft" HorizontalAlignment="Center" Margin="5"
-                                            Width="330" FontWeight="ExtraBold" Background="#2c75e9">
+                                            Width="200" FontWeight="ExtraBold" Background="#404040">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <Image Source="Assets/AppImage/CompanyLogos/Microsoft.png"
                                                        Width="30" Height="30"/>
-                                                <TextBlock Text="ĐĂNG KÝ BẰNG TÀI KHOẢN MICROSOFT" Margin="3"
-                                                           VerticalAlignment="Center" FontSize="10"
+                                                <TextBlock Text="MICROSOFT" Margin="3"
+                                                           VerticalAlignment="Center" FontSize="20"
                                                            Foreground="White"/>
                                             </StackPanel>
                                         </Button>
                                         <Button x:Name="SignInWithGoogle" HorizontalAlignment="Center" Margin="5"
-                                            Width="330" FontWeight="ExtraBold" Background="#ca463c">
+                                            Width="200" FontWeight="ExtraBold" Background="#ca463c">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <Image Source="Assets/AppImage/CompanyLogos/Google.png"
                                                        Width="30" Height="30"/>
-                                                <TextBlock Text="ĐĂNG KÝ BẰNG TÀI KHOẢN GOOGLE" Margin="3"
-                                                           VerticalAlignment="Center" FontSize="10"
+                                                <TextBlock Text="GOOGLE" Margin="3"
+                                                           VerticalAlignment="Center" FontSize="20"
                                                            Foreground="White"/>
                                             </StackPanel>
                                         </Button>
