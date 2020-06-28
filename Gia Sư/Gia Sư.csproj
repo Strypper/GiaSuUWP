@@ -200,8 +200,14 @@
     <Compile Include="Pages\Home\RootHome.xaml.cs">
       <DependentUpon>RootHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Home\UserInfo.xaml.cs">
+      <DependentUpon>UserInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Subject\RootSubject.xaml.cs">
       <DependentUpon>RootSubject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UserInfoPages\OverViewProfile.xaml.cs">
+      <DependentUpon>OverViewProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="splash.xaml.cs">
@@ -218,6 +224,7 @@
     <Content Include="Assets\AppImage\CNTT.png" />
     <Content Include="Assets\AppImage\CompanyLogos\Facebook.png" />
     <Content Include="Assets\AppImage\CompanyLogos\Google.png" />
+    <Content Include="Assets\AppImage\CompanyLogos\MicrosoftIcon.png" />
     <Content Include="Assets\AppImage\CompanyLogos\Microsoft.png" />
     <Content Include="Assets\AppImage\Design.png" />
     <Content Include="Assets\AppImage\Farm.png" />
@@ -391,7 +398,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Home\UserInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Subject\RootSubject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\UserInfoPages\OverViewProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

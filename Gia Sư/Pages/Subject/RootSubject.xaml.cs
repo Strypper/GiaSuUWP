@@ -33,18 +33,17 @@ namespace Gia_Sư.Pages.Subject
         private int PageNumber = 0;
         private string BugDetail;
         private SubjectRequest sr = new SubjectRequest();
-        public string GetRequestUrl(int PageNumber) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/RequestPage/{PageNumber}";
-        public string GetRequestDetailUrl(int RequestNumber) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/RequestDetail/{RequestNumber}";
-        public string SearchRequestUrl(string SubName) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/SearchSubject/{SubName}";
-        public string FeedBackSubmitUrl = "https://giasuapi.azurewebsites.net/api/FeedbackControllers/CreateFeedBack";
-        private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
-        private readonly HttpClient httpClient = new HttpClient(handler);
+        private SubjectRequestSchedule srs = new SubjectRequestSchedule();
+        public string GetRequestUrl(int PageNumber) => $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/RequestPage/{PageNumber}";
+        public string GetRequestDetailUrl(int RequestNumber) => $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/RequestDetail/{RequestNumber}";
+        public string SearchRequestUrl(string SubName) => $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/SearchSubject/{SubName}";
+        public string FeedBackSubmitUrl = "https://giasuapi2.azurewebsites.net/api/FeedbackControllers/CreateFeedBack";
+        private readonly HttpClient httpClient = new HttpClient();
 
         private bool HomeWorkVisible { get; set; }
         private bool PresentationVisible { get; set; }
         private bool LaboratoryVisible { get; set; }
         private bool FirstTime = false;
-
         //Blur Animation
         private Compositor compositor = Window.Current.Compositor;
         private SpriteVisual effectVisual;
@@ -101,8 +100,11 @@ namespace Gia_Sư.Pages.Subject
 
                 //Get the Schedules
                 //SchedulesData = sr.requestSchedules;
-                ScheduleBoard.Schedules = sr.requestSchedules;
-                ScheduleBoard.AnalyzeData();
+                srs = new SubjectRequestSchedule();
+                srs.Schedules = sr.requestSchedules;
+                srs.AnalyzeData();
+                DaysOfWeek.Children.Add(srs);
+                DayOfWeekRing.IsActive = false;
 
                 //Get the PayMentTime
                 switch (sr.payMentTime)
@@ -150,7 +152,6 @@ namespace Gia_Sư.Pages.Subject
         }
         private async void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
-            ScheduleBoard.ClearData();
             LeftSide.Translation = new Vector3(-500, 0, 0);
             RightSide.Translation = new Vector3(500, 0, 0);
             DaysOfWeekField.Translation = new Vector3(0, 300, 0);
@@ -167,6 +168,8 @@ namespace Gia_Sư.Pages.Subject
 
 
             await Task.Delay(400);
+            DaysOfWeek.Children.Remove(srs);
+            DayOfWeekRing.IsActive = true;
 
             Price.Text = "Đang Tải";
             XamlPaymentTime.Text = "Đang Tải";
@@ -267,7 +270,7 @@ namespace Gia_Sư.Pages.Subject
         private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
         {
             GetOverViewSubjectRequest.IsActive = true;
-            await GetOverViewRequestsAsync(0);
+            SubjectGridView.ItemsSource = await GetOverViewRequestsAsync(0);
             SubjectFinder.Text = "";
             GetOverViewSubjectRequest.IsActive = false;
         }
@@ -295,7 +298,7 @@ namespace Gia_Sư.Pages.Subject
         private async void RefreshPage_Click(object sender, RoutedEventArgs e)
         {
             GetOverViewSubjectRequest.IsActive = true;
-            await GetOverViewRequestsAsync(0);
+            SubjectGridView.ItemsSource = await GetOverViewRequestsAsync(0);
             SubjectFinder.Text = "";
             GetOverViewSubjectRequest.IsActive = false;
         }

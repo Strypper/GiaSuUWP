@@ -49,15 +49,15 @@ namespace Gia_Sư
         private double PredictAge;
         private int CityId, DistrictId, GroupId;
 
-        private readonly string RegisterUrl = "https://giasuapi.azurewebsites.net/api/LoginRegister/Register";
-        private readonly string LoginUrl = "https://giasuapi.azurewebsites.net/api/LoginRegister/Login";
-        private readonly string GetUserInfoUrl = "https://giasuapi.azurewebsites.net/api/LoginRegister/GetUserInfo";
-        private readonly string CitiesUrl = "https://giasuapi.azurewebsites.net/api/VietNamLocation/CitiesList";
-        private readonly string StudyGroupUrl = "https://giasuapi.azurewebsites.net/api/SubjectControllers/StudyGroupList";
+        private readonly string RegisterUrl = "https://giasuapi2.azurewebsites.net/api/LoginRegister/Register";
+        private readonly string LoginUrl = "https://giasuapi2.azurewebsites.net/api/LoginRegister/Login";
+        private readonly string GetUserInfoUrl = "https://giasuapi2.azurewebsites.net/api/LoginRegister/GetUserInfo";
+        private readonly string CitiesUrl = "https://giasuapi2.azurewebsites.net/api/VietNamLocation/CitiesList";
+        private readonly string StudyGroupUrl = "https://giasuapi2.azurewebsites.net/api/SubjectControllers/StudyGroupList";
 
-        private string DistrictUrl(int cityid) => $"https://giasuapi.azurewebsites.net/api/VietNamLocation/DistrictsList/{CityId}";
-        private string StudyFieldUrl(int groupid) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/StudyFieldList/{GroupId}";
-        private string SchoolUrl(int districtid) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/SchoolList/{DistrictId}";
+        private string DistrictUrl(int cityid) => $"https://giasuapi2.azurewebsites.net/api/VietNamLocation/DistrictsList/{CityId}";
+        private string StudyFieldUrl(int groupid) => $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/StudyFieldList/{GroupId}";
+        private string SchoolUrl(int districtid) => $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/SchoolList/{DistrictId}";
 
         private StorageFile userPhoto;
         private VietNamCity ObjectCity;

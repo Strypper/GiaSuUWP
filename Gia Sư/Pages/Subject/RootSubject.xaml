@@ -693,9 +693,10 @@
                         <Run Text="Ngày học trong tuần"/>
                 </TextBlock>
 
-                <Border x:Name="DaysOfWeek" Width="700" Height="400" CornerRadius="5" Background="{ThemeResource SystemAltMediumLowColor}">
-                    <PopUp:SubjectRequestSchedule x:Name="ScheduleBoard"/>
-                </Border>
+                <Grid x:Name="DaysOfWeek" Width="700" Height="400" CornerRadius="5" Background="{ThemeResource SystemAltMediumLowColor}">
+                    <!--<PopUp:SubjectRequestSchedule x:Name="ScheduleBoard"/>-->
+                    <ProgressRing x:Name="DayOfWeekRing" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="True"/>
+                </Grid>
 
                     <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal" Margin="-30">
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center"

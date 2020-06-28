@@ -30,7 +30,6 @@ namespace Gia_Sư.Components.PopUps
         }
         public void AnalyzeData()
         {
-           ClearData();
            foreach (RequestSchedules rs in Schedules)
            {
                 //Time Duration
@@ -131,13 +130,6 @@ namespace Gia_Sư.Components.PopUps
                 toolTip.Content = rs.timeStart + " - " + rs.timeEnd;
                 ToolTipService.SetToolTip(rec, toolTip);
                 BoardUI.Children.Add(rec);
-            }
-        }
-        public void ClearData()
-        {
-            foreach(Rectangle rec in BoardUI.Children.OfType<Rectangle>())
-            {
-                BoardUI.Children.Remove(rec);
             }
         }
     }

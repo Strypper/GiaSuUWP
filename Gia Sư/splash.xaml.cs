@@ -36,9 +36,7 @@ namespace Gia_Sư
         private SplashScreen mySplash; // Variable to hold the splash screen object.
         internal bool dismissed = false; // Variable to track splash screen dismissal status.
         internal Frame rootFrame;
-
-        private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
-        private readonly HttpClient httpClient = new HttpClient(handler);
+        private readonly HttpClient httpClient = new HttpClient();
 
         public static ApplicationDataContainer localData = ApplicationData.Current.RoamingSettings;
 
@@ -94,11 +92,11 @@ namespace Gia_Sư
         {
             rootFrame = new Frame();
             //Clear the Value
-            localData.Values.Remove("UserToken");
+            //localData.Values.Remove("UserToken");
             if (localData.Values["UserToken"] != null)
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", localData.Values["UserToken"].ToString());
-                var response = httpClient.GetAsync("https://giasuapi.azurewebsites.net/api/LoginRegister/GetUserInfo").GetAwaiter().GetResult();
+                var response = httpClient.GetAsync("https://giasuapi2.azurewebsites.net/api/LoginRegister/GetUserInfo").GetAwaiter().GetResult();
                 var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 App.User = JsonConvert.DeserializeObject<UserModel>(result);
                 rootFrame.Content = new MainPage();

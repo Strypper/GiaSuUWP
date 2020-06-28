@@ -22,6 +22,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -152,9 +153,28 @@ namespace Gia_Sư
         {
             if (e.Key == VirtualKey.Control) _isCtrlKeyPressed = false;
         }
-        private void User_PointerPressed(object sender, PointerRoutedEventArgs e)
+        private void UserInfo_Click(object sender, RoutedEventArgs e)
         {
+            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("ForwardConnectedAnimation", User);
+            Frame.Navigate(typeof(UserInfo), null, new EntranceNavigationTransitionInfo());
+        }
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            if(splash.localData.Values != null)
+            {
+                splash.localData.Values.Remove("UserToken");
+            }
+            Frame.Navigate(typeof(LoginPageV2));
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
+            var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("ForwardConnectedAnimation");
+            if (anim != null)
+            {
+                anim.TryStart(User);
+            }
         }
     }
 }

@@ -124,7 +124,32 @@
         </muxc:NavigationView.PaneHeader>
         <muxc:NavigationView.PaneFooter>
             <StackPanel Orientation="Horizontal">
-                <PersonPicture x:Name="User" Width="25" Margin="5" PointerPressed="User_PointerPressed"/>
+                <Button Background="Transparent" VerticalAlignment="Stretch" Width="40" Padding="0"
+                        CornerRadius="20">
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel HorizontalAlignment="Stretch">
+                                <Button x:Name="UserInfo" HorizontalAlignment="Center" Background="Transparent"
+                                        Click="UserInfo_Click">
+                                    <StackPanel Orientation="Horizontal" 
+                                                HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE783;" Margin="5" HorizontalAlignment="Left" Foreground="{StaticResource SystemAccentColor}"/>
+                                        <TextBlock Text="Thông tin cá nhân" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Foreground="{StaticResource SystemAccentColor}"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="LogOut" HorizontalAlignment="Stretch" Background="Transparent"
+                                        Click="LogOut_Click">
+                                    <StackPanel Orientation="Horizontal" 
+                                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7E8;" Foreground="Red" Margin="5" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Đăng xuất" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                    <PersonPicture x:Name="User" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
                 <Button x:Name="Settings" Tag="Settings" Background="Transparent"
                     Click="Setting" PointerEntered="Settings_PointerEntered">
                     <StackPanel Orientation="Horizontal">

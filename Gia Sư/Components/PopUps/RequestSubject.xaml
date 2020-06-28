@@ -109,13 +109,13 @@
                                     </Border.Background>
                                     <TextBlock Text="{x:Bind StudyGroupName}" FontWeight="ExtraBold"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               FontSize="12"/>
+                                               FontSize="12" Foreground="White"/>
                                 </Border>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <ComboBox x:Name="StudyField" HorizontalAlignment="Stretch" Margin="5" 
-                          CornerRadius="0">
+                          CornerRadius="0" HorizontalContentAlignment="Center">
                         <ComboBox.Header>
                             <TextBlock Text="Ngành" HorizontalAlignment="Center"/>
                         </ComboBox.Header>

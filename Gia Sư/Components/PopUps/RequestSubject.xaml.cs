@@ -34,16 +34,16 @@ namespace Gia_Sư.Components.PopUps
     public sealed partial class RequestSubject : ContentDialog
 
     {
-        private int CityId, DistrictId, GroupId, ValidErr;
-        private string Descript, PayType;
-        private readonly string CreateRequestUrl = "https://giasuapi.azurewebsites.net/api/SubjectControllers/CreateRequest";
+        private int CityId, DistrictId, GroupId, ValidErr, PayType;
+        private string Descript;
+        private readonly string CreateRequestUrl = "https://giasuapi2.azurewebsites.net/api/SubjectControllers/CreateRequest";
         private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
         private readonly HttpClient httpClient = new HttpClient(handler);
-        private readonly string CitiesUrl = "https://giasuapi.azurewebsites.net/api/VietNamLocation/CitiesList";
-        private readonly string StudyGroupUrl = "https://giasuapi.azurewebsites.net/api/SubjectControllers/StudyGroupList";
-        public string StudyFieldUrl(int groupid) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/StudyFieldList/{GroupId}";
-        public string SchoolUrl(int districtid) => $"https://giasuapi.azurewebsites.net/api/SubjectControllers/SchoolList/{DistrictId}";
-        public string DistrictUrl(int PageNumber) => $"https://giasuapi.azurewebsites.net/api/VietNamLocation/DistrictsList/{CityId}";
+        private readonly string CitiesUrl = "https://giasuapi2.azurewebsites.net/api/VietNamLocation/CitiesList";
+        private readonly string StudyGroupUrl = "https://giasuapi2.azurewebsites.net/api/SubjectControllers/StudyGroupList";
+        public string StudyFieldUrl(int groupid) => $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/StudyFieldList/{GroupId}";
+        public string SchoolUrl(int districtid) => $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/SchoolList/{DistrictId}";
+        public string DistrictUrl(int PageNumber) => $"https://giasuapi2.azurewebsites.net/api/VietNamLocation/DistrictsList/{CityId}";
         private VietNamCity ObjectCity;
         private VietNamDistrict ObjectDistrict;
         private List<VietNamCity> VNCity;
@@ -228,7 +228,7 @@ namespace Gia_Sư.Components.PopUps
                                     { "Presentation", Presentation.IsChecked },
                                     { "Laboratory", Lab.IsChecked },
                                     { "WeekDays", Choosentimes },
-                                    { "PaymentType", PayType}
+                                    { "PayMentTime", PayType}
                                 };
                     var content = new StringContent(JsonConvert.SerializeObject(value), Encoding.UTF8, "application/json");
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token.token);
@@ -327,19 +327,19 @@ namespace Gia_Sư.Components.PopUps
             {
                 WeekPay.IsChecked = false;
                 MonthPay.IsChecked = false;
-                PayType = "Hour";
+                PayType = 0;
             }
             if (tb.Name == "WeekPay")
             {
                 HourPay.IsChecked = false;
                 MonthPay.IsChecked = false;
-                PayType = "Week";
+                PayType = 1;
             }
             if (tb.Name == "MonthPay")
             {
                 WeekPay.IsChecked = false;
                 HourPay.IsChecked = false;
-                PayType = "Month";
+                PayType = 2;
             }
         }
     }
