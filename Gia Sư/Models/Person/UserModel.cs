@@ -21,6 +21,8 @@ namespace Gia_Sư.Models.Person
         public int Age { get; set; }
         public string PhoneNumber { get; set; }
         public string SchoolName { get; set; }
+        public string SchoolAddress { get; set; }
+        public string SchoolLogo { get; set; }
         public string UserAddress { get; set; }
     }
     public class Token 

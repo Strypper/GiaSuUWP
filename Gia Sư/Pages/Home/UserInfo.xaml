@@ -84,7 +84,7 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <Pivot x:Name="MainPivot">
+            <Pivot x:Name="MainPivot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <PivotItem>
                     <PivotItem.Header>
                         <StackPanel Orientation="Horizontal">
