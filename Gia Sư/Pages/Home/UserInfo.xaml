@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Gia_Sư.Pages.Home"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:muxc="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     mc:Ignorable="d" Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -19,7 +19,7 @@
                 <Rectangle x:Name="OverlayRectangle" HorizontalAlignment="Stretch" Height="300" VerticalAlignment="Top"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Stretch" x:Name="TextContainer">
                     <PersonPicture x:Name="ProfileImage" ProfilePicture="{x:Bind MyProfile.ProfileImageUrl}" 
-                                   Height="170" Width="170" VerticalAlignment="Center" Margin="35,0,0,0"/>
+                                   Height="170" Width="170" VerticalAlignment="Center" Margin="15,0,0,0"/>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,20,5,5">
                         <TextBlock>
                             <Run Text="{x:Bind MyProfile.FirstName, Mode=OneWay}" FontWeight="ExtraBold" Foreground="White" FontSize="30"/>
@@ -33,7 +33,8 @@
                                             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
                                         </Run>
                         </TextBlock>
-                        <TextBlock x:Name="MoreText" Text="More" Foreground="White" Margin="0,10,0,0"/>
+                        <muxc:RatingControl x:Name="Rating" Value="5" HorizontalAlignment="Left" 
+                                            IsClearEnabled="False" IsReadOnly="True"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
                             <StackPanel Orientation="Horizontal" x:Name="ButtonPanel">
                                 <Button x:Name="ReturnHomeRoot" Padding="0" Foreground="White" Style="{ThemeResource TextBlockButtonStyle}"
@@ -58,6 +59,30 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                    <StackPanel x:Name="RatingLayout" Margin="15">
+                        <TextBlock Text="ĐƯỢC ĐÁNH GIÁ" FontWeight="Bold" FontSize="30" 
+                                   Foreground="{StaticResource SystemAccentColor}"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Run FontFamily="Segoe MDL2 Assets" Text="&#xE082;" FontSize="60"
+                                 Foreground="{StaticResource SystemAccentColor}"/>
+                            <Run Text="5.0" FontSize="60" FontWeight="Bold"
+                                 Foreground="{StaticResource SystemAccentColor}"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel x:Name="TeachCountLayout" Margin="15">
+                        <TextBlock Text="ĐÃ KÈM" FontWeight="Bold" Foreground="White" FontSize="30" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="12" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   FontSize="60" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel x:Name="SubjectCountLayout" Margin="15">
+                        <TextBlock Text="MÔN DẠY" FontWeight="Bold" Foreground="White" FontSize="30" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="3" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   FontSize="60" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                </StackPanel>
             </Grid>
             <Pivot x:Name="MainPivot">
                 <PivotItem>
@@ -65,10 +90,10 @@
                         <StackPanel Orientation="Horizontal">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE187;" 
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      Margin="5" FontSize="25" Foreground="Green"/>
+                                      Margin="5" FontSize="25" Foreground="{StaticResource SystemAccentColor}"/>
                             <TextBlock Text="THÔNG TIN CÁ NHÂN" FontWeight="Bold"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Foreground="Green"/>
+                                       Foreground="{StaticResource SystemAccentColor}"/>
                         </StackPanel>
                     </PivotItem.Header>
                     <Frame x:Name="OverViewProfileFrame" HorizontalAlignment="Stretch">

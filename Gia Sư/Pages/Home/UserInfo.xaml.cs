@@ -1,4 +1,5 @@
 ﻿using Gia_Sư.Models.Person;
+using Gia_Sư.Pages.UserInfoPages;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Toolkit.Uwp.UI.Animations.Expressions;
 using System;
@@ -42,6 +43,7 @@ namespace Gia_Sư.Pages.Home
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            OverViewProfileFrame.Navigate(typeof(OverViewProfile));
             OverlayRectangle.Fill = new SolidColorBrush(new Windows.UI.Color() { A = 155, R = 78, B = 201, G = 159 });
             // Update the ZIndex of the header container so that the header is above the items when scrolling
             var headerPresenter = (UIElement)VisualTreeHelper.GetParent((UIElement)Header);
@@ -131,7 +133,10 @@ namespace Gia_Sư.Pages.Home
             // Get backing visuals for the text blocks so that their properties can be animated
             Visual subtitleVisual = ElementCompositionPreview.GetElementVisual(Role);
             Visual blurbVisual = ElementCompositionPreview.GetElementVisual(Life);
-            Visual moreVisual = ElementCompositionPreview.GetElementVisual(MoreText);
+            Visual teachVisual = ElementCompositionPreview.GetElementVisual(TeachCountLayout);
+            Visual subjectcountVisual = ElementCompositionPreview.GetElementVisual(SubjectCountLayout);
+            Visual ratingcountVisual = ElementCompositionPreview.GetElementVisual(RatingLayout);
+            Visual ratingVisual = ElementCompositionPreview.GetElementVisual(Rating);
 
             // Create an ExpressionAnimation that moves between 1 and 0 with scroll progress, to be used for text block opacity
             ExpressionNode textOpacityAnimation = EF.Clamp(1 - (progressNode * 2), 0, 1);
@@ -145,9 +150,21 @@ namespace Gia_Sư.Pages.Home
             subtitleVisual.StartAnimation("Scale.X", scaleAnimation);
             subtitleVisual.StartAnimation("Scale.Y", scaleAnimation);
 
-            moreVisual.StartAnimation("Opacity", textOpacityAnimation);
-            moreVisual.StartAnimation("Scale.X", scaleAnimation);
-            moreVisual.StartAnimation("Scale.Y", scaleAnimation);
+            ratingVisual.StartAnimation("Opacity", textOpacityAnimation);
+            ratingVisual.StartAnimation("Scale.X", scaleAnimation);
+            ratingVisual.StartAnimation("Scale.Y", scaleAnimation);
+
+            ratingcountVisual.StartAnimation("Opacity", textOpacityAnimation);
+            ratingcountVisual.StartAnimation("Scale.X", scaleAnimation);
+            ratingcountVisual.StartAnimation("Scale.Y", scaleAnimation);
+
+            teachVisual.StartAnimation("Opacity", textOpacityAnimation);
+            teachVisual.StartAnimation("Scale.X", scaleAnimation);
+            teachVisual.StartAnimation("Scale.Y", scaleAnimation);
+
+            subjectcountVisual.StartAnimation("Opacity", textOpacityAnimation);
+            subjectcountVisual.StartAnimation("Scale.X", scaleAnimation);
+            subjectcountVisual.StartAnimation("Scale.Y", scaleAnimation);
 
             // Get the backing visuals for the text and button containers so that their properites can be animated
             Visual textVisual = ElementCompositionPreview.GetElementVisual(TextContainer);
