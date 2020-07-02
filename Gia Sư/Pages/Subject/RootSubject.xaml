@@ -697,29 +697,6 @@
                     <!--<PopUp:SubjectRequestSchedule x:Name="ScheduleBoard"/>-->
                     <ProgressRing x:Name="DayOfWeekRing" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="True"/>
                 </Grid>
-
-                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal" Margin="-30">
-                    <Button VerticalAlignment="Center" HorizontalAlignment="Center"
-                            Width="150" Height="40" Margin="5"
-                            Background="#0c9c4a" CornerRadius="5">
-                        <TextBlock Text="Liên Lạc" FontWeight="Bold"/>
-                    </Button>
-                    <Button VerticalAlignment="Center" HorizontalAlignment="Center"
-                            Width="150" Height="40" Margin="5"
-                            Background="Red" CornerRadius="5">
-                        <TextBlock Text="Nhắn Tin" FontWeight="Bold"/>
-                    </Button>
-                    <Button VerticalAlignment="Center" HorizontalAlignment="Center"
-                            Width="150" Height="40" Margin="5"
-                            Background="Yellow" CornerRadius="5">
-                        <TextBlock Text="Nhận Dạy" FontWeight="Bold"/>
-                    </Button>
-                    <Button VerticalAlignment="Center" HorizontalAlignment="Center"
-                            Width="150" Height="40" Margin="5"
-                            Background="Blue" CornerRadius="5">
-                        <TextBlock Text="Học Chung" FontWeight="Bold"/>
-                    </Button>
-                </StackPanel>
             </StackPanel>
 
 

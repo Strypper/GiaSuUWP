@@ -34,10 +34,10 @@
         <TextBlock Grid.Row="0" Grid.Column="6" Text="Thứ 7" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="0" Grid.Column="7" Text="Chủ Nhật" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Sáng (6AM đến 12PM)" VerticalAlignment="Center"
-                    FontSize="10" Width="30" TextWrapping="Wrap" Margin="5"/>
+                    FontSize="10" Width="40" TextWrapping="Wrap" Margin="5"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Chiều (12PM đến 6PM)" VerticalAlignment="Center"
-                    FontSize="10" Width="30" TextWrapping="Wrap" Margin="5"/>
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Chiều (6PM đến 12PM)" VerticalAlignment="Center"
-                    FontSize="10" Width="30" TextWrapping="Wrap" Margin="5"/>
+                    FontSize="10" Width="40" TextWrapping="Wrap" Margin="5"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Tối (6PM đến 12PM)" VerticalAlignment="Center"
+                    FontSize="10" Width="40" TextWrapping="Wrap" Margin="5"/>
     </Grid>
 </UserControl>

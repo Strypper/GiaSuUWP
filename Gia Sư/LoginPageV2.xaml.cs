@@ -73,8 +73,8 @@ namespace Gia_Sư
         private List<StudyField> SF = new List<StudyField>();
         private List<School> _Sc = new List<School>();
 
-        private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
-        private readonly HttpClient httpClient = new HttpClient(handler);
+        //private static readonly HttpClientHandler handler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
+        private readonly HttpClient httpClient = new HttpClient();
 
         SignUpSuccess contentSuccess = new SignUpSuccess();
 

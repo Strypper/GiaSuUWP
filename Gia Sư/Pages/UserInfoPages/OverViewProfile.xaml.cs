@@ -39,10 +39,10 @@ namespace Gia_Sư.Pages.UserInfoPages
         {
             Random rand = new Random();
             List<FinancialStuff> financialStuffList = new List<FinancialStuff>();
-            financialStuffList.Add(new FinancialStuff() { Name = "MSFT", Amount = rand.Next(0, 200) });
-            financialStuffList.Add(new FinancialStuff() { Name = "AAPL", Amount = rand.Next(0, 200) });
-            financialStuffList.Add(new FinancialStuff() { Name = "GOOG", Amount = rand.Next(0, 200) });
-            financialStuffList.Add(new FinancialStuff() { Name = "BBRY", Amount = rand.Next(0, 200) });
+            financialStuffList.Add(new FinancialStuff() { Name = "TOÁN", Amount = rand.Next(0, 200) });
+            financialStuffList.Add(new FinancialStuff() { Name = "LÝ", Amount = rand.Next(0, 200) });
+            financialStuffList.Add(new FinancialStuff() { Name = "HÓA", Amount = rand.Next(0, 200) });
+            financialStuffList.Add(new FinancialStuff() { Name = "ANH VĂN", Amount = rand.Next(0, 200) });
             (PieChart.Series[0] as PieSeries).ItemsSource = financialStuffList;
         }
     }
