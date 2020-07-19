@@ -11,6 +11,21 @@
             </ResourceDictionary.MergedDictionaries>
             <x:Double x:Key="ContentDialogMaxWidth">1800</x:Double>
             <x:Double x:Key="ContentDialogMaxHeight">2000</x:Double>
+            <Style TargetType="ToggleButton">
+                <Setter Property="CornerRadius" Value="0" />
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="CornerRadius" Value="0" />
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+            <Style TargetType="PasswordBox">
+                <Setter Property="CornerRadius" Value="0"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

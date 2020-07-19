@@ -85,7 +85,7 @@
                     </TextBlock.ScaleTransition>
                 </TextBlock>
                 <Image x:Name="LogoImage" Width="200" Height="200"
-                   CenterPoint="75,75,0" Scale="0,0,0" Source="Assets/TutorLogo.png"
+                   CenterPoint="75,75,0" Scale="0,0,0" Source="Assets/AppImage/TutorLogo.png"
                    HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Image.ScaleTransition>
                         <Vector3Transition Duration="0:0:3"/>

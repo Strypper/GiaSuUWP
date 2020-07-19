@@ -1,0 +1,38 @@
+﻿<UserControl
+    x:Class="Gia_Sư.Components.College.CollegeSubjectRequestOverViewCell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Gia_Sư.Components.College"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="420">
+
+    <Grid x:Name="MainLayout" Height="120" Width="420" PointerEntered="Grid_PointerEntered" PointerExited="Grid_PointerExited" 
+          Background="Transparent" Padding="0">
+        <Grid.BackgroundTransition>
+            <BrushTransition Duration="0:0:1"/>
+        </Grid.BackgroundTransition>
+        <PersonPicture ProfilePicture="{Binding SchoolLogoUrl, Mode=OneTime}" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+        <StackPanel HorizontalAlignment="Left">
+            <TextBlock x:Name="SubjectRequest" FontWeight="Bold" Margin="10"  TextDecorations="Underline"
+                       Scale="1,1,1" Text="{x:Bind SubjectName, Mode=OneWay}">
+                <TextBlock.ScaleTransition>
+                    <Vector3Transition/>
+                </TextBlock.ScaleTransition>
+            </TextBlock>
+            <TextBlock Text="{x:Bind SchoolName, Mode=OneWay}" Margin="10" />
+            <TextBlock Margin="10">
+                <Run Text="{x:Bind Price, Mode=OneWay}" FontWeight="Bold" Foreground="Green"/>
+                <Run Text="VNĐ /"/>
+                <Run Text="{x:Bind PaymentType, Mode=OneWay}"/>
+            </TextBlock>
+        </StackPanel>
+        <StackPanel x:Name="Actions" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal"
+                    Margin="70,0,0,0">
+            <ToggleButton Content="&#xE74E;" FontFamily="Segoe MDL2 Assets" Background="Transparent" ToolTipService.ToolTip="Lưu yêu cầu"/>
+            <ToggleButton Content="&#xEF90;" FontFamily="Segoe MDL2 Assets" Background="Transparent" ToolTipService.ToolTip="Nhận dạy"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

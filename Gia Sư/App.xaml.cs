@@ -1,4 +1,6 @@
 ﻿using Gia_Sư.Models.Person;
+using Gia_Sư.Pages.Subject;
+using Gia_Sư.Pages.Tutor;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -47,15 +49,17 @@ namespace Gia_Sư
 
                 if (e.PreviousExecutionState != ApplicationExecutionState.Terminated)
                 {
-                    bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
-                    splash extendedSplash = new splash(e.SplashScreen, loadState);
-                    rootFrame.Content = extendedSplash;
-                    Window.Current.Content = rootFrame;
                 }
+                Window.Current.Content = rootFrame;
             }
 
             if (e.PrelaunchActivated == false)
             {
+                if (rootFrame.Content == null)
+                {
+                    rootFrame.Navigate(typeof(LoginPageV2), e.Arguments);
+                }
+
                 Window.Current.Activate();
                 ElementSoundPlayer.State = ElementSoundPlayerState.On;
 

@@ -122,7 +122,10 @@
     </Compile>
     <Compile Include="Common\ExtensionMethods.cs" />
     <Compile Include="Common\VisualTreeExtension.cs" />
-    <Compile Include="Components\ExploreButton.xaml.cs">
+    <Compile Include="Components\College\CollegeSubjectRequestOverViewCell.xaml.cs">
+      <DependentUpon>CollegeSubjectRequestOverViewCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\PopUps\App\ExploreButton.xaml.cs">
       <DependentUpon>ExploreButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Logo.xaml.cs">
@@ -131,7 +134,7 @@
     <Compile Include="Components\Pagination.xaml.cs">
       <DependentUpon>Pagination.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\ParticleCanvas.xaml.cs">
+    <Compile Include="Components\PopUps\App\ParticleCanvas.xaml.cs">
       <DependentUpon>ParticleCanvas.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\PersonalSchedule\PersonalSchedule.xaml.cs">
@@ -140,29 +143,26 @@
     <Compile Include="Components\PopUps\PersonalSchedulePopUp.xaml.cs">
       <DependentUpon>PersonalSchedulePopUp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\PopUps\RequestSubject.xaml.cs">
-      <DependentUpon>RequestSubject.xaml</DependentUpon>
+    <Compile Include="Components\PopUps\College\RequestSubjectPopUp.xaml.cs">
+      <DependentUpon>RequestSubjectPopUp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\PopUps\Settings.xaml.cs">
+    <Compile Include="Components\PopUps\App\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\PopUps\SignUpError.xaml.cs">
+    <Compile Include="Components\PopUps\App\LoginRegister\SignUpError.xaml.cs">
       <DependentUpon>SignUpError.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\PopUps\SignUpSuccess.xaml.cs">
+    <Compile Include="Components\PopUps\App\LoginRegister\SignUpSuccess.xaml.cs">
       <DependentUpon>SignUpSuccess.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\PersonalSchedule\SubjectRequestSchedule.xaml.cs">
       <DependentUpon>SubjectRequestSchedule.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\PopUps\UniversalToast.xaml.cs">
+    <Compile Include="Components\PopUps\App\UniversalToast.xaml.cs">
       <DependentUpon>UniversalToast.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\SubjectUI\SubjectDetailUI.xaml.cs">
-      <DependentUpon>SubjectDetailUI.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Components\SubjectUI\SubjectOverViewUI.xaml.cs">
-      <DependentUpon>SubjectOverViewUI.xaml</DependentUpon>
+    <Compile Include="Components\Stuhub\UserStoryComponent.xaml.cs">
+      <DependentUpon>UserStoryComponent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ColorBloomTransitionHelper.cs" />
     <Compile Include="Helpers\ImageLoader\ICircleSurface.cs" />
@@ -186,6 +186,8 @@
     <Compile Include="Models\Location\PersonalLocation.cs" />
     <Compile Include="Models\Person\UserModel.cs" />
     <Compile Include="Models\Location\School.cs" />
+    <Compile Include="Models\Stuhub\UserStory.cs" />
+    <Compile Include="Models\Services\CollegeStudyGroup\CollegeStudyGroupModel.cs" />
     <Compile Include="Models\SubjectData\RequestSchedules.cs" />
     <Compile Include="Models\SubjectData\StudyField.cs" />
     <Compile Include="Models\SubjectData\StudyGroup.cs" />
@@ -195,24 +197,26 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Services\Services.cs" />
-    <Compile Include="Models\SubjectData\SubjectRequest.cs" />
-    <Compile Include="Pages\Home\RootHome.xaml.cs">
-      <DependentUpon>RootHome.xaml</DependentUpon>
+    <Compile Include="Models\SubjectData\SubjectCollegeRequest.cs" />
+    <Compile Include="Pages\Home\RootHomeV2.xaml.cs">
+      <DependentUpon>RootHomeV2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Home\UserInfo.xaml.cs">
       <DependentUpon>UserInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Subject\CollegeRequestSubject.xaml.cs">
+      <DependentUpon>CollegeRequestSubject.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Subject\RootSubject.xaml.cs">
       <DependentUpon>RootSubject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Tutor\TutorPage.xaml.cs">
+      <DependentUpon>TutorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\UserInfoPages\OverViewProfile.xaml.cs">
       <DependentUpon>OverViewProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="splash.xaml.cs">
-      <DependentUpon>splash.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -220,23 +224,25 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\AppImage\Business.jpg" />
-    <Content Include="Assets\AppImage\CNTT.png" />
+    <Content Include="Assets\AppImage\StudyGroup\Business.jpg" />
+    <Content Include="Assets\AppImage\StudyGroup\CNTT.png" />
     <Content Include="Assets\AppImage\CompanyLogos\Facebook.png" />
     <Content Include="Assets\AppImage\CompanyLogos\Google.png" />
     <Content Include="Assets\AppImage\CompanyLogos\MicrosoftIcon.png" />
     <Content Include="Assets\AppImage\CompanyLogos\Microsoft.png" />
-    <Content Include="Assets\AppImage\Design.png" />
-    <Content Include="Assets\AppImage\Farm.png" />
-    <Content Include="Assets\AppImage\HotelService.png" />
-    <Content Include="Assets\AppImage\KienTrucXayDung.jpg" />
-    <Content Include="Assets\AppImage\Law.png" />
-    <Content Include="Assets\AppImage\MediaEducation.png" />
-    <Content Include="Assets\AppImage\Medic.png" />
-    <Content Include="Assets\AppImage\Science.jpg" />
-    <Content Include="Assets\AppImage\Social.png" />
-    <Content Include="Assets\AppImage\Sport.png" />
-    <Content Include="Assets\AppImage\Teacher.png" />
+    <Content Include="Assets\AppImage\StudyGroup\Design.jpg" />
+    <Content Include="Assets\AppImage\StudyGroup\Design.png" />
+    <Content Include="Assets\AppImage\StudyGroup\Farm.png" />
+    <Content Include="Assets\AppImage\StudyGroup\HotelService.png" />
+    <Content Include="Assets\AppImage\StudyGroup\KienTrucXayDung.jpg" />
+    <Content Include="Assets\AppImage\StudyGroup\KyThuat.png" />
+    <Content Include="Assets\AppImage\StudyGroup\Law.png" />
+    <Content Include="Assets\AppImage\StudyGroup\MediaEducation.png" />
+    <Content Include="Assets\AppImage\StudyGroup\Medic.png" />
+    <Content Include="Assets\AppImage\StudyGroup\Science.jpg" />
+    <Content Include="Assets\AppImage\StudyGroup\Social.png" />
+    <Content Include="Assets\AppImage\StudyGroup\Sport.png" />
+    <Content Include="Assets\AppImage\StudyGroup\Teacher.png" />
     <Content Include="Assets\AppImage\TutorLogo.png" />
     <Content Include="Assets\AppImage\Wallpapers\Mountain.png" />
     <Content Include="Assets\BadgeLogo.scale-100.png" />
@@ -244,10 +250,10 @@
     <Content Include="Assets\BadgeLogo.scale-150.png" />
     <Content Include="Assets\BadgeLogo.scale-200.png" />
     <Content Include="Assets\BadgeLogo.scale-400.png" />
-    <Content Include="Assets\ServiceImages\1.jpeg" />
-    <Content Include="Assets\ServiceImages\2.jpeg" />
-    <Content Include="Assets\ServiceImages\3.jpeg" />
-    <Content Include="Assets\ServiceImages\4.jpeg" />
+    <Content Include="Assets\TestPurpose\Wallpapers\1.jpeg" />
+    <Content Include="Assets\TestPurpose\Wallpapers\2.jpeg" />
+    <Content Include="Assets\TestPurpose\Wallpapers\3.jpeg" />
+    <Content Include="Assets\TestPurpose\Wallpapers\4.jpeg" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
@@ -269,6 +275,7 @@
     <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
     <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
     <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-24.png" />
     <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-256.png" />
     <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-32.png" />
     <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-48.png" />
@@ -306,23 +313,27 @@
     <Content Include="Assets\TestPurpose\ProfileImage\Trung.jpg" />
     <Content Include="Assets\TestPurpose\SchoolLogo\IU.png" />
     <Content Include="Assets\TestPurpose\Wallpapers\.NET.png" />
+    <Content Include="Assets\TestPurpose\Wallpapers\IUTest1.jpg" />
+    <Content Include="Assets\TestPurpose\Wallpapers\IUTest2.jpg" />
+    <Content Include="Assets\TestPurpose\Wallpapers\IUTest3.jpg" />
     <Content Include="Assets\TestPurpose\Wallpapers\Rain.jpg" />
-    <Content Include="Assets\TutorLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Components\ExploreButton.xaml">
+    <Page Include="Components\College\CollegeSubjectRequestOverViewCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\PopUps\App\ExploreButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -334,7 +345,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\ParticleCanvas.xaml">
+    <Page Include="Components\PopUps\App\ParticleCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -346,19 +357,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\PopUps\RequestSubject.xaml">
+    <Page Include="Components\PopUps\College\RequestSubjectPopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\PopUps\Settings.xaml">
+    <Page Include="Components\PopUps\App\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\PopUps\SignUpError.xaml">
+    <Page Include="Components\PopUps\App\LoginRegister\SignUpError.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\PopUps\SignUpSuccess.xaml">
+    <Page Include="Components\PopUps\App\LoginRegister\SignUpSuccess.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -366,15 +377,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\PopUps\UniversalToast.xaml">
+    <Page Include="Components\PopUps\App\UniversalToast.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\SubjectUI\SubjectDetailUI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Components\SubjectUI\SubjectOverViewUI.xaml">
+    <Page Include="Components\Stuhub\UserStoryComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -394,7 +401,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Home\RootHome.xaml">
+    <Page Include="Pages\Home\RootHomeV2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -402,15 +409,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Subject\CollegeRequestSubject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Subject\RootSubject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\UserInfoPages\OverViewProfile.xaml">
+    <Page Include="Pages\Tutor\TutorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="splash.xaml">
+    <Page Include="Pages\UserInfoPages\OverViewProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -420,22 +431,22 @@
       <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp">
-      <Version>6.1.0</Version>
+      <Version>7.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
-      <Version>6.1.0</Version>
+      <Version>7.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
-      <Version>6.1.0</Version>
+      <Version>7.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>6.1.0</Version>
+      <Version>7.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Lottie">
       <Version>6.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.4.2</Version>
+      <Version>2.5.0-prerelease.200708003</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime">
       <Version>4.3.1</Version>
@@ -449,8 +460,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Location\" />
-    <Folder Include="Pages\Tools\" />
-    <Folder Include="Pages\Tutor\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ResizeHelper\CompositionExtensions.Implicit.cs" />

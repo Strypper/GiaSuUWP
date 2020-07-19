@@ -2,7 +2,7 @@
     x:Class="Gia_Sư.Pages.Subject.RootSubject"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Gia_Sư.Pages.Subject" Loaded="Page_Loaded"
+    xmlns:local="using:Gia_Sư.Pages.Subject"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -194,43 +194,8 @@
         </Style>
     </Page.Resources>
 
-    <Grid x:Name="SubjectRequestPage">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="WindowsState">
-                <VisualState x:Name="SurfaceBookAdapt">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="2000"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="DesktopAdapt">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1600"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="PhoneAdapt">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="700"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="RequestPage.ColumnDefinitions[1].Width" Value="0"/>
-                        <Setter Target="HotRequest.(UIElement.Visibility)" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="PhoneAdapt1">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="RequestPage.ColumnDefinitions[1].Width" Value="0"/>
-                        <Setter Target="HotRequest.(UIElement.Visibility)" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+    <!--<Grid x:Name="SubjectRequestPage">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -338,10 +303,10 @@
                                 </TextBlock>
                             </Grid>
                         </GridView.Header>
-                        <!--MainGridView-->
+                        --><!--MainGridView--><!--
                         <controls:AdaptiveGridView.ItemTemplate>
                             <DataTemplate x:DataType="data:OverviewRequest">
-                                <!--Gridview element-->
+                                --><!--Gridview element--><!--
                                 <Grid Height="120" Width="400" RowSpacing="2">
                                     <Interactivity:Interaction.Behaviors>
                                         <Core:EventTriggerBehavior EventName="PointerEntered">
@@ -443,7 +408,7 @@
                                   IsActive="False"  Width="100" Height="100"/>
         </Grid>
 
-        <!--Command Bar-->
+        --><!--Command Bar--><!--
         <CommandBar IsOpen="False" DefaultLabelPosition="Bottom"
                     VerticalAlignment="Bottom" Grid.Row="1">
             <AppBarButton x:Name="CreateRequest" Icon="Add" Label="Tạo yêu cầu dạy học" Click="CreateRequest_Click"/>
@@ -694,7 +659,7 @@
                 </TextBlock>
 
                 <Grid x:Name="DaysOfWeek" Width="700" Height="400" CornerRadius="5" Background="{ThemeResource SystemAltMediumLowColor}">
-                    <!--<PopUp:SubjectRequestSchedule x:Name="ScheduleBoard"/>-->
+                    --><!--<PopUp:SubjectRequestSchedule x:Name="ScheduleBoard"/>--><!--
                     <ProgressRing x:Name="DayOfWeekRing" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="True"/>
                 </Grid>
             </StackPanel>
@@ -750,5 +715,5 @@
                 </StackPanel>
             </Grid>
         </Grid> 
-    </Grid>
+    </Grid>-->
 </Page>

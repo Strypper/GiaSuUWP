@@ -50,13 +50,23 @@
                             QueryIcon="Find" Width="400"/>
         </muxc:NavigationView.AutoSuggestBox>
         <muxc:NavigationView.MenuItems>
-            <muxc:NavigationViewItem x:Name="Home" Icon="Home" Content="TRANG CHỦ" IsSelected="True" Tag="RootHome" FontWeight="Bold"/>
+            <muxc:NavigationViewItem x:Name="Home" Icon="Home" Content="TRANG CHỦ" IsSelected="True" Tag="RootHomeV2" FontWeight="Bold"/>
+            <muxc:NavigationViewItem x:Name="Messenger" Content="TIN NHẮN" IsSelected="True" Tag="RootHomeV2" FontWeight="Bold">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE206;" />
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+            <muxc:NavigationViewItem x:Name="Club" Content="CÂU LẠC BỘ" Icon="flag" IsSelected="True" Tag="RootHomeV2" FontWeight="Bold"/>
             <muxc:NavigationViewItemSeparator/>
-            <muxc:NavigationViewItem Content="GIA SƯ" Icon="Contact" ToolTipService.ToolTip="Dịch Vụ Gia Sư" Tag="RootSubject" FontWeight="Bold">
+            <muxc:NavigationViewItem Content="GIA SƯ" Icon="Contact" ToolTipService.ToolTip="Dịch Vụ Gia Sư" Tag="CollegeRequestSubject" FontWeight="Bold">
                 <muxc:NavigationViewItem.MenuItems>
-                    <muxc:NavigationViewItem x:Name="Subject" Icon="Library" Content="Môn Học" FontWeight="Bold"/>
-                    <muxc:NavigationViewItem x:Name="Tutor" Icon="Contact2" Content="Gia Sư" FontWeight="Bold"/>
-                    <muxc:NavigationViewItem x:Name="Homework" Content="Bài Tập" FontWeight="Bold">
+                    <muxc:NavigationViewItem x:Name="CollegeSubject" Content="Yêu Cầu Môn Đại Học" FontWeight="Bold">
+                        <muxc:NavigationViewItem.Icon>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED15;" />
+                        </muxc:NavigationViewItem.Icon>
+                    </muxc:NavigationViewItem>
+                    <muxc:NavigationViewItem x:Name="Tutor" Icon="Contact2" Content="Tìm Gia Sư Đại Học" FontWeight="Bold"/>
+                    <muxc:NavigationViewItem x:Name="Homework" Content="Giúp Đỡ Bài Tập" FontWeight="Bold">
                         <muxc:NavigationViewItem.Icon>
                             <FontIcon Glyph="&#xEC87;" />
                         </muxc:NavigationViewItem.Icon>

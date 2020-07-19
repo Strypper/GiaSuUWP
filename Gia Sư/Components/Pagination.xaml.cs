@@ -27,7 +27,7 @@ namespace Gia_Sư.Components
         public event EventHandler<PaginationRouteEvent> pageClick;
         private int NumberOfRequest;
         //Get the request count
-        private readonly string GetNumberOfPage = $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/NumberOfRecord";
+        private readonly string GetNumberOfPage = $"https://giasuapi2.azurewebsites.net/api/CollegeSubjectControllers/NumberOfRecord";
         private readonly HttpClient httpClient = new HttpClient();
         private bool FirstTriggerButton = true;
 

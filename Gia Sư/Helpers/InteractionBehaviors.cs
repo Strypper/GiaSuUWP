@@ -157,7 +157,7 @@ namespace Gia_Sư.Helpers
             infoVisual.StartAnimation("Scale", EF.Vector3(1, 1, 1) * EF.Lerp(1, 1.2f, propSetProgress));
 
             // Create an animation that changes the offset of the photoVisual and shadowVisual based on the manipulation progress
-            var photoOffsetExp = -120f * _props.GetReference().GetScalarProperty("Progress");
+            var photoOffsetExp = -30f * _props.GetReference().GetScalarProperty("Progress");
             photoVisual.StartAnimation("offset.y", photoOffsetExp);
             shadowVisual.StartAnimation("offset.y", photoOffsetExp);
 

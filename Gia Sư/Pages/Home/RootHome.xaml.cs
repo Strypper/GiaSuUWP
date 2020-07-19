@@ -31,7 +31,7 @@ namespace Gia_Sư.Pages.Home
     /// </summary>
     public sealed partial class RootHome : Page
     {
-        private List<Services> services;
+        //private List<Services> services;
         public RootHome()
         {
             this.InitializeComponent();
@@ -41,8 +41,8 @@ namespace Gia_Sư.Pages.Home
 
             Below.Opacity = 1;
             Welcome.Translation = new Vector3(0, 0, 0);
-            services = ServiceList.GetServices();
-            Items.ItemsSource = services;
+            //services = ServiceList.GetServices();
+            //Items.ItemsSource = services;
 
 
             Benefit.EnableImplicitAnimation(VisualPropertyType.Offset, 1400);

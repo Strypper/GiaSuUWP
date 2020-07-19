@@ -55,10 +55,10 @@ namespace Gia_Sư
             switch (item.Name)
             {
                 case "Home":
-                    MainFrame.Navigate(typeof(RootHome));
+                    MainFrame.Navigate(typeof(RootHomeV2));
                     break;
-                case "Subject":
-                    MainFrame.Navigate(typeof(RootSubject));
+                case "CollegeSubject":
+                    MainFrame.Navigate(typeof(CollegeRequestSubject));
                     break;
             }
         }
@@ -79,7 +79,7 @@ namespace Gia_Sư
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if(App.User.ProfileImageUrl == null)
+            if (App.User.ProfileImageUrl == null)
             {
                 User.ProfilePicture = null;
             }
@@ -90,7 +90,7 @@ namespace Gia_Sư
                 User.ProfilePicture = bitmap;
             }
             //Start the page
-            MainFrame.Navigate(typeof(RootHome));
+            MainFrame.Navigate(typeof(RootHomeV2));
             //Animate the gear
             backVisual = ElementCompositionPreview.GetElementVisual(GearIcon);
             backVisual.Size = new System.Numerics.Vector2(20, 20);
@@ -110,7 +110,7 @@ namespace Gia_Sư
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
             var pageName = MainFrame.Content.GetType().Name;            
-            if(pageName == "RootHome" || pageName == "RootSubject")
+            if(pageName == "RootHomeV2" || pageName == "CollegeRequestSubject")
             {            
                 //find menu item that has the matching tag
                 var menuItem = NavigationViewPanel.MenuItems
@@ -124,8 +124,6 @@ namespace Gia_Sư
                 NavigationViewPanel.IsBackButtonVisible = Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed;
             }
             else NavigationViewPanel.IsBackButtonVisible = Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Visible;
-
-
         }
         private async void Setting(object sender, RoutedEventArgs e)
         {
@@ -144,7 +142,7 @@ namespace Gia_Sư
                 switch (e.Key)
                 {
                     case VirtualKey.S: Search.Focus(FocusState.Programmatic); break;
-                    case VirtualKey.Number1: MainFrame.Navigate(typeof(RootHome)); break;
+                    case VirtualKey.Number1: MainFrame.Navigate(typeof(RootHomeV2)); break;
                     case VirtualKey.Number2: MainFrame.Navigate(typeof(RootSubject)); break;
                 }
             }
@@ -160,11 +158,11 @@ namespace Gia_Sư
         }
         private void LogOut_Click(object sender, RoutedEventArgs e)
         {
-            if(splash.localData.Values != null)
-            {
-                splash.localData.Values.Remove("UserToken");
-            }
-            Frame.Navigate(typeof(LoginPageV2));
+            //if(splash.localData.Values != null)
+            //{
+            //    splash.localData.Values.Remove("UserToken");
+            //}
+            //Frame.Navigate(typeof(LoginPageV2));
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
