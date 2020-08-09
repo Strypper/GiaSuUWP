@@ -1,9 +1,4 @@
-﻿using Gia_Sư.Models.Location;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Gia_Sư.Models.Person
 {
@@ -25,7 +20,7 @@ namespace Gia_Sư.Models.Person
         public string SchoolLogo { get; set; }
         public string UserAddress { get; set; }
     }
-    public class Token 
+    public class Token
     {
         public string token { get; set; }
     }

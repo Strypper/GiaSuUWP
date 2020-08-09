@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions" 
-    xmlns:data="using:Gia_Sư.Models.Location" xmlns:data1="using:Gia_Sư.Models.SubjectData" xmlns:data2="using:Gia_Sư.Models" xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:data="using:Gia_Sư.Models.Location" xmlns:studygroup="using:Gia_Sư.Models.College" 
+    xmlns:school="using:Gia_Sư.Models" xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
@@ -371,7 +373,7 @@
                                                 </StackPanel>
                                             </ComboBox.Header>
                                             <ComboBox.ItemTemplate>
-                                                <DataTemplate x:DataType="data2:School">
+                                                <DataTemplate x:DataType="school:School">
                                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                                         <Image Source="{x:Bind schoolLogo}" Width="50" Height="50" Margin="5"/>
                                                         <TextBlock Text="{x:Bind schoolName}" Margin="5" VerticalAlignment="Center"/>
@@ -388,7 +390,7 @@
                                                 </StackPanel>
                                             </ComboBox.Header>
                                             <ComboBox.ItemTemplate>
-                                                <DataTemplate x:DataType="data1:StudyGroup">
+                                                <DataTemplate x:DataType="studygroup:StudyGroup">
                                                     <Border Width="280" Height="50">
                                                         <Border.Background>
                                                             <ImageBrush>
@@ -399,7 +401,7 @@
                                                         </Border.Background>
                                                         <TextBlock Text="{x:Bind StudyGroupName}" FontWeight="ExtraBold"
                                                                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                                   FontSize="12"/>
+                                                                   FontSize="12" Foreground="White"/>
                                                     </Border>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
@@ -413,7 +415,7 @@
                                                 </StackPanel>
                                             </ComboBox.Header>
                                             <ComboBox.ItemTemplate>
-                                                <DataTemplate x:DataType="data1:StudyField">
+                                                <DataTemplate x:DataType="studygroup:StudyField">
                                                     <TextBlock Text="{x:Bind StudyFieldName}"/>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>

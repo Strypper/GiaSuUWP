@@ -47,18 +47,18 @@
         </VisualStateManager.VisualStateGroups>
         <muxc:NavigationView.AutoSuggestBox>
             <AutoSuggestBox x:Name="Search" AccessKey="S" ToolTipService.ToolTip="Press Crt + S for Quick Access"
-                            QueryIcon="Find" Width="400"/>
+                            QueryIcon="Find" Width="400" CornerRadius="0"/>
         </muxc:NavigationView.AutoSuggestBox>
         <muxc:NavigationView.MenuItems>
-            <muxc:NavigationViewItem x:Name="Home" Icon="Home" Content="TRANG CHỦ" IsSelected="True" Tag="RootHomeV2" FontWeight="Bold"/>
-            <muxc:NavigationViewItem x:Name="Messenger" Content="TIN NHẮN" IsSelected="True" Tag="RootHomeV2" FontWeight="Bold">
+            <muxc:NavigationViewItem x:Name="Home" Icon="Home" Content="TRANG CHỦ" IsSelected="True" FontWeight="Bold"/>
+            <muxc:NavigationViewItem x:Name="Messenger" Content="TIN NHẮN" IsSelected="True" FontWeight="Bold">
                 <muxc:NavigationViewItem.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE206;" />
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8F2;" />
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
-            <muxc:NavigationViewItem x:Name="Club" Content="CÂU LẠC BỘ" Icon="flag" IsSelected="True" Tag="RootHomeV2" FontWeight="Bold"/>
+            <muxc:NavigationViewItem x:Name="Club" Content="CÂU LẠC BỘ" Icon="flag" IsSelected="True" FontWeight="Bold"/>
             <muxc:NavigationViewItemSeparator/>
-            <muxc:NavigationViewItem Content="GIA SƯ" Icon="Contact" ToolTipService.ToolTip="Dịch Vụ Gia Sư" Tag="CollegeRequestSubject" FontWeight="Bold">
+            <muxc:NavigationViewItem Content="GIA SƯ" Icon="Contact" ToolTipService.ToolTip="Dịch Vụ Gia Sư" FontWeight="Bold">
                 <muxc:NavigationViewItem.MenuItems>
                     <muxc:NavigationViewItem x:Name="CollegeSubject" Content="Yêu Cầu Môn Đại Học" FontWeight="Bold">
                         <muxc:NavigationViewItem.Icon>
@@ -71,7 +71,6 @@
                             <FontIcon Glyph="&#xEC87;" />
                         </muxc:NavigationViewItem.Icon>
                     </muxc:NavigationViewItem>
-                    <muxc:NavigationViewItemSeparator/>
                 </muxc:NavigationViewItem.MenuItems>
             </muxc:NavigationViewItem>
             <muxc:NavigationViewItem Content="VIỆC LÀM" ToolTipService.ToolTip="Tìm Kiếm Việc Làm" FontWeight="Bold">
@@ -128,7 +127,7 @@
                 </muxc:NavigationViewItem.MenuItems>
             </muxc:NavigationViewItem>
         </muxc:NavigationView.MenuItems>
-        <Frame x:Name="MainFrame" Navigated="MainFrame_Navigated"/>
+        <Frame x:Name="MainFrame"/>
         <muxc:NavigationView.PaneHeader>
             <Image Source="Assets/AppImage/TutorLogo.png"/>
         </muxc:NavigationView.PaneHeader>
@@ -160,7 +159,7 @@
                     </Button.Flyout>
                     <PersonPicture x:Name="User" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
-                <Button x:Name="Settings" Tag="Settings" Background="Transparent"
+                <Button x:Name="Settings" Background="Transparent"
                     Click="Setting" PointerEntered="Settings_PointerEntered">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon x:Name="GearIcon" Glyph="&#xE713;" FontSize="20"

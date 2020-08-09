@@ -8,7 +8,8 @@
     xmlns:UserControl="using:Gia_Sư.Components" 
     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" 
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    mc:Ignorable="d" xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions" xmlns:data="using:Gia_Sư.Models.Location" xmlns:data1="using:Gia_Sư.Models.SubjectData" xmlns:data2="using:Gia_Sư.Models" xmlns:lottie="using:Microsoft.Toolkit.Uwp.UI.Lottie"
+    mc:Ignorable="d" xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions" xmlns:data="using:Gia_Sư.Models.Location" 
+    xmlns:data1="using:Gia_Sư.Models.College" xmlns:data2="using:Gia_Sư.Models" xmlns:lottie="using:Microsoft.Toolkit.Uwp.UI.Lottie"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>

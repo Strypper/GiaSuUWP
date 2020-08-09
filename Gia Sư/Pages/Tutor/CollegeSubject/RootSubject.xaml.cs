@@ -1,28 +1,4 @@
-﻿using Gia_Sư.Components.PopUps;
-using Gia_Sư.Helpers.ResizeHelper;
-using Gia_Sư.Models.AppTools;
-using Gia_Sư.Models.SubjectData;
-using Microsoft.Graphics.Canvas.Effects;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI;
-using Windows.UI.Composition;
-using Windows.UI.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
+﻿using Windows.UI.Xaml.Controls;
 
 
 namespace Gia_Sư.Pages.Subject

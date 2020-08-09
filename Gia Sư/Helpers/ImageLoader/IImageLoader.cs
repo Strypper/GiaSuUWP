@@ -1,6 +1,7 @@
-﻿using System;
-using Microsoft.Graphics.Canvas;
+﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Composition;
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
@@ -8,7 +9,6 @@ using Windows.Graphics.DirectX;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Composition;
-using System.Diagnostics;
 
 namespace Gia_Sư.Helpers.ImageLoader
 {

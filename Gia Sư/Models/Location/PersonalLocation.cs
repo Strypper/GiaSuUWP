@@ -1,8 +1,4 @@
-﻿using Gia_Sư.Models.Person;
-using System;
-using System.Collections.Generic;
-
-namespace Gia_Sư.Models.Location
+﻿namespace Gia_Sư.Models.Location
 {
     public class PersonalLocation
     {

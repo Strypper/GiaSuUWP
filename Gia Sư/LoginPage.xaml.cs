@@ -1,46 +1,33 @@
-﻿using Gia_Sư.Helpers.ResizeHelper;
+﻿using Gia_Sư.Components.PopUps;
+using Gia_Sư.Models;
+using Gia_Sư.Models.AppTools;
+using Gia_Sư.Models.Location;
 using Gia_Sư.Models.Person;
+using Gia_Sư.Models.College;
+using Microsoft.Toolkit.Uwp.UI.Animations;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Media.Capture;
 using Windows.Storage;
-using Windows.UI.Popups;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
-using Microsoft.Toolkit.Uwp.UI.Extensions;
-using Windows.UI;
-using Gia_Sư.Models.AppTools;
-using Gia_Sư.Models.Location;
-using Gia_Sư.Components.PopUps;
-using Gia_Sư.Models.SubjectData;
-using Gia_Sư.Models;
-using Microsoft.Toolkit.Uwp.UI.Animations;
-using System.Net.Http.Headers;
-using System.Diagnostics;
-using Windows.Media.Capture;
-using Windows.System.Display;
-using Windows.Graphics.Display;
-using Windows.Graphics.Imaging;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -282,7 +269,8 @@ namespace Gia_Sư
                 WaitingRegisterBar.Visibility = Visibility.Visible;
                 await saveUserPhoto(userPhoto);
                 await RegisterAsync();
-            } else 
+            }
+            else
             {
                 SignUpError content = new SignUpError(ValidForm);
                 await content.ShowAsync();
@@ -308,7 +296,7 @@ namespace Gia_Sư
             StudyField sf = (StudyField)StudyField.SelectedItem;
             School sc = (School)ExistingSchool.SelectedItem;
             int GenderConvert = Gender.SelectedIndex;
-            switch (Role.SelectedIndex) 
+            switch (Role.SelectedIndex)
             {
                 case 0:
                     UserRole = "Admin";
@@ -348,10 +336,10 @@ namespace Gia_Sư
             var content = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
             try
             {
-               var response = await httpClient.PostAsync(RegisterUrl, content);
-               string Status = response.StatusCode.ToString();
-               var responseString = await response.Content.ReadAsStringAsync();
-               System.Diagnostics.Debug.WriteLine(Status);
+                var response = await httpClient.PostAsync(RegisterUrl, content);
+                string Status = response.StatusCode.ToString();
+                var responseString = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine(Status);
                 if (Status == "OK")
                 {
                     MainPivot.SelectedIndex = 1;
@@ -364,7 +352,7 @@ namespace Gia_Sư
                     WaitingRegisterBar.ShowError = true;
                 }
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 WaitingRegisterBar.ShowError = true;
                 throw new Exception("Some thing wrong");
@@ -423,7 +411,7 @@ namespace Gia_Sư
             var result = await response.Content.ReadAsStringAsync();
             System.Diagnostics.Debug.WriteLine(result);
             VNDistrict = JsonConvert.DeserializeObject<List<VietNamDistrict>>(result);
-            switch (who) 
+            switch (who)
             {
                 case 0:
                     District.ItemsSource = VNDistrict;
@@ -450,7 +438,7 @@ namespace Gia_Sư
             SG = JsonConvert.DeserializeObject<List<StudyGroup>>(result);
             StudyGroup.ItemsSource = SG;
         }
-        private async Task GetStudyFieldAsync(int Gid) 
+        private async Task GetStudyFieldAsync(int Gid)
         {
             GroupId = Gid;
             var response = await httpClient.GetAsync(StudyFieldUrl(GroupId));
@@ -507,7 +495,7 @@ namespace Gia_Sư
         }
         private async Task saveUserPhoto(StorageFile photo)
         {
-            if(photo == null)
+            if (photo == null)
             {
                 Debug.WriteLine("No Photo Attach");
                 SignUp.Content = "\uE114";
@@ -579,7 +567,7 @@ namespace Gia_Sư
                 Password.Header = "Mật khẩu phải có ít nhất 1 chữ HOA";
                 Password.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
             }
-            else if(Password.Password.Any(char.IsNumber) == false)
+            else if (Password.Password.Any(char.IsNumber) == false)
             {
                 Password.Header = "Mật khẩu phải có số";
                 Password.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
@@ -594,7 +582,7 @@ namespace Gia_Sư
         {
             if (Password.Password.Length < 6 || ConfirmPassword.Password == "" || Password.Password.Any(char.IsUpper) == false || Password.Password.Any(char.IsNumber) == false)
             {
-                ConfirmPassword.Header = "Có gì đó sai"; 
+                ConfirmPassword.Header = "Có gì đó sai";
                 ConfirmPassword.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
                 if (Password.Password != ConfirmPassword.Password)
                 {
@@ -653,7 +641,7 @@ namespace Gia_Sư
         private void DateOfBirth_Closed(object sender, object e)
         {
             double CalculateAge;
-            if(DateOfBirth.Date == null)
+            if (DateOfBirth.Date == null)
             {
                 DateOfBirth.Date = null;
             }

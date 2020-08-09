@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Gia_Sư.Models.Services.CollegeStudyGroup
+namespace Gia_Sư.Models.Tutor.CollegeStudyGroup
 {
     public class CollegeStudyGroupModel
     {
@@ -12,12 +8,12 @@ namespace Gia_Sư.Models.Services.CollegeStudyGroup
         public string StudyGroupName { get; set; }
         public string StudyGroupImageUrl { get; set; }
     }
-    public class CollegeStudyGroupData 
+    public class CollegeStudyGroupData
     {
         public static List<CollegeStudyGroupModel> GetData()
         {
             var data = new List<CollegeStudyGroupModel>();
-            data.Add(new CollegeStudyGroupModel { GroupID = 4 ,StudyGroupName = "Khoa học Máy tính và Công nghệ thông tin", StudyGroupImageUrl = "ms-appx:///Assets/AppImage/StudyGroup/CNTT.png" });
+            data.Add(new CollegeStudyGroupModel { GroupID = 4, StudyGroupName = "Khoa học Máy tính và Công nghệ thông tin", StudyGroupImageUrl = "ms-appx:///Assets/AppImage/StudyGroup/CNTT.png" });
             data.Add(new CollegeStudyGroupModel { GroupID = 6, StudyGroupName = "Khoa học Ứng dụng và Khoa học Cơ bản", StudyGroupImageUrl = "ms-appx:///Assets/AppImage/StudyGroup/Science.jpg" });
             data.Add(new CollegeStudyGroupModel { GroupID = 7, StudyGroupName = "Kinh doanh & Quản lý", StudyGroupImageUrl = "ms-appx:///Assets/AppImage/StudyGroup/Business.jpg" });
             data.Add(new CollegeStudyGroupModel { GroupID = 9, StudyGroupName = "Kỹ thuật", StudyGroupImageUrl = "ms-appx:///Assets/AppImage/StudyGroup/KyThuat.png" });

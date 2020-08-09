@@ -5,7 +5,7 @@ using Gia_Sư.Models;
 using Gia_Sư.Models.AppTools;
 using Gia_Sư.Models.Location;
 using Gia_Sư.Models.Person;
-using Gia_Sư.Models.SubjectData;
+using Gia_Sư.Models.College;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -13,12 +13,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -28,8 +26,6 @@ using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -53,11 +49,10 @@ namespace Gia_Sư
         private readonly string LoginUrl = "https://giasuapi2.azurewebsites.net/api/LoginRegister/Login";
         private readonly string GetUserInfoUrl = "https://giasuapi2.azurewebsites.net/api/LoginRegister/GetUserInfo";
         private readonly string CitiesUrl = "https://giasuapi2.azurewebsites.net/api/VietNamLocation/CitiesList";
-        private readonly string StudyGroupUrl = "https://giasuapi2.azurewebsites.net/api/SubjectControllers/StudyGroupList";
-
+        private readonly string StudyGroupUrl = "https://giasuapi2.azurewebsites.net/api/CollegeSubjectControllers/StudyGroupList";
         private string DistrictUrl(int cityid) => $"https://giasuapi2.azurewebsites.net/api/VietNamLocation/DistrictsList/{CityId}";
-        private string StudyFieldUrl(int groupid) => $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/StudyFieldList/{GroupId}";
-        private string SchoolUrl(int districtid) => $"https://giasuapi2.azurewebsites.net/api/SubjectControllers/SchoolList/{DistrictId}";
+        private string StudyFieldUrl(int groupid) => $"https://giasuapi2.azurewebsites.net/api/CollegeSubjectControllers/StudyFieldList/{GroupId}";
+        private string SchoolUrl(int districtid) => $"https://giasuapi2.azurewebsites.net/api/CollegeSubjectControllers/SchoolList/{DistrictId}";
 
         private StorageFile userPhoto;
         private VietNamCity ObjectCity;
@@ -266,7 +261,7 @@ namespace Gia_Sư
             bool validation = TextBoxRegex.GetIsValid(tb);
             if (validation == false)
             {
-                tb.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86)); 
+                tb.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
                 tb.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
                 SignUp.Content = "\uE814";
                 SignUp.FontFamily = new FontFamily("Segoe MDL2 Assets");
@@ -293,7 +288,7 @@ namespace Gia_Sư
                 Password.Header = "Mật khẩu phải có ít nhất 1 chữ HOA";
                 Password.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
             }
-            else if(Password.Password.Any(char.IsLower) == false) 
+            else if (Password.Password.Any(char.IsLower) == false)
             {
                 Password.Header = "Mật khẩu phải có ít nhất 1 chữ THƯỜNG";
                 Password.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
@@ -416,8 +411,8 @@ namespace Gia_Sư
                 Address.Foreground = new SolidColorBrush(Colors.Green);
                 Address.BorderBrush = new SolidColorBrush(Colors.Green);
             }
-            
-            foreach(TextBox tb in UserRealName.Children.OfType<TextBox>())
+
+            foreach (TextBox tb in UserRealName.Children.OfType<TextBox>())
             {
                 bool ValidationTextBox = TextBoxRegex.GetIsValid(tb);
                 if (ValidationTextBox == false)

@@ -8,9 +8,9 @@ namespace Gia_Sư.Helpers.ResizeHelper
 {
     public static partial class CompositionExtensions
     {
-        public static void EnableFluidVisibilityAnimation(this UIElement element, AnimationAxis? axis = null, 
-            float showFromOffset = 0.0f, float hideToOffset = 0.0f, Vector3? centerPoint = null, 
-            float showFromScale = 1.0f, float hideToScale = 1.0f, float showDuration = 800.0f, float hideDuration = 800.0f, 
+        public static void EnableFluidVisibilityAnimation(this UIElement element, AnimationAxis? axis = null,
+            float showFromOffset = 0.0f, float hideToOffset = 0.0f, Vector3? centerPoint = null,
+            float showFromScale = 1.0f, float hideToScale = 1.0f, float showDuration = 800.0f, float hideDuration = 800.0f,
             int showDelay = 0, int hideDelay = 0, bool animateOpacity = true)
         {
             var elementVisual = element.Visual();

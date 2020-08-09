@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Gia_Sư.Models.SubjectData
+namespace Gia_Sư.Models.College
 {
     public class RequestSchedules
     {

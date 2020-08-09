@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Composition;
@@ -93,6 +95,9 @@ namespace Gia_Sư.Helpers.ResizeHelper
         public static Visual Visual(this UIElement element) =>
             ElementCompositionPreview.GetElementVisual(element);
 
+        public static CompositionPropertySet GetPointerPositionProperties(this UIElement element) =>
+            ElementCompositionPreview.GetPointerPositionPropertySet(element);
+
         public static void SetChildVisual(this UIElement element, Visual childVisual) =>
             ElementCompositionPreview.SetElementChildVisual(element, childVisual);
 
@@ -104,23 +109,45 @@ namespace Gia_Sư.Helpers.ResizeHelper
             return root;
         }
 
-        public static FlickDirection FlickDirection(this ManipulationCompletedRoutedEventArgs e)
+        public static void SetDropShadow(this FrameworkElement element, DropShadow shadow, FrameworkElement sizingElement = null)
         {
-            if (!e.IsInertial)
+            var compositor = shadow.Compositor;
+
+            var shadowVisual = compositor.CreateSpriteVisual();
+            shadowVisual.Shadow = shadow;
+
+            if (sizingElement == null)
             {
-                return global::Gia_Sư.Helpers.ResizeHelper.FlickDirection.None;
+                sizingElement = element;
             }
 
-            var x = e.Cumulative.Translation.X;
-            var y = e.Cumulative.Translation.Y;
-
-            if (Math.Abs(x) > Math.Abs(y))
+            sizingElement.SizeChanged += (s, e) =>
             {
-                return x > 0 ? global::Gia_Sư.Helpers.ResizeHelper.FlickDirection.Right : global::Gia_Sư.Helpers.ResizeHelper.FlickDirection.Left;
-            }
+                if (e.PreviousSize.Equals(e.NewSize)) return;
+                shadowVisual.Size = sizingElement.RenderSize.ToVector2();
+            };
+            shadowVisual.Size = sizingElement.RenderSize.ToVector2();
 
-            return y > 0 ? global::Gia_Sư.Helpers.ResizeHelper.FlickDirection.Down : global::Gia_Sư.Helpers.ResizeHelper.FlickDirection.Up;
+            element.SetChildVisual(shadowVisual);
         }
+
+        //public static FlickDirection FlickDirection(this ManipulationCompletedRoutedEventArgs e)
+        //{
+        //    if (!e.IsInertial)
+        //    {
+        //        return global::Continuity.FlickDirection.None;
+        //    }
+
+        //    var x = e.Cumulative.Translation.X;
+        //    var y = e.Cumulative.Translation.Y;
+
+        //    if (Math.Abs(x) > Math.Abs(y))
+        //    {
+        //        return x > 0 ? global::Continuity.FlickDirection.Right : global::Continuity.FlickDirection.Left;
+        //    }
+
+        //    return y > 0 ? global::Continuity.FlickDirection.Down : global::Continuity.FlickDirection.Up;
+        //}
 
         public static void FillAnimation(this ManipulationCompletedRoutedEventArgs e, double fullDimension,
             Action forward, Action backward,
@@ -182,6 +209,28 @@ namespace Gia_Sư.Helpers.ResizeHelper
             return value;
         }
 
+        public static void AddRangeOverTime<T>(this ObservableCollection<T> newCollection, IList<T> oldCollection, TimeSpan duration = default(TimeSpan))
+        {
+            if (duration == default(TimeSpan))
+            {
+                duration = TimeSpan.FromMilliseconds(50);
+            }
+
+            var observable = Observable.Generate(0, i => i <= oldCollection.Count - 1, i => ++i, i => oldCollection[i], i => duration);
+            observable.ObserveOnDispatcher().Subscribe(newCollection.Add);
+        }
+
+        public static void ForEachOverTime<T>(this IList<T> oldCollection, Action<T> doWork, TimeSpan duration = default(TimeSpan))
+        {
+            if (duration == default(TimeSpan))
+            {
+                duration = TimeSpan.FromMilliseconds(50);
+            }
+
+            var observable = Observable.Generate(0, i => i <= oldCollection.Count - 1, i => ++i, i => oldCollection[i], i => duration);
+            observable.ObserveOnDispatcher().Subscribe(doWork);
+        }
+
         public static bool IsFullyVisibile(this FrameworkElement element, FrameworkElement parent)
         {
             if (element == null || parent == null)
@@ -226,18 +275,16 @@ namespace Gia_Sư.Helpers.ResizeHelper
         public static Task ChangeViewAsync(this ScrollViewer scrollViewer, double? horizontalOffset, double? verticalOffset, float? zoomFactor, bool disableAniamtion)
         {
             var taskSource = new TaskCompletionSource<bool>();
-            EventHandler<ScrollViewerViewChangedEventArgs> onViewChanged = null;
 
-            onViewChanged = (sender, e) =>
+            void OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
             {
-                if (e.IsIntermediate)
-                    return;
+                if (e.IsIntermediate) return;
 
-                scrollViewer.ViewChanged -= onViewChanged;
+                scrollViewer.ViewChanged -= OnViewChanged;
                 taskSource.SetResult(true);
-            };
+            }
 
-            scrollViewer.ViewChanged += onViewChanged;
+            scrollViewer.ViewChanged += OnViewChanged;
             scrollViewer.ChangeView(horizontalOffset, verticalOffset, zoomFactor, disableAniamtion);
 
             return taskSource.Task;
@@ -265,5 +312,26 @@ namespace Gia_Sư.Helpers.ResizeHelper
         public static IEnumerable<T> GetValues<T>() => Enum.GetValues(typeof(T)).Cast<T>();
 
         public static BitmapImage ToBitmapImage(this string uri) => new BitmapImage(new Uri(uri));
+
+        public static Vector2 GetDesiredSize(this UIElement element)
+        {
+            element.Measure(new Size(double.PositiveInfinity, height: Double.PositiveInfinity));
+            return element.DesiredSize.ToVector2();
+        }
+
+        public static Task SizeChangedAsync(this FrameworkElement element)
+        {
+            var taskSource = new TaskCompletionSource<bool>();
+
+            element.SizeChanged += OnSizeChanged;
+
+            void OnSizeChanged(object sender, SizeChangedEventArgs e)
+            {
+                element.SizeChanged -= OnSizeChanged;
+                taskSource.SetResult(true);
+            }
+
+            return taskSource.Task;
+        }
     }
 }

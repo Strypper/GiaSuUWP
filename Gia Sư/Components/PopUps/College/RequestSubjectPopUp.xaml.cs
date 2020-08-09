@@ -1,31 +1,23 @@
 ﻿using Gia_Sư.Models;
 using Gia_Sư.Models.AppTools;
 using Gia_Sư.Models.Location;
-using Gia_Sư.Models.SubjectData;
-using Gia_Sư.Pages.Subject;
+using Gia_Sư.Models.College;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -159,9 +151,9 @@ namespace Gia_Sư.Components.PopUps
         }
         private bool InfoValid()
         {
-            foreach(ComboBox cb in Form.Children.OfType<ComboBox>())
+            foreach (ComboBox cb in Form.Children.OfType<ComboBox>())
             {
-                if(cb.SelectedItem == null)
+                if (cb.SelectedItem == null)
                 {
                     cb.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
                     cb.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
@@ -181,7 +173,7 @@ namespace Gia_Sư.Components.PopUps
             {
                 ValidErr = 0;
                 return false;
-            } 
+            }
             return true;
         }
         private void TimeStart_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
@@ -270,7 +262,7 @@ namespace Gia_Sư.Components.PopUps
         }
         private void WeekDayAdd_Click(object sender, RoutedEventArgs e)
         {
-            if(DayOfWeek.SelectedItem == null)
+            if (DayOfWeek.SelectedItem == null)
             {
                 DayOfWeek.Foreground = new SolidColorBrush(Color.FromArgb(255, 251, 44, 86));
                 DayOfWeek.Header = "Bạn cần phải chọn thứ trong ngày";
@@ -323,7 +315,7 @@ namespace Gia_Sư.Components.PopUps
         private void Pay_Checked(object sender, RoutedEventArgs e)
         {
             ToggleButton tb = sender as ToggleButton;
-            if(tb.Name == "HourPay")
+            if (tb.Name == "HourPay")
             {
                 WeekPay.IsChecked = false;
                 MonthPay.IsChecked = false;

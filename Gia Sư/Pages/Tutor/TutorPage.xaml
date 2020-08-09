@@ -5,128 +5,640 @@
     xmlns:local="using:Gia_Sư.Pages.Tutor" Loaded="Page_Loaded"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
-    xmlns:data="using:Gia_Sư.Models.CollegeSubjectData" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:ToolkitBehaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:tutor="using:Gia_Sư.Models.College" 
+    xmlns:services="using:Gia_Sư.Models.Tutor.CollegeStudyGroup" 
+    xmlns:PopUp="using:Gia_Sư.Components.PopUps" xmlns:muxc="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <!--GridViewOverViewUI-->
+        <Style TargetType="GridViewItem" x:Key="HuetroGridViewItemRevealStyle">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="{ThemeResource GridViewItemRevealBorderThemeThickness}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource GridViewItemRevealBorderBrush}" />
+            <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}" />
+            <Setter Property="TabNavigation" Value="Local" />
+            <Setter Property="IsHoldingEnabled" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,4,4" />
+            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}" />
+            <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}" />
+            <Setter Property="AllowDrop" Value="False" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="FocusVisualMargin" Value="-2" />
+            <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource GridViewItemFocusVisualPrimaryBrush}" />
+            <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+            <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource GridViewItemFocusVisualSecondaryBrush}" />
+            <Setter Property="FocusVisualSecondaryThickness" Value="1" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+
+                        <Grid x:Name="RootGrid" Background="Transparent" >
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="PointerEntered">
+                                    <Core:CallMethodAction TargetObject="{Binding ElementName=GridScaleUp}" MethodName="StartAnimation"/>
+                                </Core:EventTriggerBehavior>
+                                <Core:EventTriggerBehavior EventName="PointerExited">
+                                    <Core:CallMethodAction TargetObject="{Binding ElementName=GridScaleDown}" MethodName="StartAnimation"/>
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition From="PointerOver" To="Normal" GeneratedDuration="0:0:0">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(DropShadowPanel.ShadowOpacity)">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseIn"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="0.2">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(DropShadowPanel.BlurRadius)">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="30">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseIn"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="20">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                    </VisualStateGroup.Transitions>
+
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Selected" />
+
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver" />
+                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPointerOver}" />
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(DropShadowPanel.ShadowOpacity)">
+                                                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.2">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                        <CubicEase EasingMode="EaseIn"/>
+                                                    </EasingDoubleKeyFrame.EasingFunction>
+                                                </EasingDoubleKeyFrame>
+                                                <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="1">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                        <CubicEase EasingMode="EaseOut"/>
+                                                    </EasingDoubleKeyFrame.EasingFunction>
+                                                </EasingDoubleKeyFrame>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(DropShadowPanel.BlurRadius)">
+                                                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="20">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                        <CubicEase EasingMode="EaseIn"/>
+                                                    </EasingDoubleKeyFrame.EasingFunction>
+                                                </EasingDoubleKeyFrame>
+                                                <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="30">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                        <CubicEase EasingMode="EaseOut"/>
+                                                    </EasingDoubleKeyFrame.EasingFunction>
+                                                </EasingDoubleKeyFrame>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState x:Name="PointerOverSelected">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver" />
+                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPointerOver}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="PointerOverPressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed" />
+                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPointerOverPressed }" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed" />
+                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPressed }" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+
+                                    <VisualState x:Name="PressedSelected">
+                                        <VisualState.Setters>
+                                            <Setter Target="ContentPresenter.(RevealBrush.State)" Value="Pressed" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="DisabledStates">
+                                    <VisualState x:Name="Enabled" />
+
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.RevealBorderThickness" Value="0" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <controls:DropShadowPanel x:Name="DropShadowHolder" VerticalAlignment="Stretch" Margin="10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                               BlurRadius="20"
+                               ShadowOpacity="0.1"
+                               OffsetX="1"
+                               OffsetY="1"
+                               Color="Black">
+                                <Interactivity:Interaction.Behaviors>
+                                    <ToolkitBehaviors:Scale x:Name="GridScaleUp" Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1.1" ScaleY="1.1" CenterX="120" CenterY="40" EasingMode="EaseOut" EasingType="Cubic" />
+                                    <ToolkitBehaviors:Scale x:Name="GridScaleDown"  Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1" ScaleY="1" CenterX="120" CenterY="40" EasingMode="EaseOut" EasingType="Cubic"/>
+                                </Interactivity:Interaction.Behaviors>
+                                <Grid x:Name="ContentHolder" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch"  Background="Transparent">
+                                    <ContentPresenter x:Name="ContentPresenter"
+                                                  Background="Transparent"
+                             
+                                Content="{TemplateBinding Content}"
+                                ContentTransitions="{TemplateBinding ContentTransitions}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Padding="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                               
+                                AutomationProperties.AccessibilityView="Raw" />
+                                </Grid>
+                            </controls:DropShadowPanel>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="460"/>
+        </Grid.ColumnDefinitions>
         <RefreshContainer x:Name="RefreshContainer">
             <controls:AdaptiveGridView x:Name="TutorsGridView" animations:ReorderGridAnimation.Duration="1400"
-                                       HorizontalAlignment="Center" Margin="4,0,0,0" IsItemClickEnabled="True"
-                                       MinWidth="475">
+                                       HorizontalAlignment="Stretch" Margin="4,0,0,0" IsItemClickEnabled="True"
+                                       ItemClick="TutorsGridView_ItemClick" MinWidth="475" Padding="0">
                 <controls:AdaptiveGridView.ItemContainerTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition IsStaggeringEnabled="True"
-                                             FromHorizontalOffset="400"
-                                             FromVerticalOffset="450"/>
+                                                 FromVerticalOffset="450"/>
                     </TransitionCollection>
                 </controls:AdaptiveGridView.ItemContainerTransitions>
                 <GridView.Header>
                     <Grid HorizontalAlignment="Stretch">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                        FontSize="25" ToolTipService.ToolTip="Yêu cầu cá nhân"
-                                                        Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}">
-                                    <Run FontFamily="Segoe MDL2 Assets" Text="&#xE77B;"/>
-                                    <Run Text="45"/>
-                        </TextBlock>
-                        <TextBlock FontSize="25" Foreground="{ThemeResource SystemAccentColor}"
-                                                        FontWeight="ExtraBold" HorizontalAlignment="Center">
-                                    <Run Text="&#xE1D3;" FontFamily="Segoe MDL2 Assets"/>
-                                    <Run Text="MÔN HỌC"/>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextTrimming="Clip"
+                                   FontSize="25" Text="Tìm gia sư theo yêu cầu của bạn" FontWeight="Bold"/>
+                        <TextBlock FontSize="25" HorizontalAlignment="Center">
+                                    <Run Text="&#xE8D4;" FontFamily="Segoe MDL2 Assets"/>
+                                    <Run Text="GIA SƯ"/>
                         </TextBlock>
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right"
-                                                        FontSize="25" ToolTipService.ToolTip="Yêu cầu theo nhóm"
-                                                        Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemAccentColor}">
+                                   FontSize="25" ToolTipService.ToolTip="Yêu cầu theo nhóm"
+                                   Margin="0,0,5,0">
                                     <Run FontFamily="Segoe MDL2 Assets" Text="&#xE125;"/>
                                     <Run Text="20"/>
                         </TextBlock>
                     </Grid>
                 </GridView.Header>
                 <controls:AdaptiveGridView.ItemTemplate>
-                    <DataTemplate x:DataType="data:OverviewCollegeRequest">
-                                <Grid Height="120" Width="400" RowSpacing="2">
-                                    <Interactivity:Interaction.Behaviors>
-                                        <Core:EventTriggerBehavior EventName="PointerEntered">
+                    <DataTemplate x:DataType="tutor:TutorCollegeRequest">
+                         <Grid Height="130" Width="412" RowSpacing="2" Padding="0">
+                              <Interactivity:Interaction.Behaviors>
+                                    <Core:EventTriggerBehavior EventName="PointerEntered">
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=NameOffsetRight}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=PositionOffsetRight}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=LocationOffsetRight}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=LocationFadeIn}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=ActionGridFadeIn}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=PhotoScaleUp}" MethodName="StartAnimation"/>
-                                        </Core:EventTriggerBehavior>
-                                        <Core:EventTriggerBehavior EventName="PointerExited">
+                                    </Core:EventTriggerBehavior>
+                                    <Core:EventTriggerBehavior EventName="PointerExited">
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=NameOffsetLeft}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=PositionOffsetLeft}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=LocationOffsetLeft}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=LocationFadeOut}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=ActionGridFadeOut}" MethodName="StartAnimation"/>
                                             <Core:CallMethodAction TargetObject="{Binding ElementName=PhotoScaleDown}" MethodName="StartAnimation"/>
-                                        </Core:EventTriggerBehavior>
-                                    </Interactivity:Interaction.Behaviors>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="30"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <PersonPicture x:Name="ProfilePicture" ProfilePicture="{Binding Path=ProfileUrlImage, Mode=OneWay, TargetNullValue={Binding Path=NullValue}}"  Opacity="1" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3">
-                                        <Interactivity:Interaction.Behaviors>
+                                    </Core:EventTriggerBehavior>
+                              </Interactivity:Interaction.Behaviors>
+                              <Grid.ColumnDefinitions>
+                                     <ColumnDefinition Width="100"/>
+                                     <ColumnDefinition Width="*"/>
+                                     <ColumnDefinition Width="30"/>
+                              </Grid.ColumnDefinitions>
+                              <PersonPicture x:Name="ProfilePicture" ProfilePicture="{Binding Path=profileUrlImage, Mode=OneWay}" Opacity="1" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3"
+                                             BadgeImageSource="{Binding Path=schoolLogoUrl, Mode=OneWay}">
+                                      <Interactivity:Interaction.Behaviors>
                                             <ToolkitBehaviors:Scale x:Name="PhotoScaleUp" Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1.2" ScaleY="1.2" CenterX="24" CenterY="24" EasingMode="EaseOut"  EasingType="Cubic" />
                                             <ToolkitBehaviors:Scale x:Name="PhotoScaleDown"  Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1" ScaleY="1" CenterX="24" CenterY="24" EasingMode="EaseOut"   EasingType="Cubic"/>
-                                        </Interactivity:Interaction.Behaviors>
-                                    </PersonPicture>
-                                    <TextBlock Text="{x:Bind Sub, Mode=OneTime}" FontSize="30" FontWeight="SemiBold" Grid.RowSpan="3" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="0,0,0,16" Grid.Column="1" Grid.Row="0" Foreground="{ThemeResource SystemAccentColor}">
+                                      </Interactivity:Interaction.Behaviors>
+                              </PersonPicture>
+                              <TextBlock Text="{x:Bind fullName, Mode=OneTime}" FontSize="25" FontWeight="SemiBold" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,25,0,0" Grid.Column="1" Grid.Row="0"
+                                         TextTrimming="CharacterEllipsis">
+                                      <Interactivity:Interaction.Behaviors>
+                                             <ToolkitBehaviors:Offset x:Name="NameOffsetRight" Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="10" OffsetY="-15" EasingMode="EaseOut"  EasingType="Cubic" />
+                                             <ToolkitBehaviors:Offset x:Name="NameOffsetLeft"  Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="0" OffsetY="0"  EasingMode="EaseOut"   EasingType="Cubic"/>
+                                      </Interactivity:Interaction.Behaviors>
+                              </TextBlock>
+                              <TextBlock Grid.RowSpan="3" Text="{x:Bind schoolName, Mode=OneTime}" HorizontalAlignment="Stretch" FontWeight="SemiBold" FontSize="15" VerticalAlignment="Center" Margin="0,35,0,0" Grid.Column="1" Grid.Row="1"
+                                         TextTrimming="CharacterEllipsis">
+                                       <Interactivity:Interaction.Behaviors>
+                                              <ToolkitBehaviors:Offset x:Name="PositionOffsetRight" Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="10" OffsetY="10" EasingMode="EaseOut" EasingType="Cubic" />
+                                              <ToolkitBehaviors:Offset x:Name="PositionOffsetLeft"  Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="0" OffsetY="0" EasingMode="EaseOut"  EasingType="Cubic" />
+                                       </Interactivity:Interaction.Behaviors>
+                              </TextBlock>
+                              <TextBlock Text="{x:Bind tutorStudyField,Mode=OneTime}" FontSize="20" Opacity="0" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,0,5" Grid.Column="1" Grid.Row="1">
+                                       <Interactivity:Interaction.Behaviors>
+                                              <ToolkitBehaviors:Offset x:Name="LocationOffsetRight" Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="15" EasingMode="EaseOut" EasingType="Cubic" />
+                                              <ToolkitBehaviors:Offset x:Name="LocationOffsetLeft"  Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="0" EasingMode="EaseOut"  EasingType="Cubic" />
+                                              <ToolkitBehaviors:Fade x:Name="LocationFadeIn" Duration="300" Delay="0" AutomaticallyStart="False" Value="1" EasingMode="EaseOut" EasingType="Cubic" />
+                                              <ToolkitBehaviors:Fade x:Name="LocationFadeOut"  Duration="300" Delay="0" AutomaticallyStart="False" Value="0" EasingMode="EaseOut"  EasingType="Cubic" />
+                                       </Interactivity:Interaction.Behaviors>
+                              </TextBlock>
+                              <TextBlock Text="{x:Bind tutorStudyGroup, Mode=OneTime}" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="15" Margin="0,0,10,0" TextTrimming="CharacterEllipsis"/>
+                              <Grid Grid.Column="2" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                                    <Grid.RowDefinitions>
+                                         <RowDefinition Height="*"/>
+                                         <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
                                     <Interactivity:Interaction.Behaviors>
-                                        <ToolkitBehaviors:Offset x:Name="NameOffsetRight" Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="10" OffsetY="-15" EasingMode="EaseOut"  EasingType="Cubic" />
-                                        <ToolkitBehaviors:Offset x:Name="NameOffsetLeft"  Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="0" OffsetY="0"  EasingMode="EaseOut"   EasingType="Cubic"/>
+                                          <ToolkitBehaviors:Fade x:Name="ActionGridFadeIn" Duration="300" Delay="0" AutomaticallyStart="False" Value="1" EasingMode="EaseOut" EasingType="Cubic" />
+                                          <ToolkitBehaviors:Fade x:Name="ActionGridFadeOut"  Duration="300" Delay="0" AutomaticallyStart="False" Value="0" EasingMode="EaseOut"  EasingType="Cubic" />
                                     </Interactivity:Interaction.Behaviors>
-                                    </TextBlock>
-                                    <TextBlock Grid.RowSpan="3" Text="{x:Bind SchoolName, Mode=OneTime}" HorizontalAlignment="Left" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Margin="0,50,0,0" Grid.Column="1" Grid.Row="1">
-                                    <Interactivity:Interaction.Behaviors>
-                                        <ToolkitBehaviors:Offset x:Name="PositionOffsetRight" Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="10" OffsetY="10" EasingMode="EaseOut" EasingType="Cubic" />
-                                        <ToolkitBehaviors:Offset x:Name="PositionOffsetLeft"  Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="0" OffsetY="0" EasingMode="EaseOut"  EasingType="Cubic" />
-                                    </Interactivity:Interaction.Behaviors>
-                                    </TextBlock>
-
-                                    <TextBlock Text="{x:Bind SchoolName, Mode=OneTime}" FontSize="20" Opacity="0" Grid.RowSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,15,0,0" Grid.Column="1" Grid.Row="1">
-                                    <Interactivity:Interaction.Behaviors>
-                                        <ToolkitBehaviors:Offset x:Name="LocationOffsetRight" Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="10" EasingMode="EaseOut" EasingType="Cubic" />
-                                        <ToolkitBehaviors:Offset x:Name="LocationOffsetLeft"  Duration="400" Delay="0" AutomaticallyStart="False" OffsetX="0" EasingMode="EaseOut"  EasingType="Cubic" />
-                                      <ToolkitBehaviors:Fade x:Name="LocationFadeIn" Duration="300" Delay="0" AutomaticallyStart="False" Value="1" EasingMode="EaseOut" EasingType="Cubic" />
-                                        <ToolkitBehaviors:Fade x:Name="LocationFadeOut"  Duration="300" Delay="0" AutomaticallyStart="False" Value="0" EasingMode="EaseOut"  EasingType="Cubic" />
-                                    </Interactivity:Interaction.Behaviors>
-                                    </TextBlock>
-                                    <TextBlock Text="{x:Bind Day, Mode=OneTime}" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="22" FontWeight="SemiBold" Margin="0,0,10,0"/>
-                                    <Grid Grid.Column="2" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Interactivity:Interaction.Behaviors>
-                                            <ToolkitBehaviors:Fade x:Name="ActionGridFadeIn" Duration="300" Delay="0" AutomaticallyStart="False" Value="1" EasingMode="EaseOut" EasingType="Cubic" />
-                                            <ToolkitBehaviors:Fade x:Name="ActionGridFadeOut"  Duration="300" Delay="0" AutomaticallyStart="False" Value="0" EasingMode="EaseOut"  EasingType="Cubic" />
-                                        </Interactivity:Interaction.Behaviors>
-
-                                        <Button Width="40" BorderThickness="1" Margin="-8,0,0,0" Height="50" Grid.Row="0" Background="Transparent" Foreground="#69797e" Style="{StaticResource ButtonRevealStyle}">
-                                            <Button.Content>
-                                                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="15" Glyph="&#xE717;" />
-                                            </Button.Content>
-                                        </Button>
-                                        <Button Width="40" BorderThickness="1" Margin="-8,5,0,0" Height="50" Grid.Row="1" Background="Transparent" Foreground="#69797e  " Style="{StaticResource ButtonRevealStyle}">
-                                            <Button.Content>
+                                    <Button Width="40" CornerRadius="0" Margin="-8,0,0,0" Height="60" Grid.Row="0" Background="Transparent" Foreground="#69797e" Style="{StaticResource ButtonRevealStyle}">
+                                          <Button.Content>
+                                              <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="15" Glyph="&#xE717;" />
+                                          </Button.Content>
+                                    </Button>
+                                    <Button Width="40" CornerRadius="0" Margin="-8,0,0,0" Height="60" Grid.Row="1" Background="Transparent" Foreground="#69797e  " Style="{StaticResource ButtonRevealStyle}">
+                                          <Button.Content>
                                                 <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="15" Glyph="&#xE714;" />
-                                            </Button.Content>
-                                        </Button>
-                                    </Grid>
+                                          </Button.Content>
+                                    </Button>
+                              </Grid>
+                         </Grid>
+                    </DataTemplate>
+                </controls:AdaptiveGridView.ItemTemplate>
+            </controls:AdaptiveGridView>
+        </RefreshContainer>
+        <ScrollViewer Grid.Column="1" Padding="0">
+            <StackPanel VerticalAlignment="Stretch" Grid.Row="0">
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="True" FromHorizontalOffset="1000"/>
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+                    <FlipView x:Name="StudyGroupFlipView" VerticalAlignment="Top" CornerRadius="0"
+                      HorizontalAlignment="Stretch" Height="60" Padding="0" Margin="0,0,3,3"
+                      Background="Transparent" Opacity="0">
+                        <FlipView.OpacityTransition>
+                            <ScalarTransition Duration="0:0:4"/>
+                        </FlipView.OpacityTransition>
+                        <FlipView.ItemTemplate>
+                            <DataTemplate x:DataType="services:CollegeStudyGroupModel">
+                                <Grid Width="460" Height="60" Padding="0" HorizontalAlignment="Stretch">
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="{x:Bind StudyGroupImageUrl}" Stretch="UniformToFill"/>
+                                    </Grid.Background>
+                                    <TextBlock Text="{x:Bind StudyGroupName}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="ExtraBold" Foreground="White"/>
                                 </Grid>
+                            </DataTemplate>
+                        </FlipView.ItemTemplate>
+                    </FlipView>
+                    <controls:AdaptiveGridView x:Name="TopTutorGridView" Margin="0,5,3,0" Height="260" Padding="0"
+                                       BorderThickness="3" BorderBrush="{ThemeResource SystemBaseMediumHighColor}">
+                        <controls:AdaptiveGridView.Header>
+                            <TextBlock Text="TOP 10 GIA SƯ" HorizontalAlignment="Center" FontSize="25"/>
+                        </controls:AdaptiveGridView.Header>
+                        <controls:AdaptiveGridView.ItemContainerTransitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition IsStaggeringEnabled="True" FromHorizontalOffset="450"/>
+                            </TransitionCollection>
+                        </controls:AdaptiveGridView.ItemContainerTransitions>
+                        <controls:AdaptiveGridView.ItemTemplate>
+                            <DataTemplate x:DataType="tutor:TutorCollegeRequest">
+                                <StackPanel Margin="1" x:Name="TopTutor">
+                                    <ToolTipService.ToolTip>
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Bind schoolName}" FontWeight="Bold"/>
+                                            <TextBlock Text="{x:Bind tutorStudyField}"/>
+                                            <TextBlock Text="{x:Bind tutorStudyGroup}"/>
+                                            <RatingControl Value="5"/>
+                                        </StackPanel>
+                                    </ToolTipService.ToolTip>
+                                    <PersonPicture Width="80" Height="80" HorizontalAlignment="Center" Margin="2"
+                                           ProfilePicture="{Binding Path=profileUrlImage, Mode=OneWay}" 
+                                           BadgeImageSource="{Binding Path=schoolLogoUrl, Mode=OneWay}"/>
+                                    <TextBlock Text="{x:Bind firstName}" HorizontalAlignment="Center" Margin="2"/>
+                                </StackPanel>
                             </DataTemplate>
                         </controls:AdaptiveGridView.ItemTemplate>
                     </controls:AdaptiveGridView>
-                </RefreshContainer>
+                    <ComboBox x:Name="CityFilter" Header="Thành phố" Margin="0,5,3,0"
+                          HorizontalAlignment="Stretch" BorderThickness="3" BorderBrush="{ThemeResource SystemBaseMediumHighColor}"/>
+                    <ComboBox x:Name="DistrictFilter" Header="Quận Huyện" Margin="0,5,3,0"
+                          HorizontalAlignment="Stretch" BorderThickness="3" BorderBrush="{ThemeResource SystemBaseMediumHighColor}"/>
+                    <ComboBox x:Name="SchoolFilter" Header="Trường học" Margin="0,5,3,0"
+                          HorizontalAlignment="Stretch" BorderThickness="3" BorderBrush="{ThemeResource SystemBaseMediumHighColor}"/>
+                    <!--<Border BorderThickness="3" BorderBrush="{ThemeResource SystemBaseMediumHighColor}" Margin="0,10,3,0">
+                <Maps:MapControl x:Name="GiaSuMapControl" ZoomInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl"   
+                             MapServiceToken="ATZxNblgAFMp6YmzRNVP~kIJ7jw62EQVf9rvZ2hniyw~Ak1QOPbwka31bnE0oARu0hsya10hg84DJll4tKwBsNiKphuvNExpvrto0n04-nXX" 
+                             Height="440"/>
+            </Border>-->
+                    <TextBlock Margin="0,5,3,0" TextWrapping="Wrap">
+                        <Run Text="&#xEC32;" FontFamily="Segoe MDL2 Assets" FontSize="20"/>
+                        <Run Text="Chọn những quán cafe/ quán ăn đã được đăng ký vào hệ thống để có nhiều khuyến mãi hấp dẫn hơn." FontSize="15"/>
+                    </TextBlock>
+
+                    <ListView Margin="0,5,3,0" VerticalAlignment="Stretch" Grid.Row="1" Height="400"
+                          BorderThickness="3" BorderBrush="{ThemeResource SystemBaseMediumHighColor}">
+                        <ListView.Header>
+                            <TextBlock Text="NƠI TỤ TẬP CÓ SẴN" HorizontalAlignment="Center" FontSize="25"/>
+                        </ListView.Header>
+                    </ListView>
+                    <Button HorizontalAlignment="Stretch" Background="Transparent" Grid.Row="2"
+                            Margin="0,10,3,0" BorderThickness="3" BorderBrush="{ThemeResource SystemBaseMediumHighColor}">
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Center" FontSize="50" FontFamily="Segoe MDL2 Assets" Text="&#xE8D4;"/>
+                            <TextBlock HorizontalAlignment="Center" FontSize="25" Text="Trở thành gia sư"/>
+                        </StackPanel>
+                    </Button>
+            </StackPanel>
+        </ScrollViewer>
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <Grid x:Name="OverlayPopup" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" Grid.ColumnSpan="2">
+            <Grid.Background>
+                <AcrylicBrush BackgroundSource="Backdrop" TintColor="#88484848" TintOpacity="0.4" FallbackColor="#FF484848"/>
+            </Grid.Background>
+            <StackPanel x:Name="LeftSide" HorizontalAlignment="Left" VerticalAlignment="Center" Translation="-500,0,0">
+                <StackPanel.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1"/>
+                </StackPanel.TranslationTransition>
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="290"/>
+                        <ColumnDefinition Width="110"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="PaymentField" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="0" Width="275"
+                                Background="{ThemeResource SystemAltMediumLowColor}" CornerRadius="5" Padding="10">
+                        <TextBlock HorizontalAlignment="Center" FontWeight="Bold"
+                           FontSize="20" Style="{ThemeResource BaseTextBlockStyle}">
+                            <Run Text="&#xEC5C;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="Hình thức thanh toán"/>
+                        </TextBlock>
+                        <TextBlock x:Name="Price" FontSize="30" Foreground="#69797e" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="XamlPaymentTime" Foreground="#69797e" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="110" Height="115" Background="{ThemeResource SystemAltMediumLowColor}" CornerRadius="5">
+                        <TextBlock x:Name="NumberOfStudent" Style="{ThemeResource BaseTextBlockStyle}" FontSize="30"
+                                   FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Run Text="&#xE125;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="15"/>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+                <RelativePanel x:Name="SubjectInFoField" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"
+                      Background="{ThemeResource SystemAltMediumLowColor}" CornerRadius="5" Padding="10" Width="400">
+                    <TextBlock x:Name="SubjectTitle" HorizontalAlignment="Center" FontWeight="Bold"
+                               RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"
+                               FontSize="20" Style="{ThemeResource BaseTextBlockStyle}">
+                            <Run Text="&#xE783;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="Thông tin môn học"/>
+                    </TextBlock>
+                    <TextBlock Margin="5" x:Name="SubjectName" RelativePanel.Below="SubjectTitle"
+                                RelativePanel.AlignLeftWithPanel="True" Text="Tên Môn:"
+                                Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="SubjectType" RelativePanel.Below="SubjectName"
+                               RelativePanel.AlignLeftWithPanel="True" Text="Thuộc Khoa:"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="Department" RelativePanel.Below="SubjectType"
+                               RelativePanel.AlignLeftWithPanel="True" Text="Ngành:"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" RelativePanel.Below="Department"
+                               RelativePanel.AlignLeftWithPanel="True" Text="Giáo Viên:"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="SubjectNameValue" RelativePanel.Below="SubjectTitle"
+                               RelativePanel.AlignLeftWithPanel="False" 
+                               RelativePanel.AlignRightWithPanel="True"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="StudyGroupValue" RelativePanel.Below="SubjectNameValue"
+                               RelativePanel.AlignLeftWithPanel="False" 
+                               RelativePanel.AlignRightWithPanel="True"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="StudyFieldValue" RelativePanel.Below="StudyGroupValue"
+                               RelativePanel.AlignLeftWithPanel="False" 
+                               RelativePanel.AlignRightWithPanel="True"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="TeacherValue" RelativePanel.Below="StudyFieldValue"
+                               RelativePanel.AlignLeftWithPanel="False" 
+                               RelativePanel.AlignRightWithPanel="True"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                </RelativePanel>
+                <RelativePanel x:Name="SchoolInFOField" Background="{ThemeResource SystemAltMediumLowColor}" 
+                               CornerRadius="5" Padding="10" Width="400"
+                               Margin="10">
+                    <TextBlock x:Name="SchoolTitle" HorizontalAlignment="Center" FontWeight="Bold"
+                               RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"
+                               FontSize="20" Style="{ThemeResource BaseTextBlockStyle}">
+                            <Run Text="&#xEC07;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="Thông tin trường"/>
+                    </TextBlock>
+                    <ProgressRing x:Name="ImageLoader" IsActive="True" RelativePanel.AlignHorizontalCenterWithPanel="True"
+                                  HorizontalAlignment="Center" Margin="5" RelativePanel.Below="SchoolTitle" Width="100" Height="100"/>
+                    <Image x:Name="SchoolLogo" Width="100" Height="100" RelativePanel.AlignHorizontalCenterWithPanel="True"
+                           Stretch="UniformToFill" HorizontalAlignment="Center" Margin="5" RelativePanel.Below="SchoolTitle"
+                           Visibility="Collapsed"/>
+                    <TextBlock Margin="5" x:Name="SchoolName" RelativePanel.Below="SchoolLogo"
+                                RelativePanel.AlignLeftWithPanel="True" Text="Tên Trường:"
+                                Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="SchoolLocation" RelativePanel.Below="SchoolName"
+                               RelativePanel.AlignLeftWithPanel="True" Text="Địa Điểm:"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="City" RelativePanel.Below="SchoolLocation"
+                               RelativePanel.AlignLeftWithPanel="True" Text="Thành Phố:"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="District" RelativePanel.Below="City"
+                               RelativePanel.AlignLeftWithPanel="True" Text="Quận/Huyện:"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="SchoolNameValue" RelativePanel.Below="SchoolLogo"
+                               RelativePanel.AlignLeftWithPanel="False" 
+                               RelativePanel.AlignRightWithPanel="True"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="SchoolLocationValue" RelativePanel.Below="SchoolNameValue"
+                               RelativePanel.AlignLeftWithPanel="False"
+                               RelativePanel.AlignRightWithPanel="True"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="CityValue" RelativePanel.Below="SchoolLocationValue"
+                               RelativePanel.AlignLeftWithPanel="False"
+                               RelativePanel.AlignRightWithPanel="True"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                    <TextBlock Margin="5" x:Name="DistrictValue" RelativePanel.Below="CityValue"
+                               RelativePanel.AlignLeftWithPanel="False"
+                               RelativePanel.AlignRightWithPanel="True"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"/>
+                </RelativePanel>
+                <ListView x:Name="JoinRequest" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10"
+                                           Width="400" CornerRadius="5" 
+                                           Background="{ThemeResource SystemAltMediumLowColor}"
+                                           Padding="10" Height="220">
+                    <ListView.Header>
+                        <TextBlock FontWeight="Bold" FontSize="20" HorizontalAlignment="Center">
+                        <Run Text="&#xE710;" FontFamily="Segoe MDL2 Assets"/>
+                        <Run Text="Danh sách học chung"/>
+                        </TextBlock>
+                    </ListView.Header>
+                </ListView>
+            </StackPanel>
+            <StackPanel x:Name="RightSide" HorizontalAlignment="Right" VerticalAlignment="Center" Translation="500,0,0">
+                <StackPanel.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1"/>
+                </StackPanel.TranslationTransition>
+                <StackPanel x:Name="LocationRequest" Margin="10"
+                            Background="{ThemeResource SystemAltMediumLowColor}" CornerRadius="5" Padding="10" Width="400">
+                    <TextBlock HorizontalAlignment="Center" FontWeight="Bold"
+                           FontSize="20" Style="{ThemeResource BaseTextBlockStyle}">
+                            <Run Text="&#xEC32;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="Nơi tụ tập"/>
+                    </TextBlock>
+                    <Image x:Name="LocationLogo" Width="100" Height="100"
+                       Source="/Assets/TestPurpose/LocationLogo/TheCoffeeHouse.png" Stretch="UniformToFill"
+                       HorizontalAlignment="Center" Margin="5"/>
+                    <TextBlock Margin="5" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4"
+                           Text="The Coffee House" FontWeight="Bold"/>
+                    <TextBlock Margin="5" HorizontalAlignment="Center"
+                                   Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4">
+                            <Run Text="Địa chỉ: "/>
+                            <Run Text="06/ Hoàng Diệu 2/ Phường Linh Trung"/>
+                    </TextBlock>
+                    <TextBlock Margin="5" HorizontalAlignment="Center"
+                                   Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4">
+                            <Run Text="Thành phố: "/>
+                            <Run Text="Sài Gòn"/>
+                    </TextBlock>
+                    <TextBlock Margin="5" HorizontalAlignment="Center"
+                                   Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4">
+                            <Run Text="Quận: "/>
+                            <Run Text="Thủ Đức"/>
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC3F;" Margin="5" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED56;" Margin="5" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC32;" Margin="5" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE913;" Margin="5" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE9CA;" Margin="5" />
+                    </StackPanel>
+                    <Button Content="Khám phá" Margin="5" HorizontalAlignment="Center" Background="#ea8024" Foreground="White"/>
+                    <FlipView Width="380" Height="220" HorizontalAlignment="Center">
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/1.jpg"/>
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/2.jpg"/>
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/3.jpg"/>
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/4.jpg"/>
+                        <Image Width="400" Stretch="Fill" Source="/Assets/TestPurpose/LocationOverView/5.jpg"/>
+                    </FlipView>
+                </StackPanel>
+                <ListView x:Name="WelcomePrice" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Padding="10" Height="250"
+                          Width="400" CornerRadius="5" Background="{ThemeResource SystemAltMediumLowColor}">
+                    <ListView.Header>
+                        <TextBlock FontWeight="Bold" FontSize="20" HorizontalAlignment="Center">
+                            <Run Text="&#xE10B;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="Danh sách nhận dạy"/>
+                        </TextBlock>
+                    </ListView.Header>
+                </ListView>
+            </StackPanel>
+            <StackPanel x:Name="DaysOfWeekField" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                        Height="470" Translation="0,300,0">
+                <StackPanel.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1"/>
+                </StackPanel.TranslationTransition>
+                <TextBlock HorizontalAlignment="Center" FontWeight="Bold" Margin="5"
+                               FontSize="20" Style="{ThemeResource BaseTextBlockStyle}">
+                        <Run Text="&#xE1DC;" FontFamily="Segoe MDL2 Assets"/>
+                        <Run Text="Ngày học trong tuần"/>
+                </TextBlock>
+                <Grid x:Name="DaysOfWeek" Width="700" Height="400" CornerRadius="5" Background="{ThemeResource SystemAltMediumLowColor}">
+                    <PopUp:SubjectRequestSchedule x:Name="ScheduleBoard"/>
+                    <ProgressRing x:Name="DayOfWeekRing" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="True"/>
+                </Grid>
+            </StackPanel>
+            <Button x:Name="CloseBtn" VerticalAlignment="Top" HorizontalAlignment="Center" 
+                    Content="&#xE106;" ToolTipService.ToolTip="Close" 
+                    AutomationProperties.Name="Close" Click="CloseBtn_Click" 
+                    CenterPoint="25,25,0"
+                    Margin="35" FontFamily="Segoe MDL2 Assets" Grid.Row="0" 
+                    Background="OrangeRed" Width="50" Height="50" 
+                    CornerRadius="50" 
+                    Translation="0,-300,0">
+                <Button.TranslationTransition>
+                    <Vector3Transition Duration="0:0:1"/>
+                </Button.TranslationTransition>
+                <Button.RotationTransition>
+                    <ScalarTransition Duration="0:0:1.5"/>
+                </Button.RotationTransition>
+            </Button>
+            <Grid x:Name="destinationElement" HorizontalAlignment="Center" VerticalAlignment="Center" Width="700"
+                  Background="{ThemeResource SystemAltHighColor}" Margin="0,-300,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Margin="0,-55,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Width="700">
+                    <PersonPicture x:Name="PersonThumbnail" Width="110" Height="110"/>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button x:Name="HomeWork" Content="Bài Tập" FontWeight="Bold" Margin="0,5,5,5" Background="{ThemeResource SystemAccentColor}" Visibility="Collapsed"/>
+                        <Button x:Name="Presentation" Content="Thuyết Trình" FontWeight="Bold" Margin="5" Background="{ThemeResource SystemAccentColor}" Visibility="Collapsed"/>
+                        <Button x:Name="Laboratory" Content="Thực Hành" FontWeight="Bold" Margin="5" Background="{ThemeResource SystemAccentColor}" Visibility="Collapsed"/>
+                    </StackPanel>
+                    <TextBlock x:Name="SubjectNameInDetail" HorizontalAlignment="Left" FontWeight="ExtraBold" FontSize="30" Foreground="{ThemeResource SystemAccentColor}"/>
+                </Grid>
+                <StackPanel HorizontalAlignment="Center" Grid.Row="1" Margin="0,5,0,0" Padding="10">
+                    <TextBlock Text="Yêu cầu" FontSize="20" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
+                    <muxc:ProgressBar x:Name="DescriptionLoader" Width="130" IsIndeterminate="True" ShowPaused="False" ShowError="False" />
+                    <TextBlock x:Name="Description" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"
+                               Style="{ThemeResource BaseTextBlockStyle}" Opacity="0.4" Visibility="Collapsed"/>
+                </StackPanel>
+            </Grid>
+        </Grid> 
     </Grid>
 </Page>

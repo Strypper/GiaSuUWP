@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using Gia_Sư.Helpers.ResizeHelper;
+using System;
+using System.ComponentModel;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Hosting;
+using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -73,13 +67,12 @@ namespace Gia_Sư.Components.Stuhub
         public UserStoryComponent()
         {
             this.InitializeComponent();
-            MainLayout.Translation += new Vector3(0, 0, 100);
         }
 
         private void CommentButton_Click(object sender, RoutedEventArgs e)
         {
             ToggleButton tB = sender as ToggleButton;
-            if(tB != null)
+            if (tB != null)
             {
                 if (tB.IsChecked == true)
                 {

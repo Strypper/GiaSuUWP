@@ -1,16 +1,23 @@
 ﻿<Page
-    x:Class="Gia_Sư.Pages.Subject.CollegeRequestSubject"
+    x:Class="Gia_Sư.Pages.Tutor.CollegeSubject.CollegeRequestSubject"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Gia_Sư.Pages.Subject" Loaded="Page_Loaded"
+    Loaded="Page_Loaded"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:data="using:Gia_Sư.Models.CollegeSubjectData"
+    xmlns:data="using:Gia_Sư.Models.College"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations" 
-    xmlns:college="using:Gia_Sư.Components.College" xmlns:Component="using:Gia_Sư.Components" xmlns:services="using:Gia_Sư.Models.Services.CollegeStudyGroup"
+    xmlns:college="using:Gia_Sư.Components.College" 
+    xmlns:Component="using:Gia_Sư.Components" 
+    xmlns:services="using:Gia_Sư.Models.Tutor.CollegeStudyGroup"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        
+    </Page.Resources>
+    
+    
     <Grid>
         <!--Adapt Visual Windows Change-->
         <VisualStateManager.VisualStateGroups>
@@ -76,7 +83,7 @@
             </Grid.TranslationTransition>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="440"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -86,13 +93,15 @@
 
             <RefreshContainer x:Name="RefreshContainer" RefreshRequested="RefreshContainer_RefreshRequested" HorizontalAlignment="Stretch">
                 <controls:AdaptiveGridView x:Name="CollegeSubjectRequestGridView" animations:ReorderGridAnimation.Duration="1400"
-                                       HorizontalAlignment="Stretch" IsItemClickEnabled="True" Padding="0"
-                                       ItemClick="CollegeSubjectRequestGridView_ItemClick">
+                                           HorizontalAlignment="Stretch" IsItemClickEnabled="True" Padding="0" CanDrag="True" CanDragItems="True"
+                                           ItemClick="CollegeSubjectRequestGridView_ItemClick"  
+                                           DragItemsStarting="CollegeSubjectRequestGridView_DragItemsStarting"
+                                           DragOver="CollegeSubjectRequestGridView_DragOver">
                     <controls:AdaptiveGridView.ItemContainerTransitions>
                         <TransitionCollection>
                             <EntranceThemeTransition IsStaggeringEnabled="True"
-                                             FromHorizontalOffset="400"
-                                             FromVerticalOffset="450"/>
+                                                     FromHorizontalOffset="400"
+                                                     FromVerticalOffset="450"/>
                         </TransitionCollection>
                     </controls:AdaptiveGridView.ItemContainerTransitions>
                     <GridView.Header>
@@ -107,9 +116,9 @@
                                     <ScalarTransition Duration="0:0:1"/>
                                 </ToggleButton.RotationTransition>
                             </ToggleButton>
-                            <TextBlock FontSize="25" FontWeight="ExtraBold" HorizontalAlignment="Center">
-                                    <Run Text="&#xE1D3;" FontFamily="Segoe MDL2 Assets"/>
-                                    <Run Text="MÔN HỌC"/>
+                            <TextBlock FontSize="25" HorizontalAlignment="Center">
+                                    <Run Text="&#xED15;" FontFamily="Segoe MDL2 Assets"/>
+                                    <Run Text="YÊU CẦU MÔN HỌC"/>
                             </TextBlock>
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right"
                                                         FontSize="25" ToolTipService.ToolTip="Yêu cầu theo nhóm">
@@ -170,18 +179,26 @@
                     </controls:DockPanel>
                     <Button Content="LỌC" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5"/>
                 </StackPanel>
-                <Grid Grid.Row="1" >
-                    <ListView Margin="5,5,5,10" VerticalAlignment="Stretch"
+                <ListView x:Name="TeachingList" Margin="5,5,5,10" VerticalAlignment="Stretch" 
+                          CanDragItems="True" CanReorderItems="True" AllowDrop="True"
+                          Drop="TeachingList_Drop" DragOver="TeachingList_DragOver"
+                          SelectionMode="Single" DragEnter="TeachingList_DragEnter"
+                          Grid.Row="1" Padding="0"
                           Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-                        <ListView.Header>
-                            <TextBlock HorizontalAlignment="Center">
+                    <ListView.Header>
+                        <TextBlock HorizontalAlignment="Center">
                             <Run Text="&#xEF90;" FontSize="30" FontFamily="Segoe MDL2 Assets"/>
                             <Run Text="NHẬN DẠY" FontSize="30" FontWeight="Bold"/>
-                            </TextBlock>
-                        </ListView.Header>
-                    </ListView>
-                    <TextBlock Text="Hãy kéo môn học vào đây" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
+                        </TextBlock>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:OverviewCollegeRequest">
+                            <college:CollegeSubjectRequestOverViewCell SubjectName="{x:Bind Sub}" SchoolName="{x:Bind SchoolName}" Price="{x:Bind VNDPrice}"
+                                                                       SchoolLogoUrl="{x:Bind SchoolLogoUrl}" PaymentTimeType="{x:Bind payMentTimeType}"
+                                                                       Margin="5,0,0,5" Padding="0"></college:CollegeSubjectRequestOverViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
 
             <CommandBar x:Name="PageCommandBar" IsOpen="False" DefaultLabelPosition="Bottom" Margin="0,0,0,60"

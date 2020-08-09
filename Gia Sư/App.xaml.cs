@@ -1,28 +1,13 @@
 ﻿using Gia_Sư.Models.Person;
-using Gia_Sư.Pages.Subject;
+using Gia_Sư.Pages.Stuhub;
 using Gia_Sư.Pages.Tutor;
-using Newtonsoft.Json;
+using Gia_Sư.Pages.Tutor.CollegeSubject;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Gia_Sư
@@ -58,6 +43,9 @@ namespace Gia_Sư
                 if (rootFrame.Content == null)
                 {
                     rootFrame.Navigate(typeof(LoginPageV2), e.Arguments);
+                    //rootFrame.Navigate(typeof(TutorPage), e.Arguments);
+                    //rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    //rootFrame.Navigate(typeof(CollegeRequestSubject), e.Arguments);
                 }
 
                 Window.Current.Activate();

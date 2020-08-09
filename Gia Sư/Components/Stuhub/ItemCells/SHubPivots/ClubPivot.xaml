@@ -1,0 +1,103 @@
+﻿<UserControl
+    x:Class="Gia_Sư.Components.Stuhub.ItemCells.SHubPivots.ClubPivot"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Gia_Sư.Components.Stuhub.ItemCells.SHubPivots"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Name="ClubOVPivot"
+    d:DesignHeight="300"
+    d:DesignWidth="450">
+
+    <Border CornerRadius="1">
+        <Grid Height="220" Margin="0" Padding="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.RowSpan="2" Source="{Binding ClubCoverImageUrl, Mode=OneWay, ElementName=ClubOVPivot}" Stretch="UniformToFill"/>
+            <TextBlock x:Name="ClubNameText" Text="{x:Bind ClubName, Mode=OneWay}" VerticalAlignment="Top" HorizontalAlignment="Left"
+                       FontSize="30" FontWeight="Bold" Margin="5" Foreground="White">
+                <TextBlock.TranslationTransition>
+                    <Vector3Transition />
+                </TextBlock.TranslationTransition>
+            </TextBlock>
+            <RatingControl Grid.Row="0" Margin="5" Value="{x:Bind Rating, Mode=OneWay}" IsHoldingEnabled="False" IsReadOnly="True" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <Grid x:Name="BelowGrid" Grid.Row="1" 
+                  Background="{ThemeResource SystemAltHighColor}" 
+                  PointerExited="Grid_PointerExited" 
+                  PointerEntered="Grid_PointerEntered" 
+                  Translation="0,95,0">
+                <Grid.TranslationTransition>
+                    <Vector3Transition />
+                </Grid.TranslationTransition>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <PersonPicture x:Name="ClubLogo" ProfilePicture="{Binding ClubLogoUrl, Mode=OneWay, ElementName=ClubOVPivot}" Width="90" Height="90" 
+                               VerticalAlignment="Top" HorizontalAlignment="Center" 
+                               Margin="0,-50,0,0"/>
+                <StackPanel Grid.Column="0" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"
+                            Background="{ThemeResource SystemListLowColor}" Width="100">
+                        <TextBlock>
+                            <Run Text="&#xE715;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="Mail"/>
+                        </TextBlock>
+                    </Button>
+                    <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"
+                            Background="{ThemeResource SystemListLowColor}" Width="100">
+                        <TextBlock>
+                            <Run Text="&#xE11C;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="Tham gia"/>
+                        </TextBlock>
+                    </Button>
+                </StackPanel>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Stretch" FontSize="15">
+                            <Run Text="&#xE717;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="{x:Bind ClubPhoneNumber, Mode=OneWay}"/>
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Stretch" FontSize="15" Margin="15,0,0,0">
+                            <Run Text="&#xE716;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="{x:Bind Members, Mode=OneWay}"/>
+                        </TextBlock>
+                        <TextBlock  VerticalAlignment="Top" FontSize="15" Margin="15,0,0,0">
+                            <Run Text="&#xEBD2;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="{x:Bind Projects, Mode=OneWay}"/>
+                        </TextBlock>
+                        <TextBlock VerticalAlignment="Top" FontSize="15" Margin="15,0,0,0">
+                            <Run Text="&#xEC5C;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="21.000VNĐ"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <TextBlock VerticalAlignment="Bottom" FontSize="15" Margin="0,0,0,0">
+                        <Run Text="&#xE707;" FontFamily="Segoe MDL2 Assets"/>
+                        <Run Text="Lầu 6, tòa A2 Trường Đại học Quốc tế"/>
+                    </TextBlock>
+                    <TextBlock Text="{x:Bind Intro, Mode=OneWay}" Margin="0,5,0,0" Grid.Row="1" HorizontalAlignment="Left" TextAlignment="Left"
+                               TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="16.5" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="2" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                        <Run Text="Ngày thành lập:"/>
+                        <Run Text="20-11-2020" FontWeight="Bold"/>
+                    </TextBlock>
+                    <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"
+                            Background="{ThemeResource SystemListLowColor}" Width="100" Grid.Row="2">
+                        <TextBlock>
+                            <Run Text="&#xF6FA;" FontFamily="Segoe MDL2 Assets"/>
+                            <Run Text="Khám phá"/>
+                        </TextBlock>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+    
+</UserControl>

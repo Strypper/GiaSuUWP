@@ -1,33 +1,26 @@
 ﻿using Gia_Sư.Components.PopUps;
 using Gia_Sư.Models.AppTools;
-using Gia_Sư.Models.CollegeSubjectData;
-using Gia_Sư.Models.Services.CollegeStudyGroup;
-using Microsoft.Toolkit.Uwp.UI.Animations;
+using Gia_Sư.Models.College;
+using Gia_Sư.Models.Tutor.CollegeStudyGroup;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Composition;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace Gia_Sư.Pages.Subject
+namespace Gia_Sư.Pages.Tutor.CollegeSubject
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -40,6 +33,7 @@ namespace Gia_Sư.Pages.Subject
         private SubjectCollegeRequest sr = new SubjectCollegeRequest();
         private SubjectRequestSchedule srs = new SubjectRequestSchedule();
         private List<CollegeStudyGroupModel> csg = new List<CollegeStudyGroupModel>();
+        private ObservableCollection<OverviewCollegeRequest> teachingList = new ObservableCollection<OverviewCollegeRequest>();
         public string GetRequestUrl(int PageNumber) => $"https://giasuapi2.azurewebsites.net/api/CollegeSubjectControllers/RequestCollegeSubjectsPage/{PageNumber}";
         public string GetRequestDetailUrl(int RequestNumber) => $"https://giasuapi2.azurewebsites.net/api/CollegeSubjectControllers/RequestCollegeSubjectDetail/{RequestNumber}";
         public string SearchRequestUrl(string SubName) => $"https://giasuapi2.azurewebsites.net/api/CollegeSubjectControllers/SearchSubject/{SubName}";
@@ -68,6 +62,7 @@ namespace Gia_Sư.Pages.Subject
             ExecuteAnimation();
             csg = CollegeStudyGroupData.GetData();
             StudyGroupFilter.ItemsSource = csg;
+            TeachingList.ItemsSource = teachingList;
             CollegeSubjectRequestGridView.ItemsSource = await GetData(0);
         }
 
@@ -91,7 +86,7 @@ namespace Gia_Sư.Pages.Subject
         }
         private void ToggleFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            if(ToggleFilterButton.IsChecked == true)
+            if (ToggleFilterButton.IsChecked == true)
             {
                 MainLayout.Translation = new Vector3(0, 120, 0);
                 ToggleFilterButton.Rotation = 180;
@@ -111,6 +106,31 @@ namespace Gia_Sư.Pages.Subject
         private void CollegeSubjectRequestGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
 
+        }
+
+        private void CollegeSubjectRequestGridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        {
+            OverviewCollegeRequest collegerequest = e.Items[0] as OverviewCollegeRequest;
+            e.Data.Properties.Add("CollegeRequest", collegerequest);
+            e.Data.RequestedOperation = DataPackageOperation.Copy;
+        }
+
+        private void CollegeSubjectRequestGridView_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+        }
+        private void TeachingList_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+        }
+        private void TeachingList_DragEnter(object sender, DragEventArgs e)
+        {
+            e.DragUIOverride.IsGlyphVisible = false;
+        }
+        private async void TeachingList_Drop(object sender, DragEventArgs e)
+        {
+            var element = e.DataView.Properties["CollegeRequest"] as OverviewCollegeRequest;
+            teachingList.Add(element);
         }
     }
 }

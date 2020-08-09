@@ -12,7 +12,7 @@
     CloseButtonText="Đóng"
     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" 
     xmlns:data="using:Gia_Sư.Models.Location" xmlns:data2="using:Gia_Sư.Models" 
-    xmlns:data1="using:Gia_Sư.Models.SubjectData" xmlns:data3="using:Gia_Sư.Models.AppTools" BorderBrush="{ThemeResource SystemAccentColor}"
+    xmlns:data1="using:Gia_Sư.Models.College" xmlns:data3="using:Gia_Sư.Models.AppTools" BorderBrush="{ThemeResource SystemAccentColor}"
     mc:Ignorable="d" Background="{ThemeResource SystemControlAcrylicElementBrush}">
 
     <ContentDialog.Resources>

@@ -1,22 +1,13 @@
 ﻿using Gia_Sư.Models.Person;
+using Gia_Sư.Pages.Tutor.CollegeSubject;
 using Gia_Sư.Pages.UserInfoPages;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Toolkit.Uwp.UI.Animations.Expressions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
@@ -24,19 +15,19 @@ using EF = Microsoft.Toolkit.Uwp.UI.Animations.Expressions.ExpressionFunctions;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace Gia_Sư.Pages.Home
+namespace Gia_Sư.Pages.Stuhub
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UserInfo : Page
+    public sealed partial class PersonalProfile : Page
     {
         CompositionPropertySet _props;
         CompositionPropertySet _scrollerPropertySet;
         Compositor _compositor;
         private SpriteVisual _blurredBackgroundImageVisual;
         private UserModel MyProfile = new UserModel();
-        public UserInfo()
+        public PersonalProfile()
         {
             this.InitializeComponent();
             MyProfile = App.User;
@@ -194,5 +185,9 @@ namespace Gia_Sư.Pages.Home
             Frame.GoBack();
         }
 
+        private void CreateSubject_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(CollegeRequestSubject));
+        }
     }
 }

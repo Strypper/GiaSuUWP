@@ -32,6 +32,10 @@
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer" />
     <uap:Capability Name="chat" />
+    <uap:Capability Name="objects3D"/>
+    <uap:Capability Name="picturesLibrary"/>
     <DeviceCapability Name="webcam" />
+    <DeviceCapability Name="location"/>
+    <DeviceCapability Name="microphone"/>
   </Capabilities>
 </Package>

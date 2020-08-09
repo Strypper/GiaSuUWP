@@ -1,27 +1,17 @@
 ﻿using Gia_Sư.Components.PopUps;
-using Gia_Sư.Pages;
-using Gia_Sư.Pages.Home;
-using Gia_Sư.Pages.Subject;
-using Microsoft.Toolkit.Uwp.UI.Animations;
+using Gia_Sư.Pages.Stuhub;
+using Gia_Sư.Pages.Tutor;
+using Gia_Sư.Pages.Tutor.CollegeSubject;
 using Microsoft.Toolkit.Uwp.UI.Animations.Expressions;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Composition;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
@@ -47,18 +37,21 @@ namespace Gia_Sư
         }
         private void NavigationViewPanel_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
-                Microsoft.UI.Xaml.Controls.NavigationViewItem item = args.SelectedItem as Microsoft.UI.Xaml.Controls.NavigationViewItem;
-                NavView_Navigate(item);
+            Microsoft.UI.Xaml.Controls.NavigationViewItem item = args.SelectedItem as Microsoft.UI.Xaml.Controls.NavigationViewItem;
+            NavView_Navigate(item);
         }
         private void NavView_Navigate(Microsoft.UI.Xaml.Controls.NavigationViewItem item)
         {
             switch (item.Name)
             {
                 case "Home":
-                    MainFrame.Navigate(typeof(RootHomeV2));
+                    MainFrame.Navigate(typeof(StuhubHomePage));
                     break;
                 case "CollegeSubject":
                     MainFrame.Navigate(typeof(CollegeRequestSubject));
+                    break;
+                case "Tutor":
+                    MainFrame.Navigate(typeof(TutorPage));
                     break;
             }
         }
@@ -90,7 +83,7 @@ namespace Gia_Sư
                 User.ProfilePicture = bitmap;
             }
             //Start the page
-            MainFrame.Navigate(typeof(RootHomeV2));
+            MainFrame.Navigate(typeof(StuhubHomePage));
             //Animate the gear
             backVisual = ElementCompositionPreview.GetElementVisual(GearIcon);
             backVisual.Size = new System.Numerics.Vector2(20, 20);
@@ -107,24 +100,24 @@ namespace Gia_Sư
             rotate.Duration = TimeSpan.FromMilliseconds(1000);
         }
         //Dectect what page on the Frame when it navigated
-        private void MainFrame_Navigated(object sender, NavigationEventArgs e)
-        {
-            var pageName = MainFrame.Content.GetType().Name;            
-            if(pageName == "RootHomeV2" || pageName == "CollegeRequestSubject")
-            {            
-                //find menu item that has the matching tag
-                var menuItem = NavigationViewPanel.MenuItems
-                                         .OfType<Microsoft.UI.Xaml.Controls.NavigationViewItem>()
-                                         .Where(item => item.Tag.ToString() == pageName)
-                                         .First();
+        //private void MainFrame_Navigated(object sender, NavigationEventArgs e)
+        //{
+        //    var pageName = MainFrame.Content.GetType().Name;
+        //    if (pageName == "StuhubHomePage" || pageName == "CollegeRequestSubject")
+        //    {
+        //        //find menu item that has the matching tag
+        //        var menuItem = NavigationViewPanel.MenuItems
+        //                                 .OfType<Microsoft.UI.Xaml.Controls.NavigationViewItem>()
+        //                                 .Where(item => item.Tag.ToString() == pageName)
+        //                                 .First();
 
-                //select
-                NavigationViewPanel.SelectedItem = menuItem;
+        //        //select
+        //        NavigationViewPanel.SelectedItem = menuItem;
 
-                NavigationViewPanel.IsBackButtonVisible = Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed;
-            }
-            else NavigationViewPanel.IsBackButtonVisible = Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Visible;
-        }
+        //        NavigationViewPanel.IsBackButtonVisible = Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed;
+        //    }
+        //    else NavigationViewPanel.IsBackButtonVisible = Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Visible;
+        //}
         private async void Setting(object sender, RoutedEventArgs e)
         {
             Settings s = new Settings();
@@ -142,8 +135,8 @@ namespace Gia_Sư
                 switch (e.Key)
                 {
                     case VirtualKey.S: Search.Focus(FocusState.Programmatic); break;
-                    case VirtualKey.Number1: MainFrame.Navigate(typeof(RootHomeV2)); break;
-                    case VirtualKey.Number2: MainFrame.Navigate(typeof(RootSubject)); break;
+                    case VirtualKey.Number1: MainFrame.Navigate(typeof(StuhubHomePage)); break;
+                    case VirtualKey.Number2: MainFrame.Navigate(typeof(StuhubHomePage)); break;
                 }
             }
         }
@@ -154,7 +147,7 @@ namespace Gia_Sư
         private void UserInfo_Click(object sender, RoutedEventArgs e)
         {
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("ForwardConnectedAnimation", User);
-            Frame.Navigate(typeof(UserInfo), null, new EntranceNavigationTransitionInfo());
+            Frame.Navigate(typeof(PersonalProfile), null, new EntranceNavigationTransitionInfo());
         }
         private void LogOut_Click(object sender, RoutedEventArgs e)
         {

@@ -9,11 +9,10 @@
     d:DesignHeight="300"
     d:DesignWidth="420">
 
-    <Grid x:Name="MainLayout" Height="120" Width="420" PointerEntered="Grid_PointerEntered" PointerExited="Grid_PointerExited" 
-          Background="Transparent" Padding="0">
-        <Grid.BackgroundTransition>
-            <BrushTransition Duration="0:0:1"/>
-        </Grid.BackgroundTransition>
+    <Grid x:Name="MainLayout" Height="120" Width="410" 
+          PointerEntered="Grid_PointerEntered" 
+          PointerExited="Grid_PointerExited" 
+          Background="Transparent" Padding="0" CornerRadius="1">
         <PersonPicture ProfilePicture="{Binding SchoolLogoUrl, Mode=OneTime}" HorizontalAlignment="Right" Margin="0,0,10,0"/>
         <StackPanel HorizontalAlignment="Left">
             <TextBlock x:Name="SubjectRequest" FontWeight="Bold" Margin="10"  TextDecorations="Underline"
@@ -30,7 +29,10 @@
             </TextBlock>
         </StackPanel>
         <StackPanel x:Name="Actions" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal"
-                    Margin="70,0,0,0">
+                    Margin="70,0,0,0" Translation="0,50,0">
+            <StackPanel.TranslationTransition>
+                <Vector3Transition/>
+            </StackPanel.TranslationTransition>
             <ToggleButton Content="&#xE74E;" FontFamily="Segoe MDL2 Assets" Background="Transparent" ToolTipService.ToolTip="Lưu yêu cầu"/>
             <ToggleButton Content="&#xEF90;" FontFamily="Segoe MDL2 Assets" Background="Transparent" ToolTipService.ToolTip="Nhận dạy"/>
         </StackPanel>

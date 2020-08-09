@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Gia_Sư.Helpers.ImageLoader;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
+using System;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
-using Gia_Sư.Helpers.ImageLoader;
 
 namespace Gia_Sư.Helpers
 {

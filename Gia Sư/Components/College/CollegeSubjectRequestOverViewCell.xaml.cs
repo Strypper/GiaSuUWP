@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Numerics;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -98,13 +88,13 @@ namespace Gia_Sư.Components.College
 
         private void Grid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            MainLayout.Background = new SolidColorBrush(Color.FromArgb(150, 37, 170, 225));
-            SubjectRequest.Scale = new Vector3(1.2f, 1.2f, 1);
+            Actions.Translation = new Vector3(0, 0, 0);
+            SubjectRequest.Scale = new Vector3(1.3f, 1.3f, 1);
         }
 
         private void Grid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            MainLayout.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            Actions.Translation = new Vector3(0, 50, 0);
             SubjectRequest.Scale = new Vector3(1f, 1f, 1);
         }
     }

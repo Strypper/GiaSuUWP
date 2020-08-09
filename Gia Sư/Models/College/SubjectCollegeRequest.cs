@@ -1,10 +1,10 @@
 ﻿using Gia_Sư.Models.Person;
-using Gia_Sư.Models.SubjectData;
+using Gia_Sư.Models.College;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Gia_Sư.Models.CollegeSubjectData
+namespace Gia_Sư.Models.College
 {
     public class SubjectCollegeRequest
     {
@@ -31,7 +31,7 @@ namespace Gia_Sư.Models.CollegeSubjectData
         public ICollection<RequestSchedules> requestSchedules { get; set; }
         public string VNDPrice { get => Price.ToString("####.000") + "VNĐ"; }
     }
-    public class OverviewCollegeRequest 
+    public class OverviewCollegeRequest
     {
         public int RequestID { get; set; }
         public decimal Price { get; set; }
