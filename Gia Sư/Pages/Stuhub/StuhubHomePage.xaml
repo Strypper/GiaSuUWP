@@ -20,7 +20,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.8*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.85*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ScrollViewer x:Name="LeftSide" Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}"

@@ -11,11 +11,11 @@
     d:DesignHeight="700"
     d:DesignWidth="800">
 
-    <shadow:DropShadowPanel BlurRadius="10" ShadowOpacity="1" OffsetX="0" OffsetY="0"
+    <shadow:DropShadowPanel BlurRadius="10" ShadowOpacity="1" OffsetX="0" OffsetY="0" CornerRadius="0"
                             Color="LightGray" HorizontalAlignment="Stretch" IsMasked="True">
         <StackPanel x:Name="MainLayout" HorizontalAlignment="Stretch" 
-          Background="{ThemeResource SystemChromeMediumLowColor}">
-
+          Background="{ThemeResource SystemChromeMediumLowColor}" CornerRadius="0">
+            <Rectangle HorizontalAlignment="Stretch" Fill="{ThemeResource SystemAccentColor}" Height="3"/>
             <controls:DockPanel>
                 <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" >
                     <PersonPicture Margin="5" ProfilePicture="{Binding ProfileUrl, Mode=OneWay, ElementName=UserStory}"

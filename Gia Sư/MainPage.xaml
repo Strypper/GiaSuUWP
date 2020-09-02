@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" xmlns:Windows10version1803="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 6)"
     mc:Ignorable="d" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:UserControl="using:Gia_Sư.Components"
+    xmlns:UserControl="using:Gia_Sư.Components" xmlns:controls="using:WinRTXamlToolkit.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <muxc:NavigationView x:Name="NavigationViewPanel" IsBackButtonVisible="Collapsed" IsBackEnabled="True" IsSettingsVisible="False" KeyDown="NavigationViewPanel_KeyDown" KeyUp="NavigationViewPanel_KeyUp"
@@ -143,15 +143,24 @@
                                     <StackPanel Orientation="Horizontal" 
                                                 HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE783;" Margin="5" HorizontalAlignment="Left" Foreground="{StaticResource SystemAccentColor}"/>
-                                        <TextBlock Text="Thông tin cá nhân" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Foreground="{StaticResource SystemAccentColor}"/>
+                                        <TextBlock Text="Thông tin tài khoản" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Foreground="{StaticResource SystemAccentColor}"/>
                                     </StackPanel>
                                 </Button>
                                 <Button x:Name="LogOut" HorizontalAlignment="Stretch" Background="Transparent"
                                         Click="LogOut_Click">
-                                    <StackPanel Orientation="Horizontal" 
-                                                HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7E8;" Foreground="Red" Margin="5" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="Đăng xuất" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7E8;" Foreground="Red" 
+                                                  Margin="5" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="Đăng xuất tài khoản" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                   Margin="5"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="Totechs" HorizontalAlignment="Stretch" Background="#ffc402"
+                                        Click="Totechs_Click">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <UserControl:Logo x:Name="Logo" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Totechs coop" VerticalAlignment="Center"
+                                                   FontWeight="ExtraBold" Margin="5" Foreground="White"/>
                                     </StackPanel>
                                 </Button>
                             </StackPanel>

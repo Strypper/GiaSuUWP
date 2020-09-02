@@ -24,7 +24,7 @@
             </TextBlock>
             <RatingControl Grid.Row="0" Margin="5" Value="{x:Bind Rating, Mode=OneWay}" IsHoldingEnabled="False" IsReadOnly="True" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             <Grid x:Name="BelowGrid" Grid.Row="1" 
-                  Background="{ThemeResource SystemAltHighColor}" 
+                  Background="{ThemeResource SystemControlAcrylicElementBrush}" 
                   PointerExited="Grid_PointerExited" 
                   PointerEntered="Grid_PointerEntered" 
                   Translation="0,95,0">
@@ -35,19 +35,19 @@
                     <ColumnDefinition Width="0.4*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <PersonPicture x:Name="ClubLogo" ProfilePicture="{Binding ClubLogoUrl, Mode=OneWay, ElementName=ClubOVPivot}" Width="90" Height="90" 
+                <PersonPicture x:Name="ClubLogo" ProfilePicture="{Binding ClubLogoUrl, Mode=OneWay, ElementName=ClubOVPivot}" Width="95" Height="95" 
                                VerticalAlignment="Top" HorizontalAlignment="Center" 
                                Margin="0,-50,0,0"/>
-                <StackPanel Grid.Column="0" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                    <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"
-                            Background="{ThemeResource SystemListLowColor}" Width="100">
+                <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="5"
+                            Background="{ThemeResource SystemListLowColor}" Width="100" Height="40">
                         <TextBlock>
                             <Run Text="&#xE715;" FontFamily="Segoe MDL2 Assets"/>
                             <Run Text="Mail"/>
                         </TextBlock>
                     </Button>
-                    <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"
-                            Background="{ThemeResource SystemListLowColor}" Width="100">
+                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="5"
+                            Background="{ThemeResource SystemListLowColor}" Width="100" Height="40">
                         <TextBlock>
                             <Run Text="&#xE11C;" FontFamily="Segoe MDL2 Assets"/>
                             <Run Text="Tham gia"/>
@@ -56,9 +56,9 @@
                 </StackPanel>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.25*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Stretch" FontSize="15">
@@ -82,18 +82,14 @@
                         <Run Text="&#xE707;" FontFamily="Segoe MDL2 Assets"/>
                         <Run Text="Lầu 6, tòa A2 Trường Đại học Quốc tế"/>
                     </TextBlock>
-                    <TextBlock Text="{x:Bind Intro, Mode=OneWay}" Margin="0,5,0,0" Grid.Row="1" HorizontalAlignment="Left" TextAlignment="Left"
-                               TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="16.5" FontWeight="Bold"/>
+                    <TextBlock Text="{x:Bind Intro, Mode=OneWay}" Grid.Row="1" HorizontalAlignment="Left" TextAlignment="Left"
+                               TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="15" FontWeight="Bold" Margin="0,5,0,0"/>
                     <TextBlock Grid.Row="2" VerticalAlignment="Bottom" Margin="0,0,0,5">
                         <Run Text="Ngày thành lập:"/>
                         <Run Text="20-11-2020" FontWeight="Bold"/>
                     </TextBlock>
                     <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"
                             Background="{ThemeResource SystemListLowColor}" Width="100" Grid.Row="2">
-                        <TextBlock>
-                            <Run Text="&#xF6FA;" FontFamily="Segoe MDL2 Assets"/>
-                            <Run Text="Khám phá"/>
-                        </TextBlock>
                     </Button>
                 </Grid>
             </Grid>

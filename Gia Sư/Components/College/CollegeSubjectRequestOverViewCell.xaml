@@ -4,37 +4,66 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Gia_Sư.Components.College"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="420">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:ToolkitBehaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core" xmlns:shadow="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d">
 
-    <Grid x:Name="MainLayout" Height="120" Width="410" 
+    <shadow:DropShadowPanel BlurRadius="10" ShadowOpacity="1" OffsetX="0" OffsetY="0" CornerRadius="0"
+                            Color="Gray" HorizontalAlignment="Stretch" IsMasked="True">
+        <Grid x:Name="MainLayout" Height="120" Width="410" 
           PointerEntered="Grid_PointerEntered" 
           PointerExited="Grid_PointerExited" 
-          Background="Transparent" Padding="0" CornerRadius="1">
-        <PersonPicture ProfilePicture="{Binding SchoolLogoUrl, Mode=OneTime}" HorizontalAlignment="Right" Margin="0,0,10,0"/>
-        <StackPanel HorizontalAlignment="Left">
-            <TextBlock x:Name="SubjectRequest" FontWeight="Bold" Margin="10"  TextDecorations="Underline"
+          Padding="0" CornerRadius="1"
+          Background="{ThemeResource SystemChromeMediumLowColor}">
+            <Interactivity:Interaction.Behaviors>
+                <Core:EventTriggerBehavior EventName="PointerEntered">
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=NameOffsetRight}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=PositionOffsetRight}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=LocationOffsetRight}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=LocationFadeIn}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=ActionGridFadeIn}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=PhotoScaleUp}" MethodName="StartAnimation"/>
+                </Core:EventTriggerBehavior>
+                <Core:EventTriggerBehavior EventName="PointerExited">
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=NameOffsetLeft}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=PositionOffsetLeft}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=LocationOffsetLeft}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=LocationFadeOut}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=ActionGridFadeOut}" MethodName="StartAnimation"/>
+                    <Core:CallMethodAction TargetObject="{Binding ElementName=PhotoScaleDown}" MethodName="StartAnimation"/>
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
+            <Rectangle Height="3" Fill="{ThemeResource SystemAccentColor}" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+            <PersonPicture ProfilePicture="{Binding SchoolLogoUrl, Mode=OneTime}" HorizontalAlignment="Right" Width="80" Height="80" Margin="0,0,15,0">
+                <Interactivity:Interaction.Behaviors>
+                    <ToolkitBehaviors:Scale x:Name="PhotoScaleUp" Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1.2" ScaleY="1.2" CenterX="24" CenterY="24" EasingMode="EaseOut"  EasingType="Cubic" />
+                    <ToolkitBehaviors:Scale x:Name="PhotoScaleDown"  Duration="250" Delay="0" AutomaticallyStart="False" ScaleX="1" ScaleY="1" CenterX="24" CenterY="24" EasingMode="EaseOut"   EasingType="Cubic"/>
+                </Interactivity:Interaction.Behaviors>
+            </PersonPicture>
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock x:Name="SubjectRequest" FontWeight="Bold" Margin="10"  TextDecorations="Underline"
                        Scale="1,1,1" Text="{x:Bind SubjectName, Mode=OneWay}">
-                <TextBlock.ScaleTransition>
-                    <Vector3Transition/>
-                </TextBlock.ScaleTransition>
-            </TextBlock>
-            <TextBlock Text="{x:Bind SchoolName, Mode=OneWay}" Margin="10" />
-            <TextBlock Margin="10">
+                    <TextBlock.ScaleTransition>
+                        <Vector3Transition/>
+                    </TextBlock.ScaleTransition>
+                </TextBlock>
+                <TextBlock Text="{x:Bind SchoolName, Mode=OneWay}" Margin="10" />
+                <TextBlock Margin="10">
                 <Run Text="{x:Bind Price, Mode=OneWay}" FontWeight="Bold" Foreground="Green"/>
                 <Run Text="VNĐ /"/>
                 <Run Text="{x:Bind PaymentType, Mode=OneWay}"/>
-            </TextBlock>
-        </StackPanel>
-        <StackPanel x:Name="Actions" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal"
+                </TextBlock>
+            </StackPanel>
+            <StackPanel x:Name="Actions" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal"
                     Margin="70,0,0,0" Translation="0,50,0">
-            <StackPanel.TranslationTransition>
-                <Vector3Transition/>
-            </StackPanel.TranslationTransition>
-            <ToggleButton Content="&#xE74E;" FontFamily="Segoe MDL2 Assets" Background="Transparent" ToolTipService.ToolTip="Lưu yêu cầu"/>
-            <ToggleButton Content="&#xEF90;" FontFamily="Segoe MDL2 Assets" Background="Transparent" ToolTipService.ToolTip="Nhận dạy"/>
-        </StackPanel>
-    </Grid>
+                <StackPanel.TranslationTransition>
+                    <Vector3Transition/>
+                </StackPanel.TranslationTransition>
+                <ToggleButton Content="&#xE74E;" FontFamily="Segoe MDL2 Assets" Background="Transparent" ToolTipService.ToolTip="Lưu yêu cầu"/>
+                <ToggleButton Content="&#xEF90;" FontFamily="Segoe MDL2 Assets" Background="Transparent" ToolTipService.ToolTip="Nhận dạy"/>
+            </StackPanel>
+        </Grid>
+    </shadow:DropShadowPanel>
 </UserControl>

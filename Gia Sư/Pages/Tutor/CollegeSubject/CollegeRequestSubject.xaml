@@ -195,7 +195,7 @@
                         <DataTemplate x:DataType="data:OverviewCollegeRequest">
                             <college:CollegeSubjectRequestOverViewCell SubjectName="{x:Bind Sub}" SchoolName="{x:Bind SchoolName}" Price="{x:Bind VNDPrice}"
                                                                        SchoolLogoUrl="{x:Bind SchoolLogoUrl}" PaymentTimeType="{x:Bind payMentTimeType}"
-                                                                       Margin="5,0,0,5" Padding="0"></college:CollegeSubjectRequestOverViewCell>
+                                                                       Margin="0" Padding="0" HorizontalAlignment="Stretch"></college:CollegeSubjectRequestOverViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

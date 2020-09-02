@@ -167,5 +167,10 @@ namespace Gia_Sư
                 anim.TryStart(User);
             }
         }
+
+        private void Totechs_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(EasterEgg), null, new EntranceNavigationTransitionInfo());
+        }
     }
 }
