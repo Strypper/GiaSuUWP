@@ -45,7 +45,7 @@
                             Background="#1e8ad2" >
                         <TextBlock>
                             <Run Text="&#xE715;" FontFamily="Segoe MDL2 Assets"/>
-                            <Run Text="Contact"/>
+                            <Run Text="Contact" FontFamily="Verdana"/>
                         </TextBlock>
                     </Button>
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -53,7 +53,7 @@
                             Background="#FFFF6347" >
                         <TextBlock>
                             <Run Text="&#xE250;" FontFamily="Segoe UI Symbol" FontSize="20"/>
-                            <Run Text="Join Club"/>
+                            <Run Text="Join Club" FontFamily="Verdana"/>
                         </TextBlock>
                     </Button>
                 </StackPanel>

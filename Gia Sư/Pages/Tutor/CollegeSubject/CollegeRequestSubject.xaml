@@ -243,7 +243,7 @@
                         <Grid.Background>
                             <ImageBrush ImageSource="{x:Bind StudyGroupImageUrl}" Stretch="UniformToFill"/>
                         </Grid.Background>
-                        <TextBlock Text="{x:Bind StudyGroupName}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="ExtraBold" Foreground="White"/>
+                        <TextBlock Text="{x:Bind StudyGroupName}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="ExtraBold" FontFamily="Verdana" Foreground="White"/>
                     </Grid>
                 </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>
@@ -290,12 +290,12 @@
                             </ToggleButton>
                             <TextBlock FontSize="25" HorizontalAlignment="Center" FontWeight="Bold">
                                     <Run Text="&#xED15;" FontFamily="Segoe MDL2 Assets"/>
-                                    <Run Text="YÊU CẦU MÔN HỌC"/>
+                                    <Run Text="YÊU CẦU MÔN HỌC" FontFamily="Verdana"/>
                             </TextBlock>
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right"
                                        FontSize="25" ToolTipService.ToolTip="Yêu cầu theo nhóm">
                                     <Run FontFamily="Segoe MDL2 Assets" Text="&#xE125;"/>
-                                    <Run Text="20"/>
+                                    <Run Text="20" FontFamily="Verdana"/>
                             </TextBlock>
                         </Grid>
                     </GridView.Header>
@@ -317,9 +317,9 @@
                 <StackPanel VerticalAlignment="Stretch" Grid.Row="0">
                     <TextBlock FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="5">
                     <Run Text="&#xE16E;" FontFamily="Segoe MDL2 Assets"/>
-                    <Run Text="BỘ LỌC"/>
+                    <Run Text="BỘ LỌC" FontFamily="Verdana"/>
                     </TextBlock>
-                    <TextBlock Margin="5">
+                    <TextBlock FontFamily="Verdana" Margin="5">
                                 <Run Text="Sô tiền ("/>
                                 <Run Text="{x:Bind MoneySider.Value, Mode=OneWay}"/>
                                 <Run Text=".000 VNĐ)"/>
@@ -330,26 +330,26 @@
                             Maximum="5000" Minimum="0"/>
                     </Border>
                     <ComboBox x:Name="CityFilter" Header="Thành phố" Margin="5"
-                          HorizontalAlignment="Stretch"/>
+                          HorizontalAlignment="Stretch" FontFamily="Verdana"/>
                     <ComboBox x:Name="DistrictFilter" Header="Quận Huyện" Margin="5"
-                          HorizontalAlignment="Stretch"/>
+                          HorizontalAlignment="Stretch" FontFamily="Verdana"/>
                     <ComboBox x:Name="SchoolFilter" Header="Trường học" Margin="5"
-                          HorizontalAlignment="Stretch"/>
+                          HorizontalAlignment="Stretch" FontFamily="Verdana"/>
                     <controls:DockPanel HorizontalAlignment="Stretch">
-                        <ToggleButton Content="Bài tập" Width="120" Margin="5" HorizontalAlignment="Stretch"/>
-                        <ToggleButton Content="Thuyết trình" Width="120" Margin="5" HorizontalAlignment="Stretch"/>
-                        <ToggleButton Content="Thực Hành" Margin="5" HorizontalAlignment="Stretch"/>
+                        <ToggleButton Content="Bài tập" Width="120" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
+                        <ToggleButton Content="Thuyết trình" Width="120" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
+                        <ToggleButton Content="Thực Hành" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
                     </controls:DockPanel>
                     <controls:DockPanel HorizontalAlignment="Stretch">
-                        <ToggleButton Content="T2" Margin="5" HorizontalAlignment="Stretch"/>
-                        <ToggleButton Content="T3" Margin="5" HorizontalAlignment="Stretch"/>
-                        <ToggleButton Content="T4" Margin="5" HorizontalAlignment="Stretch"/>
-                        <ToggleButton Content="T5" Margin="5" HorizontalAlignment="Stretch"/>
-                        <ToggleButton Content="T6" Margin="5" HorizontalAlignment="Stretch"/>
-                        <ToggleButton Content="T7" Margin="5" HorizontalAlignment="Stretch"/>
-                        <ToggleButton Content="CN" Margin="5" HorizontalAlignment="Stretch"/>
+                        <ToggleButton Content="T2" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
+                        <ToggleButton Content="T3" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
+                        <ToggleButton Content="T4" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
+                        <ToggleButton Content="T5" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
+                        <ToggleButton Content="T6" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
+                        <ToggleButton Content="T7" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
+                        <ToggleButton Content="CN" Margin="5" HorizontalAlignment="Stretch" FontFamily="Verdana"/>
                     </controls:DockPanel>
-                    <Button Content="LỌC" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5"/>
+                    <Button Content="LỌC" HorizontalAlignment="Stretch" FontWeight="Bold" FontFamily="Verdana" Margin="5"/>
                 </StackPanel>
                 <ListView x:Name="TeachingList" Margin="5,5,5,10" VerticalAlignment="Stretch" 
                           CanDragItems="True" CanReorderItems="True" AllowDrop="True"
@@ -358,9 +358,9 @@
                           Grid.Row="1" Padding="0"
                           Background="{ThemeResource SystemControlAcrylicWindowBrush}">
                     <ListView.Header>
-                        <TextBlock HorizontalAlignment="Center">
+                        <TextBlock FontFamily="Verdana" HorizontalAlignment="Center">
                             <Run Text="&#xEF90;" FontSize="30" FontFamily="Segoe MDL2 Assets"/>
-                            <Run Text="NHẬN DẠY" FontSize="30" FontWeight="Bold"/>
+                            <Run Text="NHẬN DẠY" FontSize="30" FontWeight="Bold" FontFamily="Verdana"/>
                         </TextBlock>
                     </ListView.Header>
                     <ListView.ItemTemplate>
@@ -375,12 +375,12 @@
 
             <CommandBar x:Name="PageCommandBar" IsOpen="False" DefaultLabelPosition="Bottom" Margin="0,0,0,60"
                         VerticalAlignment="Bottom" Grid.Row="1" Grid.ColumnSpan="2">
-                <AppBarButton x:Name="CreateRequest" Icon="Add" Label="Tạo yêu cầu dạy học"/>
-                <AppBarButton x:Name="PushRequest" Icon="Upload" Label="Đẩy yêu cầu"/>
-                <AppBarButton x:Name="RequestList" Icon="OpenWith" Label="Danh sách yêu cầu"/>
-                <AppBarButton x:Name="RequestPrice" Icon="People" Label="Danh sách chào giá"/>
-                <AppBarButton x:Name="PersonalSchedule" Icon="Calendar" Label="Thời khóa biểu cá nhân"/>
-                <AppBarButton Label="Báo lỗi" AllowFocusOnInteraction="True">
+                <AppBarButton x:Name="CreateRequest" Icon="Add" Label="Tạo yêu cầu dạy học" FontFamily="Verdana"/>
+                <AppBarButton x:Name="PushRequest" Icon="Upload" Label="Đẩy yêu cầu" FontFamily="Verdana"/>
+                <AppBarButton x:Name="RequestList" Icon="OpenWith" Label="Danh sách yêu cầu" FontFamily="Verdana"/>
+                <AppBarButton x:Name="RequestPrice" Icon="People" Label="Danh sách chào giá" FontFamily="Verdana"/>
+                <AppBarButton x:Name="PersonalSchedule" Icon="Calendar" Label="Thời khóa biểu cá nhân" FontFamily="Verdana"/>
+                <AppBarButton Label="Báo lỗi" AllowFocusOnInteraction="True" FontFamily="Verdana">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xEBE8;" />
                     </AppBarButton.Icon>
@@ -389,12 +389,12 @@
                             <Grid>
                                 <StackPanel x:Name="InsideBugWindow">
                                     <TextBlock HorizontalAlignment="Center" Margin="5" Text="Xin lỗi vì sự cố 😓😓"
-                                       FontWeight="ExtraBold" FontSize="20"/>
-                                    <TextBlock HorizontalAlignment="Center" Text="Hãy tóm tắt lỗi của bạn ❗❗" Margin="5"/>
-                                    <TextBox x:Name="BugTitle" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="5" Width="300"/>
-                                    <TextBlock HorizontalAlignment="Center" Margin="5" Text="Miêu tả chi tiết"/>
+                                       FontWeight="ExtraBold" FontSize="20" FontFamily="Verdana"/>
+                                    <TextBlock HorizontalAlignment="Center" Text="Hãy tóm tắt lỗi của bạn ❗❗" Margin="5" FontFamily="Verdana"/>
+                                    <TextBox x:Name="BugTitle" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="5" Width="300" FontFamily="Verdana"/>
+                                    <TextBlock HorizontalAlignment="Center" Margin="5" Text="Miêu tả chi tiết" FontFamily="Verdana"/>
                                     <RichEditBox x:Name="BugDetailBox" HorizontalAlignment="Stretch"
-                                                              Height="300" Margin="5"/>
+                                                 FontFamily="Verdana" Height="300" Margin="5"/>
                                     <TextBlock HorizontalAlignment="Center" Text="Nền tảng bạn đang sử dụng" Margin="5"/>
                                     <ComboBox x:Name="PlatformCombobox" HorizontalAlignment="Stretch" Margin="5" 
                                           HorizontalContentAlignment="Center">
@@ -414,8 +414,8 @@
                     <Component:Pagination x:Name="PaginationControl"/>
                 </CommandBar.Content>
                 <CommandBar.SecondaryCommands>
-                    <AppBarButton Icon="Setting" Label="Cài đặt"/>
-                    <AppBarButton x:Name="RefreshPage" Icon="Sync" Label="Tải lại"/>
+                    <AppBarButton Icon="Setting" Label="Cài đặt" FontFamily="Verdana"/>
+                    <AppBarButton x:Name="RefreshPage" Icon="Sync" Label="Tải lại" FontFamily="Verdana"/>
                 </CommandBar.SecondaryCommands>
             </CommandBar>
         </Grid>

@@ -193,6 +193,7 @@
     <Compile Include="Models\Location\PersonalLocation.cs" />
     <Compile Include="Models\Person\UserModel.cs" />
     <Compile Include="Models\Location\School.cs" />
+    <Compile Include="Models\SmartZone\SmartZone.cs" />
     <Compile Include="Models\Stuhub\Club\ClubInfo.cs" />
     <Compile Include="Models\Stuhub\UserStory.cs" />
     <Compile Include="Models\Tutor\CollegeStudyGroup\CollegeStudyGroupModel.cs" />
@@ -206,6 +207,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\College\SubjectCollegeRequest.cs" />
+    <Compile Include="Pages\SmartZone\SmartZone.xaml.cs">
+      <DependentUpon>SmartZone.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Stuhub\StubhubRightSidePivots\StuhubClubPivot.xaml.cs">
       <DependentUpon>StuhubClubPivot.xaml</DependentUpon>
     </Compile>
@@ -259,6 +263,16 @@
     <Content Include="Assets\BadgeLogo.scale-150.png" />
     <Content Include="Assets\BadgeLogo.scale-200.png" />
     <Content Include="Assets\BadgeLogo.scale-400.png" />
+    <Content Include="Assets\TestPurpose\LocationLogo\DD.png" />
+    <Content Include="Assets\TestPurpose\LocationLogo\KrispyKreme.png" />
+    <Content Include="Assets\TestPurpose\LocationLogo\Passio.jpg" />
+    <Content Include="Assets\TestPurpose\LocationLogo\StarBucksLogo.png" />
+    <Content Include="Assets\TestPurpose\LocationOverView\DDPlace.png" />
+    <Content Include="Assets\TestPurpose\LocationOverView\KKPlace.jpg" />
+    <Content Include="Assets\TestPurpose\LocationOverView\PassioPlace.jpg" />
+    <Content Include="Assets\TestPurpose\LocationOverView\StartBuckPlace.jpg" />
+    <Content Include="Assets\TestPurpose\LocationOverView\TheCoffeeHouse.jpg" />
+    <Content Include="Assets\TestPurpose\LocationOverView\TheCoffeeHouseEdited.jpg" />
     <Content Include="Assets\TestPurpose\Wallpapers\1.jpeg" />
     <Content Include="Assets\TestPurpose\Wallpapers\2.jpeg" />
     <Content Include="Assets\TestPurpose\Wallpapers\3.jpeg" />
@@ -417,6 +431,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\SmartZone\SmartZone.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Stuhub\StubhubRightSidePivots\StuhubClubPivot.xaml">
       <SubType>Designer</SubType>

@@ -21,14 +21,14 @@
                     <PersonPicture Margin="5" ProfilePicture="{Binding ProfileUrl, Mode=OneWay, ElementName=UserStory}"
                            BadgeImageSource="ms-appx:///Assets/TestPurpose/SchoolLogo/IU.png"/>
                     <StackPanel>
-                        <TextBlock Text="{x:Bind PersonName, Mode=OneWay}" FontWeight="Bold" Margin="5" FontSize="20"/>
-                        <TextBlock Text="1 minute ago" Margin="20,10,10,10" FontSize="15"/>
-                        <TextBlock Text="Đại học Quốc tế" Margin="5" FontSize="15"/>
+                        <TextBlock Text="{x:Bind PersonName, Mode=OneWay}" FontWeight="Bold" Margin="5" FontSize="20" FontFamily="Verdana"/>
+                        <TextBlock Text="1 minute ago" Margin="20,10,10,10" FontSize="15" FontFamily="Verdana"/>
+                        <TextBlock Text="Đại học Quốc tế" Margin="5" FontSize="15" FontFamily="Verdana"/>
                     </StackPanel>
                 </StackPanel>
                 <Button Content="&#xE712;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             </controls:DockPanel>
-            <TextBlock Grid.Row="1" Margin="5" Text="{x:Bind Story, Mode=OneWay}" FontSize="20"/>
+            <TextBlock Grid.Row="1" Margin="5" Text="{x:Bind Story, Mode=OneWay}" FontSize="20" FontFamily="Verdana"/>
             <Image VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"
                Source="{Binding StoryImage, Mode=OneWay, ElementName=UserStory}" Height="500"
                Margin="1"/>
@@ -40,14 +40,14 @@
                 <ToggleButton x:Name="CommentButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                           Foreground="{ThemeResource SystemAccentColor}" Margin="1,0,0,0" Background="{ThemeResource SystemAltLowColor}"
                           Click="CommentButton_Click">
-                    <TextBlock FontSize="20">
+                    <TextBlock FontSize="20" FontFamily="Verdana">
                     <Run Text="Nhận dạy"/>
                     <Run Text="&#xEF90;" FontFamily="Segoe MDL2 Assets"/>
                     </TextBlock>
                 </ToggleButton>
                 <ToggleButton Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                           Foreground="#1ed760" Margin="1,0,0,0" Background="{ThemeResource SystemAltLowColor}">
-                    <TextBlock FontSize="20">
+                    <TextBlock FontSize="20" FontFamily="Verdana">
                     <Run Text="Thích"/>
                     <Run Text="&#xE209;" FontFamily="Segoe MDL2 Assets"/>
                     </TextBlock>
@@ -60,7 +60,7 @@
                 <shadow:Expander.Header>
                     <shadow:DockPanel LastChildFill="False" HorizontalAlignment="Stretch">
                         <TextBlock FontSize="20" shadow:DockPanel.Dock="Left">
-                            <Run Text="Bình luận"/>
+                            <Run Text="Bình luận" FontFamily="Verdana"/>
                             <Run Text="&#xE25C;" FontFamily="Segoe MDL2 Assets"/>
                         </TextBlock>
                         <TextBlock Text="10" shadow:DockPanel.Dock="Right"/>
@@ -74,7 +74,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="0.1*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBox x:Name="CommentInput" Grid.Column="0" BorderBrush="#f2b724" Foreground="#f2b724" HorizontalAlignment="Stretch" MinWidth="700"/>
+                                <TextBox x:Name="CommentInput" Grid.Column="0" BorderBrush="#f2b724" Foreground="#f2b724" HorizontalAlignment="Stretch" MinWidth="700" FontFamily="Verdana"/>
                                 <Button Content="&#xE25C;" Foreground="#f2b724" BorderBrush="#f2b724" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1"
                                 Background="{ThemeResource SystemAltLowColor}" Margin="0" MinWidth="80"/>
                             </Grid>

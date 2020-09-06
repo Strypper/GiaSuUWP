@@ -1,4 +1,5 @@
 ﻿using Gia_Sư.Components.PopUps;
+using Gia_Sư.Pages.SmartZone;
 using Gia_Sư.Pages.Stuhub;
 using Gia_Sư.Pages.Tutor;
 using Gia_Sư.Pages.Tutor.CollegeSubject;
@@ -52,6 +53,9 @@ namespace Gia_Sư
                     break;
                 case "Tutor":
                     MainFrame.Navigate(typeof(TutorPage));
+                    break;
+                case "SmartZone":
+                    MainFrame.Navigate(typeof(SmartZone));
                     break;
             }
         }

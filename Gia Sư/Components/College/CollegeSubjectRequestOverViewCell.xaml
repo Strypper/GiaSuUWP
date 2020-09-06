@@ -41,14 +41,14 @@
             </Interactivity:Interaction.Behaviors>
         </PersonPicture>
         <StackPanel HorizontalAlignment="Left">
-            <TextBlock x:Name="SubjectRequest" FontWeight="Bold" Margin="10"  TextDecorations="Underline"
-                       Scale="1,1,1" Text="{x:Bind SubjectName, Mode=OneWay}">
+            <TextBlock x:Name="SubjectRequest" FontWeight="Bold" Margin="10" TextDecorations="Underline"
+                       Scale="1,1,1" Text="{x:Bind SubjectName, Mode=OneWay}" FontFamily="Verdana">
                 <TextBlock.ScaleTransition>
                     <Vector3Transition/>
                 </TextBlock.ScaleTransition>
             </TextBlock>
-            <TextBlock Text="{x:Bind SchoolName, Mode=OneWay}" Margin="10" />
-            <TextBlock Margin="10">
+            <TextBlock Text="{x:Bind SchoolName, Mode=OneWay}" Margin="10" FontFamily="Verdana"/>
+            <TextBlock Margin="10" FontFamily="Verdana">
                 <Run Text="{x:Bind Price, Mode=OneWay}" FontWeight="Bold" Foreground="Green"/>
                 <Run Text="VNĐ /"/>
                 <Run Text="{x:Bind PaymentType, Mode=OneWay}"/>

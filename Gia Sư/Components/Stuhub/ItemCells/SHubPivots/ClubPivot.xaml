@@ -17,7 +17,7 @@
             </Grid.RowDefinitions>
             <Image Grid.RowSpan="2" Source="{Binding ClubCoverImageUrl, Mode=OneWay, ElementName=ClubOVPivot}" Stretch="UniformToFill"/>
             <TextBlock x:Name="ClubNameText" Text="{x:Bind ClubName, Mode=OneWay}" VerticalAlignment="Top" HorizontalAlignment="Left"
-                       FontSize="30" FontWeight="Bold" Margin="5" Foreground="White">
+                       FontSize="30" FontWeight="Bold" Margin="5" Foreground="White" FontFamily="Verdana">
                 <TextBlock.TranslationTransition>
                     <Vector3Transition />
                 </TextBlock.TranslationTransition>
@@ -43,14 +43,14 @@
                             Background="{ThemeResource SystemListLowColor}" Width="100" Height="40">
                         <TextBlock>
                             <Run Text="&#xE715;" FontFamily="Segoe MDL2 Assets"/>
-                            <Run Text="Mail"/>
+                            <Run Text="Mail" FontFamily="Verdana"/>
                         </TextBlock>
                     </Button>
                     <Button VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="5"
                             Background="{ThemeResource SystemListLowColor}" Width="100" Height="40">
                         <TextBlock>
                             <Run Text="&#xE11C;" FontFamily="Segoe MDL2 Assets"/>
-                            <Run Text="Tham gia"/>
+                            <Run Text="Tham gia" FontFamily="Verdana"/>
                         </TextBlock>
                     </Button>
                 </StackPanel>
@@ -62,27 +62,27 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Stretch" FontSize="15">
                             <Run Text="&#xE717;" FontFamily="Segoe MDL2 Assets"/>
-                            <Run Text="{x:Bind ClubPhoneNumber, Mode=OneWay}"/>
+                            <Run Text="{x:Bind ClubPhoneNumber, Mode=OneWay}" FontFamily="Verdana"/>
                         </TextBlock>
                         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Stretch" FontSize="15" Margin="15,0,0,0">
                             <Run Text="&#xE716;" FontFamily="Segoe MDL2 Assets"/>
-                            <Run Text="{x:Bind Members, Mode=OneWay}"/>
+                            <Run Text="{x:Bind Members, Mode=OneWay}" FontFamily="Verdana"/>
                         </TextBlock>
                         <TextBlock  VerticalAlignment="Top" FontSize="15" Margin="15,0,0,0">
                             <Run Text="&#xEBD2;" FontFamily="Segoe MDL2 Assets"/>
-                            <Run Text="{x:Bind Projects, Mode=OneWay}"/>
+                            <Run Text="{x:Bind Projects, Mode=OneWay}" FontFamily="Verdana"/>
                         </TextBlock>
                         <TextBlock VerticalAlignment="Top" FontSize="15" Margin="15,0,0,0">
                             <Run Text="&#xEC5C;" FontFamily="Segoe MDL2 Assets"/>
-                            <Run Text="21.000VNĐ"/>
+                            <Run Text="21.000VNĐ" FontFamily="Verdana"/>
                         </TextBlock>
                     </StackPanel>
                     <TextBlock VerticalAlignment="Bottom" FontSize="15" Margin="0,0,0,0">
                         <Run Text="&#xE707;" FontFamily="Segoe MDL2 Assets"/>
-                        <Run Text="Lầu 6, tòa A2 Trường Đại học Quốc tế"/>
+                        <Run Text="Lầu 6, tòa A2 Trường Đại học Quốc tế" FontFamily="Verdana"/>
                     </TextBlock>
                     <TextBlock Text="{x:Bind Intro, Mode=OneWay}" Grid.Row="1" HorizontalAlignment="Left" TextAlignment="Left" LineHeight="30"
-                               TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="15" Margin="0,10,0,0"/>
+                               TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="15" Margin="0,10,0,0" FontFamily="Verdana"/>
                     <!--<TextBlock Grid.Row="2" VerticalAlignment="Bottom" Margin="0,0,0,5">
                         <Run Text="Ngày thành lập:"/>
                         <Run Text="20-11-2020" FontWeight="Bold"/>

@@ -27,31 +27,31 @@
                       Margin="0,10,0,0">
             <StackPanel Margin="0,10,0,0">
                 <PersonPicture Margin="10" ProfilePicture="ms-appx:///Assets/TestPurpose/SchoolLogo/IU.png"/>
-                <TextBlock Text="ĐẠI HỌC QUỐC TẾ" Margin="10" HorizontalAlignment="Center" FontWeight="ExtraBold" TextAlignment="Center"/>
+                <TextBlock Text="ĐẠI HỌC QUỐC TẾ" Margin="10" HorizontalAlignment="Center" FontWeight="ExtraBold" TextAlignment="Center" FontFamily="Verdana"/>
                 <controls:DockPanel LastChildFill="False" Margin="10">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF57E;" controls:DockPanel.Dock="Left"/>
-                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom">
+                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom" FontFamily="Verdana">
                         <Run Text="1050" FontWeight="Bold"/>
                         <Run Text="Tin đăng"/>
                     </TextBlock>
                 </controls:DockPanel>
                 <controls:DockPanel LastChildFill="False" Margin="10">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE129;" controls:DockPanel.Dock="Left"/>
-                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom">
+                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom" FontFamily="Verdana">
                         <Run Text="70" FontWeight="Bold"/>
                         <Run Text="Nhóm/ Câu lạc bộ"/>
                     </TextBlock>
                 </controls:DockPanel>
                 <controls:DockPanel LastChildFill="False" Margin="10">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE716;" controls:DockPanel.Dock="Left"/>
-                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom">
+                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom" FontFamily="Verdana">
                         <Run Text="102" FontWeight="Bold"/>
                         <Run Text="Người đã tham gia hệ thống"/>
                     </TextBlock>
                 </controls:DockPanel>
                 <controls:DockPanel LastChildFill="False" Margin="10">
                     <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x26A3;" controls:DockPanel.Dock="Left"/>
-                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom">
+                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom" FontFamily="Verdana">
                         <Run Text="70%" FontWeight="Bold"/>
                         <Run Text="Nam"/>
                     </TextBlock>
@@ -59,7 +59,7 @@
                 <ProgressBar Margin="10" Value="70"/>
                 <controls:DockPanel LastChildFill="False" Margin="10">
                     <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x26A2;" controls:DockPanel.Dock="Left"/>
-                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom">
+                    <TextBlock controls:DockPanel.Dock="Right" TextAlignment="End" VerticalAlignment="Bottom" FontFamily="Verdana">
                         <Run Text="30%" FontWeight="Bold"/>
                         <Run Text="Nữ"/>
                     </TextBlock>
@@ -68,11 +68,11 @@
                 <CalendarView   HorizontalAlignment="Stretch"
                                 IsGroupLabelVisible="True"
                                 IsOutOfScopeEnabled="True"
-                                Language="vi" Margin="10"
+                                Language="vi" Margin="10" FontFamily="Verdana"
                                 CalendarIdentifier="GregorianCalendar" />
                 <ListView Margin="10">
                     <ListView.Header>
-                        <TextBlock Text="Sự kiện" FontWeight="Bold"/>
+                        <TextBlock Text="Sự kiện" FontWeight="Bold" FontFamily="Verdana"/>
                     </ListView.Header>
                 </ListView>
             </StackPanel>
@@ -112,7 +112,7 @@
                                             <Grid Margin="25">
                                                 <Canvas x:Name ="InfoCanvas" Width="200" Height="100">
                                                     <Grid x:Name="Info" Width="200" Height="100" Background="{ThemeResource SystemListLowColor}">
-                                                        <TextBlock VerticalAlignment="Bottom" Text="{x:Bind Story}" FontSize="11" TextWrapping="WrapWholeWords" MaxLines="2"
+                                                        <TextBlock VerticalAlignment="Bottom" Text="{x:Bind Story}" FontSize="11" TextWrapping="WrapWholeWords" MaxLines="2" FontFamily="Verdana"
                                                                    Width="120" HorizontalAlignment="Left" FontWeight="Bold" TextTrimming="CharacterEllipsis" TextAlignment="Start"/>
                                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                                                             <ToggleButton Content="&#xE206;" FontFamily="Segoe MDL2 Assets" CornerRadius="0"/>
@@ -132,7 +132,7 @@
                                                                 <PersonPicture x:Name="ProfileImage" ProfilePicture="{x:Bind PersonProfileUrl}" 
                                                                                BadgeImageSource="ms-appx:///Assets/TestPurpose/SchoolLogo/IU.png"
                                                                                Width="50" Height="50"/>
-                                                                <TextBlock x:Name="UserName" Text="{x:Bind PersonName}" Margin="5" FontWeight="Bold" Foreground="White"/>
+                                                                <TextBlock x:Name="UserName" Text="{x:Bind PersonName}" Margin="5" FontWeight="Bold" FontFamily="Verdana" Foreground="White"/>
                                                             </StackPanel>
                                                         </Grid>
                                                     </Canvas>
@@ -155,7 +155,7 @@
                                 <ColumnDefinition Width="0.1*"/>
                             </Grid.ColumnDefinitions>
                             <RichEditBox x:Name="StoryMessage" PlaceholderText="Chuyện gì đang sôi nổi ở đây ?" CornerRadius="0"
-                                         MinHeight="50"/>
+                                         MinHeight="50" FontFamily="Verdana"/>
                             <Button VerticalAlignment="Top" HorizontalAlignment="Stretch" MinHeight="50"
                                     Content="&#xED15;" FontFamily="Segoe MDL2 Assets"
                                     Grid.Column="1" BorderThickness="1" Foreground="Green"
