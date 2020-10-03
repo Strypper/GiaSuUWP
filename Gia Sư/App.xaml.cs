@@ -43,7 +43,7 @@ namespace Gia_Sư
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(LoginPageV2), e.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
                     //rootFrame.Navigate(typeof(TutorPage), e.Arguments);
                     //rootFrame.Navigate(typeof(MainPage), e.Arguments);
                     //rootFrame.Navigate(typeof(CollegeRequestSubject), e.Arguments);

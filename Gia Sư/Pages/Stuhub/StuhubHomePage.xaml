@@ -155,19 +155,19 @@
                                 <ColumnDefinition Width="0.1*"/>
                             </Grid.ColumnDefinitions>
                             <RichEditBox x:Name="StoryMessage" PlaceholderText="Chuyện gì đang sôi nổi ở đây ?" CornerRadius="0"
-                                         MinHeight="50" FontFamily="Verdana"/>
+                                         MinHeight="50" FontFamily="Verdana" BorderThickness="1"/>
                             <Button VerticalAlignment="Top" HorizontalAlignment="Stretch" MinHeight="50"
-                                    Content="&#xED15;" FontFamily="Segoe MDL2 Assets"
-                                    Grid.Column="1" BorderThickness="1" Foreground="Green"
+                                    Content="&#xED15;" FontFamily="Segoe MDL2 Assets" Margin="2,0,1,0"
+                                    Grid.Column="1" BorderThickness="1" BorderBrush="Black"
                                     CornerRadius="0" Background="{ThemeResource SystemAltLowColor}"/>
                             <Button VerticalAlignment="Top" HorizontalAlignment="Stretch" MinHeight="50"
-                                    Content="&#xEB9F;" FontFamily="Segoe MDL2 Assets"
-                                    Grid.Column="2" BorderThickness="1" Foreground="Orange"
+                                    Content="&#xEB9F;" FontFamily="Segoe MDL2 Assets" Margin="1,0,1,0"
+                                    Grid.Column="2" BorderThickness="1" BorderBrush="Black"
                                     CornerRadius="0" Background="{ThemeResource SystemAltLowColor}"/>
                             <Button VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                                    Content="&#xE710;" FontFamily="Segoe MDL2 Assets" 
-                                    Grid.Column="3" MinHeight="50"
-                                    BorderThickness="1"  CornerRadius="0"
+                                    Content="&#xE710;" FontFamily="Segoe MDL2 Assets"
+                                    Grid.Column="3" MinHeight="50" BorderBrush="Black"
+                                    BorderThickness="1"  CornerRadius="0" Margin="1,0,1,0"
                                     Foreground="{ThemeResource SystemAccentColor}"
                                     Background="{ThemeResource SystemAltLowColor}"/>
                         </Grid>
